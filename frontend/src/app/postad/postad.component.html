@@ -1,0 +1,67 @@
+<h1>POST YOUR AD</h1>
+<div class="sell_container">
+  <div class="sell__inputs">
+    <h4>INCLUDE SOME DETAILS</h4>
+    <label for="name">Add Title</label>
+    <input id="name" type="text">
+    <label for="description">Description</label>
+    <textarea id="description" cols="30" rows="10"></textarea>
+    <label for="brand">Brand</label>
+    <input id="brand" type="text">
+    <div class="condition">
+      <label for="condition">Condition:</label>
+      <button>New</button>
+      <button>Used</button>
+    </div>
+    <hr />
+    <h4>SET A PRICE</h4>
+    <label for="price">Price</label>
+    <input id="price" type="text">
+    <hr>
+    <h4>Upload Images</h4>
+    <div class="image-upload-buttons">
+      <button (click)="triggerFileInput('image1')">Upload Image 1</button>
+      <button (click)="triggerFileInput('image2')">Upload Image 2</button>
+      <button (click)="triggerFileInput('image3')">Upload Image 3</button>
+      <button (click)="triggerFileInput('image4')">Upload Image 4</button>
+    </div>
+
+    <!-- Hidden file inputs -->
+    <input type="file" id="image1" hidden (change)="onFileSelected($event, 1)">
+    <input type="file" id="image2" hidden (change)="onFileSelected($event, 2)">
+    <input type="file" id="image3" hidden (change)="onFileSelected($event, 3)">
+    <input type="file" id="image4" hidden (change)="onFileSelected($event, 4)">
+
+    <div *ngIf="uploadedImages.length > 0">
+      <h5>Uploaded Images:</h5>
+      <ul>
+        <li *ngFor="let img of uploadedImages; let i = index">
+          Image {{ i + 1 }}: {{ img.name }}
+        </li>
+      </ul>
+    </div>
+
+    <hr />
+    <h4>Your AD'S Location</h4>
+    <label for="location">Location</label>
+    <input type="text" id="location">
+    <hr>
+    <h4>Review Your Account</h4>
+    <div class="profileName">
+      <img src="./assets/avatar.png" alt="" width="70px">
+      <div class="input">
+        <label for="profileName">Name</label>
+        <input type="text" id="profileName">
+      </div>
+    </div>
+    <h4>Let's Verify Your Account</h4>
+    <label for="profilePhone">Mobile Phone Number</label>
+    <input type="text" id="profilePhone">
+    <h4>Want to Show Phone Number? Write Yes or No</h4>
+    <label for="phoneYes">Yes or No</label>
+    <input type="text" id="phoneYes">
+    <hr />
+  </div>
+
+  <button id="btnSubmit" (click)="downloadImages()">Post Now</button>
+</div>

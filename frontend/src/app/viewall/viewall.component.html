@@ -1,0 +1,103 @@
+
+<div class="body row m-0">
+    <div class="col-12">
+        <p>Home</p>
+    </div>
+    <div class="col-12 col-md-11 borderstl">
+        <div class="row">
+            <div class="col-12 title">
+                <h2>PlayStation</h2>
+                <p>Sort</p>
+            </div>
+            <div class="col-12">
+                <!-- Carousel Component for PlayStation -->
+                <div id="carouselExample" class="carousel slide">
+                    <div class="carousel-inner">
+                        <!-- Carousel item with multiple cards -->
+                        <div class="carousel-item" *ngFor="let slide of slides; let i = index"
+                            [ngClass]="{'active': i === currentSlide}">
+                            <div class="row g-0">
+                                <div class="col-3" *ngFor="let item of slide.items">
+                                    <div (click)="goToDetails(item)" class="card">
+                                        <img [src]="item.image" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                            <button class="btn btn-danger w-100" type="button">Add To Cart</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Custom Carousel Controls -->
+                    <div class="d-flex justify-content-between align-items-center mt-3 control-container">
+                        <!-- Previous button -->
+                        <button class="btn btn-secondary custom-carousel-control-prev" (click)="previousSlide()"
+                            [disabled]="currentSlide === 0">
+                            Previous
+                        </button>
+
+                        <!-- Slide indicator -->
+                        <span class="fw-bold">Slide {{ currentSlide + 1 }} of {{ slides.length }}</span>
+
+                        <!-- Next button -->
+                        <button class="btn btn-secondary custom-carousel-control-next" (click)="nextSlide()"
+                            [disabled]="currentSlide === slides.length - 1">
+                            Next
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div style="padding-top: 100px;" class="col-12 col-md-12 body">
+                <h2>Recently Viewed</h2>
+            </div>
+            <div class="col-12 col-md-12">
+                <!-- Carousel Component for Recently Viewed -->
+                <div id="carouselExample2" class="carousel slide">
+                    <div class="carousel-inner">
+                        <!-- Ensure only one active class -->
+                        <div class="carousel-item active">
+                            <div class="row g-0">
+                                <div class="col-3">
+                                    <div class="card">
+                                        <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row g-0">
+                                <div class="col-3">
+                                    <div class="card">
+                                        <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
+                                        <div class="card-body">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Controls for Recently Viewed -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-bottom: 100px;"></div>
+</div>
+

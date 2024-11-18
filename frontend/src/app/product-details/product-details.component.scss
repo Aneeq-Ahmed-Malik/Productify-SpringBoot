@@ -1,0 +1,33 @@
+.body {
+    background-color: #F3F5F6;
+    overflow-x: hidden; /* Prevent any horizontal overflow */
+}
+
+.card {
+    margin: 10px auto; /* Ensure the card is centered */
+    border-radius: 0;
+    border: none; /* Optional: remove rounded corners */
+}
+
+.carousel-inner {
+    overflow: hidden; /* Prevent carousel items from causing overflow */
+}
+
+/* Handle overflow within rows */
+.carousel-item .row {
+    max-width: 1200px;
+    margin: 0 auto; /* Center the content */
+}
+
+.adj{
+    margin-left: auto;
+    margin-right: auto;
+}
+.clickable-item {
+    border: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.selected {
+    border: solid 2px blue;
+}

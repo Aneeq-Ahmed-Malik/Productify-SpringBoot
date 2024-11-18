@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+.navbar-brand {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #0d6efd; /* Bootstrap primary color */
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  color: #0056b3; /* Darker blue on hover */
+  transform: scale(1.1); /* Slightly larger on hover */
+}
+
+/* Styling the search icon button */
+
+.btn-outline-success i {
+  font-size: 1.3rem;
+  padding: 8px;
+ ;
+}
+.badge-position-adjust {
+ 
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* Align the Login/Signup and Cart icons */
+.navbar .icons {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .icons .nav-link {
+  margin-left: 15px; /* Space between the items */
+}
+body { overflow-x: hidden; }
+
+/* Set navbar and container to full width */
+.navbar { width: 100%; }
+.container-fluid { max-width: 100%; padding-left: 0; padding-right: 0; }
+.row { margin-left: 0; margin-right: 0; max-width: 100%; }
+
+/* Additional styling to prevent overflow and ensure alignment */
+.col { padding-left: 0; padding-right: 0; }
+.navbar-brand { font-weight: bold; color: #007bff; }
+.dropdown-menu {
+        position: absolute; /* Ensure dropdown overlays */
+        z-index: 1050; /* Higher z-index to bring it above the carousel */
+    }
+
+    /* Optional: Ensure no overflow on the body */
+    body {
+        overflow-x: hidden;
+    }

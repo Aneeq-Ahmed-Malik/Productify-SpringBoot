@@ -1,0 +1,165 @@
+<div class="container-fluid p-0">
+
+    <div class="container-fluid body p-0">
+        <!-- Section Heading -->
+        <div class="row justify-content-center align-items-center" style="height: 80px;">
+            <div class="col-11 col-md-11">
+                <h2>View All</h2>
+            </div>
+        </div>
+
+        <!-- Products Section -->
+        <div class="row justify-content-center">
+            <div class="col-md-5 adj" style="background-color: #FFFFFF; padding: 20px;">
+                <div class="row">
+                    <!-- Thumbnails Section -->
+                    <div class="col-md-3">
+                        <div class="row">
+                            <div class="col-12 mb-3" *ngFor="let product of products; let i = index">
+                                <div (click)="selectItem(i, product.image)"
+                                    class="clickable-item d-flex align-items-center justify-content-center p-2"
+                                    [ngClass]="{'selected': selectedItemIndex === i}">
+                                    <img class="img-fluid" [src]="product.image" alt="{{product.title}}"
+                                        style="max-height: 80px; max-width: 100%;">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Image Section -->
+                    <div class="col-md-9 d-flex align-items-center justify-content-center">
+                        <img class="img-fluid" [src]='path' alt="Selected Product"
+                            style="max-height: 500px; max-width: 100%;">
+                    </div>
+                </div>
+            </div>
+            <div style="height: 350px;background-color: #FFFFFF;" class="col-md-5 adj">
+                <div class="row">
+                    <div style="height: 170px; border-bottom: solid 1px silver;" class="col-11 col-md-11 adj">
+                        <h1>Titles</h1>
+                    </div>
+                    <div style="height: 170px;" class="col-11 col-md-11 adj">
+                        <div class="row">
+                            <div class="col-12 col-md-12 ">
+                                <p><b>price :</b> <span style="font-size: 30px;">&nbsp;&nbsp; 70 $</span></p>
+
+                            </div>
+                            <div class="col-3 col-md-3 ">
+                                <p><b>Ratings</b></p>
+
+                            </div>
+                            <div style="border:solid 1px red;" class="col-9 col-md-9 ">
+                                
+                            </div>
+                            <div style=" margin-top: 10px;" class="col-6 col-md-6">
+                                <button style="width: 100%;" type="button" class="btn btn-primary">Add to Cart</button>
+                            </div>
+                            <div style="margin-top: 10px;" class="col-6 col-md-6">
+                                <button style="width: 100%;" type="button" class="btn btn-danger">Redirect Now</button>                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div style="height: 100px;" class="col-12 col-md-12"></div>
+            <div style="background-color: #FFFFFF; height: 100px;" class="col-8 col-md-8 ">
+               <h2>Description</h2>
+            </div>
+        </div>
+
+        <!-- Recently Viewed Section -->
+        <div class="row justify-content-center mt-5">
+            <div style="margin-left: 50px;" class="col-11 col-md-11 ">
+                <h2>Recently Viewed</h2>
+            </div>
+        </div>
+
+        <!-- Carousel Section -->
+        <div style="margin-left: 5%;" class="row ">
+            <div id="carouselExample2" class="carousel slide col-12 col-md-12 " style="max-width: 1300px;">
+                <div class="carousel-inner adj">
+                    <!-- Carousel Item 1 -->
+                    <div class="carousel-item active">
+                        <div style="background-color: #FFFFFF;" class="row  d-flex justify-content-center mx-0">
+                            <div class="col-3">
+                                <div class="card">
+                                    <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top"
+                                        alt="Product 1">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Product 1</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card">
+                                    <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top"
+                                        alt="Product 2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Product 2</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card">
+                                    <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top"
+                                        alt="Product 3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Product 3</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Carousel Item 2 -->
+                    <div class="carousel-item active">
+                        <div style="background-color: #FFFFFF;" class="row  d-flex justify-content-center mx-0">
+                            <div class="col-3">
+                                <div class="card">
+                                    <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top"
+                                        alt="Product 1">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Product 4</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card">
+                                    <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top"
+                                        alt="Product 2">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Product 5</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="card">
+                                    <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top"
+                                        alt="Product 3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Product 6</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                <!-- Carousel Controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div style="height: 100px;" class="col-12 col-md-12"></div>
+    </div>
+
+</div>

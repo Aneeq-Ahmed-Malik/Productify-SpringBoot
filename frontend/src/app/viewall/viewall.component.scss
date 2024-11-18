@@ -1,0 +1,62 @@
+.body{
+    background-color:#F3F5F6 ;
+    overflow-x: hidden; 
+}
+
+.borderstl{
+   
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #FFFFFF;
+}
+
+.colheight{
+    height: 100%;
+    
+    margin-left: auto;
+    margin-right: auto;
+}
+.title{
+    height: 100px;
+    border-bottom: solid 1px gray;
+}
+.card {
+    height: 100%;
+    border-top:none ;
+    border-left: none;
+    border-right: none;
+    margin-left: auto;
+    margin-right: auto;
+    /* Remove card border if desired */
+    border-radius: 0;
+    /* Remove rounded corners */
+  }
+  .g-0>[class*="col-"] {
+    padding-left: 1px;
+    padding-right: 0;
+  }
+
+/* Prevent buttons from occupying full screen */
+.custom-carousel-control-prev,
+.custom-carousel-control-next {
+    position: static; /* Remove Bootstrap's default full-screen control positioning */
+    width: auto;      /* Set a custom width for the buttons */
+    height: auto;     /* Set a custom height for the buttons */
+    margin: 0 10px;   /* Add some space between the buttons and the indicator */
+}
+
+/* Adjust the alignment of control-container to keep it concise */
+.control-container {
+    max-width: 600px; /* Set a maximum width for the control container */
+    margin: 0 auto;   /* Center align the control container */
+}
+
+/* Button specific styling to prevent full-screen effect */
+.custom-carousel-control-prev:hover,
+.custom-carousel-control-next:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Add a light background to the buttons on hover */
+}
+
+img{
+    height: 200px;
+}
