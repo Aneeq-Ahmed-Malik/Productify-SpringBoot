@@ -12,6 +12,8 @@ import { CartComponent } from './cart/cart.component';
 import { ShowAdsComponent } from './show-ads/show-ads.component';
 import { AdsdetailsComponent } from './adsdetails/adsdetails.component';
 import { PostadComponent } from './postad/postad.component';
+import { DataService } from './data.service';
+import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
 
 @NgModule({
   declarations: [
@@ -28,9 +30,10 @@ import { PostadComponent } from './postad/postad.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

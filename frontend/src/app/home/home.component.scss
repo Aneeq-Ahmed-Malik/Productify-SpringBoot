@@ -40,7 +40,16 @@
   border-radius: 0;
   /* Remove rounded corners */
 }
+.card-img-top{
+  height: 200px;
+  width: 90%;
 
+}
+.addtocartbtn{
+  background-color: red;
+ border: none;
+  width: 100%;
+}
 .adj{
   margin-left: auto;
   margin-right: auto;
@@ -50,7 +59,9 @@
   padding-left: 1px;
   padding-right: 0;
 }
-
+.price{
+  color: red;
+}
 h1 {
 
   font-family: 'Roboto', sans-serif;
@@ -61,4 +72,40 @@ h1 {
   letter-spacing: 2px;
   text-transform: uppercase;
   
+}
+.custom-control {
+  background-color: rgba(0, 0, 0, 0.5); /* Default semi-transparent black background */
+  border: none;
+  border-radius: 50%; /* Makes the button round */
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.custom-control:hover {
+  background-color: gray; /* Change to gray on hover */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%); /* Make icons visible (white by default) */
+}
+
+.custom-control:focus {
+  outline: none; /* Remove focus outline */
+}
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }

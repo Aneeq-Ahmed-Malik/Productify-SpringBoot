@@ -1,10 +1,17 @@
-<div class="container-fluid p-0">
+<div *ngIf="loading" class="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
+
+<div *ngIf="!loading" class="container-fluid p-0">
 
     <div class="container-fluid body p-0">
         <!-- Section Heading -->
         <div class="row justify-content-center align-items-center" style="height: 80px;">
             <div class="col-11 col-md-11">
-                <h2>View All</h2>
+                <h2>Product Details</h2>
             </div>
         </div>
 
@@ -15,12 +22,39 @@
                     <!-- Thumbnails Section -->
                     <div class="col-md-3">
                         <div class="row">
-                            <div class="col-12 mb-3" *ngFor="let product of products; let i = index">
-                                <div (click)="selectItem(i, product.image)"
+                            <div class="col-12 mb-3">
+                                <div (click)="selectItem(0, product.image1)"
                                     class="clickable-item d-flex align-items-center justify-content-center p-2"
-                                    [ngClass]="{'selected': selectedItemIndex === i}">
-                                    <img class="img-fluid" [src]="product.image" alt="{{product.title}}"
-                                        style="max-height: 80px; max-width: 100%;">
+                                    [ngClass]="{'selected': selectedItemIndex === 0}">
+                                    <img class="img-fluid" [src]="'../../assets/' + product.image1.replace('./', '')"
+                                        alt="{{product.title}}" style="max-height: 80px; max-width: 100%;">
+                                </div>
+
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div (click)="selectItem(1, product.image2)"
+                                    class="clickable-item d-flex align-items-center justify-content-center p-2"
+                                    [ngClass]="{'selected': selectedItemIndex === 1}">
+                                    <img class="img-fluid" [src]="'../../assets/' + product.image2.replace('./', '')"
+                                        alt="{{product.title}}" style="max-height: 80px; max-width: 100%;">
+                                </div>
+
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div (click)="selectItem(2, product.image3)"
+                                    class="clickable-item d-flex align-items-center justify-content-center p-2"
+                                    [ngClass]="{'selected': selectedItemIndex === 2}">
+                                    <img class="img-fluid" [src]="'../../assets/' + product.image3.replace('./', '')"
+                                        alt="{{product.title}}" style="max-height: 80px; max-width: 100%;">
+                                </div>
+
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div (click)="selectItem(3, product.image4)"
+                                    class="clickable-item d-flex align-items-center justify-content-center p-2"
+                                    [ngClass]="{'selected': selectedItemIndex === 3}">
+                                    <img class="img-fluid" [src]="'../../assets/' + product.image4.replace('./', '')"
+                                        alt="{{product.title}}" style="max-height: 80px; max-width: 100%;">
                                 </div>
 
                             </div>
@@ -34,39 +68,69 @@
                     </div>
                 </div>
             </div>
-            <div style="height: 350px;background-color: #FFFFFF;" class="col-md-5 adj">
+            <div style="height: 60%;background-color: #FFFFFF;padding-bottom: 10px;" class="col-md-5 adj">
                 <div class="row">
-                    <div style="height: 170px; border-bottom: solid 1px silver;" class="col-11 col-md-11 adj">
-                        <h1>Titles</h1>
+                    <div style="height: 45%; border-bottom: solid 1px silver;" class="col-11 col-md-11 adj">
+                        <h1>Title</h1>
+                        <p><b>{{this.product.title}}</b></p>
                     </div>
-                    <div style="height: 170px;" class="col-11 col-md-11 adj">
+                    <div style="height: 55%;" class="col-11 col-md-11 adj">
                         <div class="row">
                             <div class="col-12 col-md-12 ">
-                                <p><b>price :</b> <span style="font-size: 30px;">&nbsp;&nbsp; 70 $</span></p>
+                                <p><b>price :</b> <span style="font-size: 30px; color: red;">&nbsp;&nbsp;{{this.product.price}}
+                                        $</span></p>
 
                             </div>
                             <div class="col-3 col-md-3 ">
                                 <p><b>Ratings</b></p>
 
                             </div>
-                            <div style="border:solid 1px red;" class="col-9 col-md-9 ">
-                                
+                            <div class="col-9 col-md-9 ">
+                                <p><b>{{this.product.rating}}</b></p>
                             </div>
                             <div style=" margin-top: 10px;" class="col-6 col-md-6">
-                                <button style="width: 100%;" type="button" class="btn btn-primary">Add to Cart</button>
+                                <button style="width: 100%;" type="button" class="btn btn-success">Add to Cart</button>
                             </div>
                             <div style="margin-top: 10px;" class="col-6 col-md-6">
-                                <button style="width: 100%;" type="button" class="btn btn-danger">Redirect Now</button>                            </div>
-                            
+                                <button style="width: 100%;" (click)="redirectTo(product.link)" type="button"
+                                    class="btn btn-danger">Buy Now</button>
+                            </div>
+                            <div style="margin-top: 10px;" class="col-10 col-md-10 adj" >
+                                <button  style="width: 100%; " class="btn btn-primary "  type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    Description
+                                  </button>
+                            </div>
+                           
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
-            <div style="height: 100px;" class="col-12 col-md-12"></div>
-            <div style="background-color: #FFFFFF; height: 100px;" class="col-8 col-md-8 ">
-               <h2>Description</h2>
-            </div>
+            <div style="margin-top: 20px;" class="col-12 col-md-12"></div>
+            <!-- <div style="background-color: #FFFFFF;" class="col-8 col-md-8">
+                <h2>Description</h2>
+                <ul>
+                    <li *ngFor="let pair of sentencePairs">
+                        <b>{{ pair }}</b>
+                    </li>
+                </ul>
+            </div> -->
+
+            
+               
+              
+              
+              <div class="collapse" id="collapseExample">
+                <div style="background-color: #FFFFFF;" class="col-8 col-md-8 adj">
+                    <h2>Description</h2>
+                    <ul>
+                        <li *ngFor="let pair of sentencePairs">
+                            <b>{{ pair }}</b>
+                        </li>
+                    </ul>
+                </div>
+              </div>
+
         </div>
 
         <!-- Recently Viewed Section -->
@@ -146,20 +210,20 @@
                         </div>
                     </div>
 
-                <!-- Carousel Controls -->
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
+                    <!-- Carousel Controls -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
             </div>
+            <div style="height: 100px;" class="col-12 col-md-12"></div>
         </div>
-        <div style="height: 100px;" class="col-12 col-md-12"></div>
-    </div>
 
-</div>
+    </div>

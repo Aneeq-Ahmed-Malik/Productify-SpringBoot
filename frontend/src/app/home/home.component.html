@@ -1,7 +1,11 @@
+<div *ngIf="loading" class="loading-overlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<div *ngIf="!loading" style="padding-bottom: 10%;" class="body">
 
-  <div style="height:100rem;" class="body" >
 
-  
 
   <div style="width: 100%; " id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
     <div class="carousel-inner carousel-inner-adj ">
@@ -28,102 +32,31 @@
   </div>
 
 
-  <div style=" width: 90%;margin-left: auto;margin-right: auto;background-color:#E1E3E4;"
-    class="row">
+  <div style="width: 90%; margin-left: auto; margin-right: auto; background-color:#E1E3E4;" class="row">
     <div class="col-12 col-md-12">
       <div class="row">
-        <div style="margin-top:30px ;text-align: center;" class="col-3 col-md-3">
-          <h1 >Gaming Chair</h1>
-          <button style="margin-top:50px ;" (click)="Routing()" type="button" class="btn btn-success">View more</button>
-
+        <div style="margin-top:30px; text-align: center;" class="col-3 col-md-3">
+          <h1>Gaming Chair</h1>
+          <button style="margin-top:50px;" (click)="Routing('viewall')" type="button" class="btn btn-success">View more</button>
         </div>
-        <div style="margin-left: auto;margin-right: auto;" class="col-9 col-md-9">
+        <div style="margin-left: auto; margin-right: auto;" class="col-9 col-md-9">
           <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
-              <!-- First carousel item with three cards -->
-              <div class="carousel-item active">
+              <!-- Loop through carousel items -->
+              <div class="carousel-item" [class.active]="i === 0" *ngFor="let cardGroup of chairs; let i = index">
                 <div class="row g-0">
-                  <div class="col-4">
-                    <div class="card">
-                      <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <p class="card-text">First card content example text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-4">
-                    <div class="card">
-                      <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <p class="card-text">Second card content example text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-4">
-                    <div class="card">
-                      <img class="cardimg" src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <p class="card-text">Third card content example text.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  <!-- Loop through cards in each group -->
+                  <div class="col-4" *ngFor="let product of cardGroup">
+                    <div (click)="Routing(product)" class="card">
+                      <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                        alt="Product Image">
 
-              <!-- Second carousel item with three cards -->
-              <div class="carousel-item">
-                <div class="row g-0">
-                  <div class="col-4">
-                    <div class="card">
-                      <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <p class="card-text">Fourth card content example text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-4">
-                    <div class="card">
-                      <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <p class="card-text">Fifth card content example text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-4">
-                    <div class="card">
-                      <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <p class="card-text">Sixth card content example text.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                      <div style="position: absolute;bottom: 0; width: 100%;" class="card-body">
+                        <p class="card-text"><b>{{ product.title.split(' ').slice(0, 4).join(' ') }}</b></p>
+                        <p class="price"><b>${{product.price}}</b></p>
+                        
 
-              <!-- Third carousel item with three cards -->
-              <div class="carousel-item">
-                <div class="row g-0">
-                  <div class="col-4">
-                    <div class="card">
-                      <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <p class="card-text">Seventh card content example text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-4 ">
-                    <div class="card">
-                      <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <p class="card-text">Eighth card content example text.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-4">
-                    <div class="card">
-                      <img src="https://via.placeholder.com/150" class="card-img-top" alt="...">
-                      <div class="card-body">
-                        <p class="card-text">Ninth card content example text.</p>
+
                       </div>
                     </div>
                   </div>
@@ -141,11 +74,7 @@
               <span class="visually-hidden">Next</span>
             </button>
           </div>
-
-
         </div>
-
-
       </div>
     </div>
   </div>
@@ -163,172 +92,429 @@
     <div id="carouselExample2" class="carousel slide">
       <div class="carousel-inner">
         <!-- First carousel item with four cards -->
-        <div class="carousel-item active">
+        <div class="carousel-item" [class.active]="i === 0" *ngFor="let cardGroup of keyboards; let i = index">
           <div class="row g-0">
-            <div class="col-3">
-              <div class="card">
-                <div  class="adj" style="border: solid 1px red; width: 90%; height: 70%;margin-top: 20px;">
-                  <img src="../../assets/img/Gaming Chairs965.1.png" alt="..." style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                
-                <div style="position: absolute;bottom: 0;" class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
+            <div class="col-3" *ngFor="let product of cardGroup">
+              <div (click)="Routing(product)" class="card">
+
+                <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                  alt="Product Image">
+                <div style="position: absolute;bottom: 0; width: 100%;" class="card-body">
+                  <p class="card-text"><b>{{ product.title.split(' ').slice(0, 4).join(' ') }}</b></p>
+                  <p class="price"><b>${{product.price}}</b></p>
+                  <div>
+                    <button class="addtocartbtn">
+                      Add to cart
+                    </button>
+                  </div>
 
                 </div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="card">
-                <div  class="adj" style="border: solid 1px red; width: 90%; height: 70%;margin-top: 20px;">
-                  <img src="../../assets/img/Gaming Chairs965.1.png" alt="..." style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                
-                <div style="position: absolute;bottom: 0;" class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
 
-                </div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="card">
-                <div  class="adj" style="border: solid 1px red; width: 90%; height: 70%;margin-top: 20px;">
-                  <img src="../../assets/img/Gaming Chairs965.1.png" alt="..." style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                
-                <div style="position: absolute;bottom: 0;" class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
-
-                </div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="card">
-                <div  class="adj" style="border: solid 1px red; width: 90%; height: 70%;margin-top: 20px;">
-                  <img src="../../assets/img/Gaming Chairs965.1.png" alt="..." style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-                
-                <div style="position: absolute;bottom: 0;" class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
-
-                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Second carousel item with four cards -->
-        <div class="carousel-item">
+        <!-- Carousel controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <div style="height: 100px;">
+
+    </div>
+  <div style="width: 100%; margin-left: auto; margin-right: auto; background-color:#E1E3E4;" class="row">
+    <div class="col-12 col-md-12">
+      <div class="row">
+        <div style="margin-top:30px; text-align: center;" class="col-3 col-md-3">
+          <h1>Playstation 5 Games</h1>
+          <button style="margin-top:50px;" (click)="Routing('viewall')" type="button" class="btn btn-success">View more</button>
+        </div>
+        <div style="margin-left: auto; margin-right: auto;" class="col-9 col-md-9">
+          <div id="carouselExample3" class="carousel slide">
+            <div class="carousel-inner">
+              <!-- Loop through carousel items -->
+              <div class="carousel-item" [class.active]="i === 0" *ngFor="let cardGroup of playstation5; let i = index">
+                <div class="row g-0">
+                  <!-- Loop through cards in each group -->
+                  <div class="col-4" *ngFor="let product of cardGroup">
+                    <div (click)="Routing(product)" class="card">
+                      <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                        alt="Product Image">
+
+                      <div style="position: absolute;bottom: 0; width: 100%;" class="card-body">
+                        <p class="card-text"><b>{{ product.title.split(' ').slice(0, 4).join(' ') }}</b></p>
+                        <p class="price"><b>${{product.price}}</b></p>
+                        
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carousel controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample3" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample3" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 100px; margin-bottom: 100px;">
+    <!-- Heading Section -->
+    <div class="row">
+      <div class="col-12">
+        <h1>Gaming Mice</h1>
+      </div>
+    </div>
+
+    <!-- Carousel Section -->
+    <div id="carouselExample4" class="carousel slide">
+      <div class="carousel-inner">
+        <!-- First carousel item with four cards -->
+        <div class="carousel-item" [class.active]="i === 0" *ngFor="let cardGroup of mice; let i = index">
           <div class="row g-0">
-            <div class="col-3">
-              <div class="card">
-                <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
+            <div class="col-3" *ngFor="let product of cardGroup">
+              <div (click)="Routing(product)" class="card">
 
-                <div class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
-
-
-                </div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="card">
-                <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
-                </div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="card">
-                <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
-                </div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="card">
-                <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
+                <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                  alt="Product Image">
+                <div style="position: absolute;bottom: 0; width: 100%;" class="card-body">
+                  <p class="card-text"><b>{{ product.title.split(' ').slice(0, 4).join(' ') }}</b></p>
+                  <p class="price"><b>${{product.price}}</b></p>
+                  <div>
+                    <button class="addtocartbtn">
+                      Add to cart
+                    </button>
+                  </div>
 
                 </div>
+
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Third carousel item with four cards -->
-        <div class="carousel-item">
-          <div class="row g-0">
-            <div class="col-3">
-              <div class="card">
-                <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
+        <!-- Carousel controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample4" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample4" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <div style="height: 100px;">
 
+    </div>
+    <div style="width: 100%; margin-left: auto; margin-right: auto; background-color:#E1E3E4;" class="row">
+      <div class="col-12 col-md-12">
+        <div class="row">
+          <div style="margin-top:30px; text-align: center;" class="col-3 col-md-3">
+            <h1>Nintendo Switch Accessories</h1>
+            <button style="margin-top:50px;" (click)="Routing('viewall')" type="button" class="btn btn-success">View more</button>
+          </div>
+          <div style="margin-left: auto; margin-right: auto;" class="col-9 col-md-9">
+            <div id="carouselExample5" class="carousel slide">
+              <div class="carousel-inner">
+                <!-- Loop through carousel items -->
+                <div class="carousel-item" [class.active]="i === 0" *ngFor="let cardGroup of Nintendo; let i = index">
+                  <div class="row g-0">
+                    <!-- Loop through cards in each group -->
+                    <div class="col-4" *ngFor="let product of cardGroup">
+                      <div (click)="Routing(product)" class="card">
+                        <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                          alt="Product Image">
+  
+                        <div style="position: absolute;bottom: 0; width: 100%;" class="card-body">
+                          <p class="card-text"><b>{{ product.title.split(' ').slice(0, 4).join(' ') }}</b></p>
+                          <p class="price"><b>${{product.price}}</b></p>
+                          
+  
+  
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Carousel controls -->
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample5" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample5" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 100px; margin-bottom: 100px;">
+      <!-- Heading Section -->
+      <div class="row">
+        <div class="col-12">
+          <h1>Gaming Monitors</h1>
+        </div>
+      </div>
+  
+      <!-- Carousel Section -->
+      <div id="carouselExample6" class="carousel slide">
+        <div class="carousel-inner">
+          <!-- First carousel item with four cards -->
+          <div class="carousel-item" [class.active]="i === 0" *ngFor="let cardGroup of monitor; let i = index">
+            <div class="row g-0">
+              <div class="col-3" *ngFor="let product of cardGroup">
+                <div (click)="Routing(product)" class="card">
+  
+                  <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                    alt="Product Image">
+                  <div style="position: absolute;bottom: 0; width: 100%;" class="card-body">
+                    <p class="card-text"><b>{{ product.title.split(' ').slice(0, 4).join(' ') }}</b></p>
+                    <p class="price"><b>${{product.price}}</b></p>
+                    <div>
+                      <button class="addtocartbtn">
+                        Add to cart
+                      </button>
+                    </div>
+  
+                  </div>
+  
                 </div>
               </div>
             </div>
-            <div class="col-3">
-              <div class="card">
-                <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
-
-
-                </div>
-              </div>
+          </div>
+  
+          <!-- Carousel controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample6" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample6" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div style="height: 100px;">
+  
+      </div>
+      <div style="width: 100%; margin-left: auto; margin-right: auto; background-color:#E1E3E4;" class="row">
+        <div class="col-12 col-md-12">
+          <div class="row">
+            <div style="margin-top:30px; text-align: center;" class="col-3 col-md-3">
+              <h1>Virtual Reality Accessories</h1>
+              <button style="margin-top:50px;" (click)="Routing('viewall')" type="button" class="btn btn-success">View more</button>
             </div>
-            <div class="col-3">
-              <div class="card">
-                <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
-
-
+            <div style="margin-left: auto; margin-right: auto;" class="col-9 col-md-9">
+              <div id="carouselExample7" class="carousel slide">
+                <div class="carousel-inner">
+                  <!-- Loop through carousel items -->
+                  <div class="carousel-item" [class.active]="i === 0" *ngFor="let cardGroup of vr; let i = index">
+                    <div class="row g-0">
+                      <!-- Loop through cards in each group -->
+                      <div class="col-4" *ngFor="let product of cardGroup">
+                        <div (click)="Routing(product)" class="card">
+                          <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                            alt="Product Image">
+    
+                          <div style="position: absolute;bottom: 0; width: 100%;" class="card-body">
+                            <p class="card-text"><b>{{ product.title.split(' ').slice(0, 4).join(' ') }}</b></p>
+                            <p class="price"><b>${{product.price}}</b></p>
+                            
+    
+    
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="card">
-                <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <button style="margin-left:80px ;margin-right:auto;" type="button" class="btn btn-danger">Add To
-                    Cart</button>
-
-
-                </div>
+    
+                <!-- Carousel controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample7" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample7" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
+    
+      <div style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 100px; margin-bottom: 100px;">
+        <!-- Heading Section -->
+        <div class="row">
+          <div class="col-12">
+            <h1>Playstation 5 Controllers</h1>
+          </div>
+        </div>
+    
+        <!-- Carousel Section -->
+        <div id="carouselExample8" class="carousel slide">
+          <div class="carousel-inner">
+            <!-- First carousel item with four cards -->
+            <div class="carousel-item" [class.active]="i === 0" *ngFor="let cardGroup of controller; let i = index">
+              <div class="row g-0">
+                <div class="col-3" *ngFor="let product of cardGroup">
+                  <div (click)="Routing(product)" class="card">
+    
+                    <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                      alt="Product Image">
+                    <div style="position: absolute;bottom: 0; width: 100%;" class="card-body">
+                      <p class="card-text"><b>{{ product.title.split(' ').slice(0, 4).join(' ') }}</b></p>
+                      <p class="price"><b>${{product.price}}</b></p>
+                      <div>
+                        <button class="addtocartbtn">
+                          Add to cart
+                        </button>
+                      </div>
+    
+                    </div>
+    
+                  </div>
+                </div>
+              </div>
+            </div>
+    
+            <!-- Carousel controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample8" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample8" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
 
-      <!-- Carousel controls -->
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
-  </div>
+        <div style="height: 100px;">
+    
+        </div>
+        <div style="width: 100%; margin-left: auto; margin-right: auto; background-color:#E1E3E4;" class="row">
+          <div class="col-12 col-md-12">
+            <div class="row">
+              <div style="margin-top:30px; text-align: center;" class="col-3 col-md-3">
+                <h1>Gaming Headsets</h1>
+                <button style="margin-top:50px;" (click)="Routing('viewall')" type="button" class="btn btn-success">View more</button>
+              </div>
+              <div style="margin-left: auto; margin-right: auto;" class="col-9 col-md-9">
+                <div id="carouselExample9" class="carousel slide">
+                  <div class="carousel-inner">
+                    <!-- Loop through carousel items -->
+                    <div class="carousel-item" [class.active]="i === 0" *ngFor="let cardGroup of headsets; let i = index">
+                      <div class="row g-0">
+                        <!-- Loop through cards in each group -->
+                        <div class="col-4" *ngFor="let product of cardGroup">
+                          <div (click)="Routing(product)" class="card">
+                            <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                              alt="Product Image">
+      
+                            <div style="position: absolute;bottom: 0; width: 100%;" class="card-body">
+                              <p class="card-text"><b>{{ product.title.split(' ').slice(0, 4).join(' ') }}</b></p>
+                              <p class="price"><b>${{product.price}}</b></p>
+                              
+      
+      
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+      
+                  <!-- Carousel controls -->
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample9" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample9" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div style="width: 100%; margin-left: auto; margin-right: auto; margin-top: 100px; margin-bottom: 100px;">
+          <!-- Heading Section -->
+          <div class="row">
+            <div class="col-12">
+              <h1>Playstation 4 Accessories</h1>
+            </div>
+          </div>
+      
+          <!-- Carousel Section -->
+          <div id="carouselExample10" class="carousel slide">
+            <div class="carousel-inner">
+              <!-- First carousel item with four cards -->
+              <div class="carousel-item" [class.active]="i === 0" *ngFor="let cardGroup of playstation4; let i = index">
+                <div class="row g-0">
+                  <div class="col-3" *ngFor="let product of cardGroup">
+                    <div (click)="Routing(product)"  class="card">
+      
+                      <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                        alt="Product Image">
+                      <div style="position: absolute;bottom: 0; width: 100%;"  class="card-body">
+                        <p class="card-text"><b>{{ product.title.split(' ').slice(0, 4).join(' ') }}</b></p>
+                        <p class="price"><b>${{product.price}}</b></p>
+                        <div>
+                          <button class="addtocartbtn">
+                            Add to cart
+                          </button>
+                        </div>
+      
+                      </div>
+      
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Carousel controls -->
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample10" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselExample10" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+          </div>
+          
 
-
-  
   </div>
 
