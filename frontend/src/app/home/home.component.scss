@@ -33,7 +33,7 @@
 }
 
 .card {
-  height: 400px;
+  height: 450px;
   border: none;
   width: 100%;
   /* Remove card border if desired */
@@ -44,6 +44,10 @@
   height: 200px;
   width: 90%;
 
+}
+.card-body{
+  height: 50%;
+  
 }
 .addtocartbtn{
   background-color: red;

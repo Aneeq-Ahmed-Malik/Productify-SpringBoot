@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { forkJoin } from 'rxjs';
+import { GlobalService } from '../global.service';
 
 @Component({
   selector: 'app-home',
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit {
 
   errorMessage: string = '';
 
-  constructor(private route: Router, private productService: DataService) {}
+  constructor(private route: Router, private productService: DataService,private global:GlobalService) {}
 
   ngOnInit() {
     // Create an array of observables for each category
@@ -70,8 +71,8 @@ export class HomeComponent implements OnInit {
   }
 
   Routing(product:any) {
-    if(product=="viewall"){
-      this.route.navigate(['/productdetails'] );
+    if(product=='viewwall'){
+      this.route.navigate(['viewall'] );
 
 
     }
@@ -101,5 +102,8 @@ export class HomeComponent implements OnInit {
       chunks.push(array.slice(i, i + size));
     }
     return chunks;
+  }
+  addToCart(product:any){
+    this.global.addToCart(product);
   }
 }
