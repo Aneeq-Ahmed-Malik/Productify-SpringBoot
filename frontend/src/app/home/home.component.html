@@ -49,7 +49,7 @@
                   <!-- Loop through cards in each group -->
                   <div class="col-4" *ngFor="let product of cardGroup">
                     <div class="card">
-                      <img [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
+                      <img (click)="Routing(product)" [src]="'../../assets/' + product.image1.replace('./', '')" class="card-img-top"
                         alt="Product Image">
 
                       <div style="position: absolute;bottom: 0; width: 100%;" class="card-body">
@@ -629,7 +629,7 @@
                       <p class="card-text"><b>{{ product.title.split(' ').slice(0, 3).join(' ') }}</b></p>
                       <p class="price"><b>${{product.price}}</b></p>
                       <div ngSwitch={{product.website.id}}>
-                        <div *ngSwitchCase="'1'">
+                        <div *ngSwitchCase="'2'">
                           <svg width="100px" height="100px" viewBox="7.082 -380.929 957.518 957.518"
                             xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -644,7 +644,7 @@
                           </svg>
     
                         </div>
-                        <div *ngSwitchCase="'2'">
+                        <div *ngSwitchCase="'1'">
                           <svg height="100px" viewBox="0 0 57.573 13.388" width="100"
                             xmlns="http://www.w3.org/2000/svg">
                             <path

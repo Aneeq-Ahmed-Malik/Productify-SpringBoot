@@ -44,4 +44,21 @@
     align-items: center;
     z-index: 9999;
   }
+  .card {
+    height: 90%;
+    border: none;
+    width: 100%;
+    /* Remove card border if desired */
+    border-radius: 0;
+    /* Remove rounded corners */
+  }
+  .card-img-top{
+    height: 200px;
+    width: 90%;
+  
+  }
+  .card-body{
+    height: 50%;
+    
+  }
   

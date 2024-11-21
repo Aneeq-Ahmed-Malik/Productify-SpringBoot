@@ -49,11 +49,23 @@
   height: 50%;
   
 }
-.addtocartbtn{
+
+.addtocartbtn {
   background-color: red;
- border: none;
+  border: none;
   width: 100%;
+  color: white;
+  
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
+
+.addtocartbtn:hover {
+  background-color: darkred; /* Darker shade of red for hover effect */
+  transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+
 .adj{
   margin-left: auto;
   margin-right: auto;

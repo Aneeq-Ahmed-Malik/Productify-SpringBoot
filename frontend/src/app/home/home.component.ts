@@ -93,7 +93,7 @@ export class HomeComponent implements OnInit {
         websiteId: product.website.id // Nested attribute
       }
     });
-    
+    this.global.addToRecent(product);
   }
 
   chunkArray(array: any[], size: number): any[][] {

@@ -13,12 +13,7 @@ export class ProductDetailsComponent implements OnInit {
   path="../../assets/img/what1.jpg";
   loading: boolean = true; // Loading flag
   sentencePairs: string[] = [];
-  products = [
-    { id: 1, image: '../../assets/img/what1.jpg', title: 'PlayStation 5' },
-    { id: 2, image: '../../assets/img/Gaming Chairs965.1.png', title: 'Xbox Series X' },
-    { id: 3, image: '../../assets/img/what1.jpg', title: 'Nintendo Switch' },
-    { id: 4, image: '../../assets/img/Gaming Chairs965.1.png', title: 'Gaming Chair' }
-  ];
+  recentproducts :any[][]=[];
 
   constructor(private route: ActivatedRoute,private global:GlobalService) {}
 
@@ -51,6 +46,7 @@ export class ProductDetailsComponent implements OnInit {
       });
       this.processDescription();
       this.loading = false; // Stop loading when data is ready
+      this.recentproducts=this.chunkArray(this.global.recent,3);
 
     },2000);
     
@@ -80,5 +76,12 @@ export class ProductDetailsComponent implements OnInit {
   addToCart(product:any){
     this.global.addToCart(product);
     this.global.increament();
+  }
+  chunkArray(array: any[], size: number): any[][] {
+    const chunks: any[][] = [];
+    for (let i = 0; i < array.length; i += size) {
+      chunks.push(array.slice(i, i + size));
+    }
+    return chunks;
   }
 }
