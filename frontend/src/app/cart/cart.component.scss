@@ -1,33 +1,44 @@
-.adj{
+.adj {
     margin-left: auto;
     margin-right: auto;
 }
-.body{
-    background-color:#F3F5F6 ;
+
+.body {
+    background-color: #F3F5F6;
 
 }
-.height{
-    height: 180px;
+
+.height {
+    
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.margin {
     margin-top: 50px;
 }
-.margin{
-    margin-top: 50px;
-}
-.colcolor{
-    background-color:#FFFF ;
+
+.colcolor {
+    background-color: #FFFF;
 
 }
+
 .button-container {
     display: flex;
-    gap: 10px; /* Adjust spacing between buttons */
-    align-items: center; /* Vertically center-align if needed */
-  }
-  
-  button{
+    gap: 10px;
+    /* Adjust spacing between buttons */
+    align-items: center;
+    /* Vertically center-align if needed */
+}
+
+button {
     width: 130px;
-  }
-  .tex-container {
+}
+
+.tex-container {
     display: flex;
-    gap: 10px; /* Adjust spacing between buttons */
-    align-items: center; /* Vertically center-align if needed */
-  }
+    gap: 10px;
+    /* Adjust spacing between buttons */
+    align-items: center;
+    /* Vertically center-align if needed */
+}

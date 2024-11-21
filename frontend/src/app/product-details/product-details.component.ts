@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { GlobalService } from '../global.service';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -20,7 +20,7 @@ export class ProductDetailsComponent implements OnInit {
     { id: 4, image: '../../assets/img/Gaming Chairs965.1.png', title: 'Gaming Chair' }
   ];
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute,private global:GlobalService) {}
 
   ngOnInit() {
     // Subscribe to query parameters
@@ -61,8 +61,8 @@ export class ProductDetailsComponent implements OnInit {
     this.path='../../assets/' + path.replace('./', '');
   }
   redirectTo(link: string) {
-    window.location.href = link; // Opens the link in the same tab
-   // window.open(link, '_blank'); // Opens the link in a new tab
+    //window.location.href = link; // Opens the link in the same tab
+    window.open(link, '_blank'); // Opens the link in a new tab
 
   }
   processDescription() {
@@ -76,5 +76,9 @@ export class ProductDetailsComponent implements OnInit {
         this.sentencePairs.push(pair.trim());
       }
     }
+  }
+  addToCart(product:any){
+    this.global.addToCart(product);
+    this.global.increament();
   }
 }

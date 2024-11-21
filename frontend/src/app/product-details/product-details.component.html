@@ -89,7 +89,7 @@
                                 <p><b>{{this.product.rating}}</b></p>
                             </div>
                             <div style=" margin-top: 10px;" class="col-6 col-md-6">
-                                <button style="width: 100%;" type="button" class="btn btn-success">Add to Cart</button>
+                                <button (click)="addToCart(product)" style="width: 100%;" type="button" class="btn btn-success">Add to Cart</button>
                             </div>
                             <div style="margin-top: 10px;" class="col-6 col-md-6">
                                 <button style="width: 100%;" (click)="redirectTo(product.link)" type="button"

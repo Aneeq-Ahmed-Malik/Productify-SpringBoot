@@ -105,5 +105,6 @@ export class HomeComponent implements OnInit {
   }
   addToCart(product:any){
     this.global.addToCart(product);
+    this.global.increament();
   }
 }
