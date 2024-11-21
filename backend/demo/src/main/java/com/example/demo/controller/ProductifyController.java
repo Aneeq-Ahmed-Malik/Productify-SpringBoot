@@ -51,6 +51,14 @@ public class ProductifyController {
     public Optional<Product> getProductById(@PathVariable Long id) {
         return productRetrievalService.getProductById(id);
     }
+
+    @CrossOrigin(origins = "http://localhost:4200")
+    @GetMapping("/products/{categoryName}/{websiteName}")
+    public List<Product> getProductsByCategory(@PathVariable String categoryName, @PathVariable String websiteName) {
+        return productRetrievalService.getProductsByWebsiteandCategory(categoryName, websiteName);
+    }
+
+
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/category/{categoryName}")
     public List<Product> getProductsByCategory(@PathVariable String categoryName) {
