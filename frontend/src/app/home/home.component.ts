@@ -70,10 +70,11 @@ export class HomeComponent implements OnInit {
 
   }
 
-  Routing(product:any) {
+  Routing(product:any,category:any=null) {
     if(product=='viewwall'){
-      this.route.navigate(['viewall'] );
-
+      this.route.navigate(['viewall'],{queryParams:{category:category}});
+      console.log("Category",category);
+    
 
     }
     console.log('before route',product);

@@ -41,8 +41,10 @@
   /* Remove rounded corners */
 }
 .card-img-top{
-  height: 200px;
-  width: 90%;
+  height: 50%;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 
 }
 .card-body{
@@ -54,8 +56,11 @@
   background-color: red;
   border: none;
   width: 100%;
+  height:20% ;
   color: white;
-  
+  position: absolute;
+  bottom: 0;
+  right: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -113,6 +118,7 @@ h1 {
 .custom-control:focus {
   outline: none; /* Remove focus outline */
 }
+
 .loading-overlay {
   position: fixed;
   top: 0;

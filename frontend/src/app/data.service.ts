@@ -20,5 +20,8 @@ export class DataService {
   getProductsByWebsite(websiteName: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/website/${websiteName}`);
   }
+  getProductsByCatWeb(category:string,websiteName:string): Observable<any>{
+    return this.http.get(`${this.baseUrl}/${category}/${websiteName}`); 
+  }
   
 }

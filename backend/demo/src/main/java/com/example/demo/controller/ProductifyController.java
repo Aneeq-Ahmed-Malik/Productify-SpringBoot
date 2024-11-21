@@ -53,7 +53,7 @@ public class ProductifyController {
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
-    @GetMapping("/products/{categoryName}/{websiteName}")
+    @GetMapping("/{categoryName}/{websiteName}")
     public List<Product> getProductsByCategory(@PathVariable String categoryName, @PathVariable String websiteName) {
         return productRetrievalService.getProductsByWebsiteandCategory(categoryName, websiteName);
     }

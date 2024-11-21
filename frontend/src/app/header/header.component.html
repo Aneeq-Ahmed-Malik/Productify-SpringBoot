@@ -47,13 +47,13 @@
           
           <div style="margin-bottom: 20px;" *ngFor="let category of categories" class="col-2 col-md-2 ">
             <div class="dropdown">
-              <a routerLink="home" class="nav-link dropdown-toggle me-5" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div  class=" dropdown-toggle me-5" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{ category.name }}
-              </a>
+              </div>
               <div class="dropdown-menu">
-                <a *ngFor="let website of category.websites" class="dropdown-item" href="#">
+                <div (click)="viewAll(category.name,website)" *ngFor="let website of category.websites" class="dropdown-item">
                   {{ website }}
-                </a>
+                </div>
               </div>
             </div>
           </div>

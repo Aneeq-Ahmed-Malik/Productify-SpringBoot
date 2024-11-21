@@ -1,12 +1,16 @@
-
-<div class="body row m-0">
+<div *ngIf="loading" class="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<div *ngIf="!loading" class="body row m-0">
     <div class="col-12">
         <p>Home</p>
     </div>
     <div class="col-12 col-md-11 borderstl">
         <div class="row">
             <div class="col-12 title">
-                <h2>PlayStation</h2>
+                <h2>{{category}}</h2>
                 <p>Sort</p>
             </div>
             <div class="col-12">
@@ -14,14 +18,18 @@
                 <div id="carouselExample" class="carousel slide">
                     <div class="carousel-inner">
                         <!-- Carousel item with multiple cards -->
-                        <div class="carousel-item" *ngFor="let slide of slides; let i = index"
-                            [ngClass]="{'active': i === currentSlide}">
+                        <div class="carousel-item" *ngFor="let slide of products; let i = index"
+                            [ngClass]="{ active: i === currentSlide }">
                             <div class="row g-0">
-                                <div class="col-3" *ngFor="let item of slide.items">
-                                    <div (click)="goToDetails(item)" class="card">
-                                        <img [src]="item.image" class="card-img-top" alt="...">
+                                <div class="col-3" *ngFor="let product of slide">
+                                    <div  class="card">
+                                        <img (click)="Routing(product)" [src]="'../../assets/' + product.image1.replace('./', '')"
+                                            class="card-img-top" alt="{{ product.title }}" />
                                         <div class="card-body">
-                                            <button class="btn btn-danger w-100" type="button">Add To Cart</button>
+                                            <p class="card-text"><b>{{ product.title.split(' ').slice(0, 3).join(' ')
+                                                    }}</b></p>
+                                            <p class="price"><b>${{product.price}}</b></p>
+                                            <button (click)="addToCart(product)" class="btn btn-danger w-100" type="button">Add To Cart</button>
                                         </div>
                                     </div>
                                 </div>
@@ -38,66 +46,60 @@
                         </button>
 
                         <!-- Slide indicator -->
-                        <span class="fw-bold">Slide {{ currentSlide + 1 }} of {{ slides.length }}</span>
+                        <span class="fw-bold">Slide {{ currentSlide + 1 }} of {{ products.length }}</span>
 
                         <!-- Next button -->
                         <button class="btn btn-secondary custom-carousel-control-next" (click)="nextSlide()"
-                            [disabled]="currentSlide === slides.length - 1">
+                            [disabled]="currentSlide === products.length - 1">
                             Next
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div style="padding-top: 100px;" class="col-12 col-md-12 body">
+            <div style="margin-left: auto;margin-right: auto;    background-color:#F3F5F6 ;margin-top: 20px;"
+                class="col-12 col-md-12">
                 <h2>Recently Viewed</h2>
             </div>
-            <div class="col-12 col-md-12">
-                <!-- Carousel Component for Recently Viewed -->
-                <div id="carouselExample2" class="carousel slide">
-                    <div class="carousel-inner">
-                        <!-- Ensure only one active class -->
-                        <div class="carousel-item active">
-                            <div class="row g-0">
-                                <div class="col-3">
-                                    <div class="card">
-                                        <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="row g-0">
-                                <div class="col-3">
-                                    <div class="card">
-                                        <img src="../../assets/img/Gaming Chairs965.1.png" class="card-img-top" alt="...">
-                                        <div class="card-body">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div class="row justify-content-center mt-5 ">
 
-                    <!-- Carousel Controls for Recently Viewed -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
+                <div style="margin-left: 5%;" class="row">
+                    <div style="height: 300px;margin-bottom: 50px;" id="carouselExample2"
+                        class="carousel slide col-12 col-md-12">
+                        <div class="carousel-inner adj">
+                            <!-- Loop through recent products -->
+                            <div class="carousel-item" [class.active]="i === 0"
+                                *ngFor="let productGroup of recentproducts; let i = index">
+                                <div style="background-color: #FFFFFF;" class="row d-flex justify-content-center mx-0">
+                                    <div class="col-3 " *ngFor="let recent of productGroup">
+                                        <div class="card">
+                                            <img [src]="'../../assets/' + recent.image1.replace('./', '')"
+                                                class="card-img-top" [alt]="recent.title" />
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ recent.title.split(' ').slice(0, 2).join(' ')
+                                                    }}</h5>
+                                                <p><b>${{ recent.price }}</b></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Carousel Controls -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample2"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample2"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div style="margin-bottom: 100px;"></div>
 </div>
-
