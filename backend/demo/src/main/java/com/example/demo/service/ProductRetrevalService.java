@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Product;
+import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ public class ProductRetrevalService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     /**
      * Retrieve all products from the database.
@@ -40,7 +44,13 @@ public class ProductRetrevalService {
      * @return List of products belonging to the specified category.
      */
     public List<Product> getProductsByCategory(String categoryName) {
-        return productRepository.findByCategoryName(categoryName);
+        Long catId = categoryRepository.findCatIdByCategoryName(categoryName);
+        if (catId == null) {
+            throw new IllegalArgumentException("Invalid category name: " + categoryName);
+        }
+
+        // Fetch and return products grouped and interleaved by web_id
+        return productRepository.findByCategoryId(catId);
     }
 
     /**
@@ -51,6 +61,17 @@ public class ProductRetrevalService {
      */
     public List<Product> getProductsByWebsite(String websiteName) {
         return productRepository.findByWebsiteName(websiteName);
+    }
+
+    /**
+     * Retrieve products by website name.
+     *
+     * @param websiteName The name of the website
+     * @param categoryName The name of category
+     * @return List of products belonging to the specified website.
+     */
+    public List<Product> getProductsByWebsiteandCategory(String categoryName, String websiteName) {
+        return productRepository.findByCategoryNameAndWebsiteName(categoryName, websiteName);
     }
 
     /**
