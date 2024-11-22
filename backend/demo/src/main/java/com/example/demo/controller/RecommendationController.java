@@ -16,8 +16,11 @@ public class RecommendationController {
     private RecommendationService recommendationService;
 
     // Endpoint to get recommendations based on a list of product IDs
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/get")
-    public List<Product> getRecommendations(@RequestParam List<Long> productIds) throws IOException {
-        return recommendationService.getRecommendations(productIds);
+    public List<Product> getRecommendations(@RequestParam List<Long> productIds, @RequestParam(defaultValue = "6") int limit) throws IOException {
+        return recommendationService.getRecommendations(productIds, limit);
     }
+
 }
