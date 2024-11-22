@@ -8,6 +8,7 @@ import { CartComponent } from './cart/cart.component';
 import { ShowAdsComponent } from './show-ads/show-ads.component';
 import { AdsdetailsComponent } from './adsdetails/adsdetails.component';
 import { PostadComponent } from './postad/postad.component';
+import { LoginComponent } from './login/login.component';
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
@@ -17,7 +18,7 @@ const routes: Routes = [
   {path:'showads',component:ShowAdsComponent},
   {path:'adsdetails',component:AdsdetailsComponent},
   {path:'postad',component:PostadComponent},
-  
+  {path:'login',component:LoginComponent}
   
   
 ];
