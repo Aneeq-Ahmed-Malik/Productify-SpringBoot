@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,7 +26,7 @@ public class User {
     private String password;
 
     // Getters and Setters
-
+    
     public Long getId() {
         return id;
     }

@@ -6,13 +6,17 @@ import com.example.demo.scraping.ScraperFactory;
 import com.example.demo.service.CSVImportService;
 import com.example.demo.service.ProductRetrevalService;
 import com.example.demo.service.RecommendationService;
+import com.example.demo.service.AdServices;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
+import com.example.demo.service.AdServices;
 
 @RestController
 @RequestMapping("/api/products")
@@ -24,6 +28,10 @@ public class ProductifyController {
     private ProductRetrevalService productRetrievalService;
     @Autowired
     private RecommendationService recommendationService;
+    @Autowired
+    private AdServices adServices;
+
+
 
     @GetMapping("/import/categories")
     public String importCategories() {
@@ -102,4 +110,29 @@ public class ProductifyController {
     public void initiateScrapingAsync(Scraper scraper, String categoryCSVPath) {
         scraper.initiateScraping(categoryCSVPath);
     }
+
+   
+    @PostMapping("/postAd")
+    public String postAd(
+            @RequestParam String title,
+            @RequestParam String desc,
+            @RequestParam String userId,
+            @RequestParam String location,
+            @RequestParam String price,
+            @RequestParam MultipartFile image1,
+            @RequestParam(required = false) MultipartFile image2,
+            @RequestParam(required = false) MultipartFile image3,
+            @RequestParam(required = false) MultipartFile image4) {
+        try {
+            // Save ad details in the database
+            Long adId = adServices.saveAd(title, desc, userId, location, price,image1, image2, image3, image4);
+            
+            return "Ad posted successfully!";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "Failed to post the ad: " + e.getMessage();
+        }
+    }
+
+
 }
