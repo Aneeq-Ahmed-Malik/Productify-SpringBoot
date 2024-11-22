@@ -22,7 +22,7 @@ public class Ad {
     private String title;  // Title of the ad
     private String description;  // Description of the ad
     private String phoneNo;  // Contact phone number
-    private String price;  // Price of the item
+    private Long price;  // Price of the item
     private String location;  // Location related to the ad
 
     // Image URLs or paths
@@ -30,6 +30,19 @@ public class Ad {
     private String image2;  
     private String image3;  
     private String image4;  
+
+    // Parameterized constructor
+    public Ad(){}
+
+
+    public Ad(User user, String title, String description, String phoneNo, Long price, String location) {
+        this.user = user;
+        this.title = title;
+        this.description = description;
+        this.phoneNo = phoneNo;
+        this.price = price;
+        this.location = location;
+    }
 
     // Getters and Setters
 
@@ -73,11 +86,11 @@ public class Ad {
         this.phoneNo = phoneNo;
     }
 
-    public String getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

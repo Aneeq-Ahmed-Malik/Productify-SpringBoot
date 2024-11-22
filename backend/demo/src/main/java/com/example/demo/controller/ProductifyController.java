@@ -116,16 +116,17 @@ public class ProductifyController {
     public String postAd(
             @RequestParam String title,
             @RequestParam String desc,
-            @RequestParam String userId,
+            @RequestParam Long userId,
             @RequestParam String location,
-            @RequestParam String price,
+            @RequestParam String phoneNo,
+            @RequestParam Long price,
             @RequestParam MultipartFile image1,
             @RequestParam(required = false) MultipartFile image2,
             @RequestParam(required = false) MultipartFile image3,
             @RequestParam(required = false) MultipartFile image4) {
         try {
             // Save ad details in the database
-            Long adId = adServices.saveAd(title, desc, userId, location, price,image1, image2, image3, image4);
+            Long adId = adServices.postAd(phoneNo, title, desc, userId, location, price,image1, image2, image3, image4);
             
             return "Ad posted successfully!";
         } catch (Exception e) {
