@@ -21,30 +21,44 @@
     border-bottom: solid 1px gray;
 }
 .card {
-    height: 100%;
-    border-top:none ;
-    border-left: none;
-    border-right: none;
-    margin-left: auto;
-    margin-right: auto;
-    /* Remove card border if desired */
-    border-radius: 0;
-    /* Remove rounded corners */
-    
-  }
+  height: 450px;
+  border: none;
+  width: 100%;
+  /* Remove card border if desired */
+  border-radius: 0;
+  /* Remove rounded corners */
+}
+.card-img-top{
+  height: 50%;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+.card-body{
+  height: 50%;
+  
+}
   .g-0>[class*="col-"] {
     padding-left: 1px;
     padding-right: 0;
   }
 
 /* Prevent buttons from occupying full screen */
-.custom-carousel-control-prev,
-.custom-carousel-control-next {
-    position: static; /* Remove Bootstrap's default full-screen control positioning */
-    width: auto;      /* Set a custom width for the buttons */
-    height: auto;     /* Set a custom height for the buttons */
-    margin: 0 10px;   /* Add some space between the buttons and the indicator */
+
+.custom-control:hover {
+  background-color: gray; /* Change to gray on hover */
 }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(100%); /* Make icons visible (white by default) */
+}
+
+.custom-control:focus {
+  outline: none; /* Remove focus outline */
+}
+
 
 /* Adjust the alignment of control-container to keep it concise */
 .control-container {
@@ -53,10 +67,9 @@
 }
 
 /* Button specific styling to prevent full-screen effect */
-.custom-carousel-control-prev:hover,
-.custom-carousel-control-next:hover {
-    background-color: rgba(0, 0, 0, 0.1); /* Add a light background to the buttons on hover */
-}
+
+
+
 
 
 
@@ -72,12 +85,35 @@
     align-items: center;
     z-index: 9999;
   }
-  .card-img-top{
-    width: 50%;
-    height: 50%;
-    margin-left: auto;
-    margin-right: auto;
-  }
+  // .card-img-top{
+  //   width: 50%;
+  //   height: 50%;
+  //   margin-left: auto;
+  //   margin-right: auto;
+  // }
+  
+  
   .price{
     color: red;
   }
+
+
+  .card2 {
+    height: 90%;
+    
+    width: 100%;
+    /* Remove card border if desired */
+    border-radius: 0;
+    border: none;
+    /* Remove rounded corners */
+  }
+  .card-img-top2{
+    height: 200px;
+    width: 90%;
+  
+  }
+  .card-body2{
+    height: 50%;
+    
+  }
+  

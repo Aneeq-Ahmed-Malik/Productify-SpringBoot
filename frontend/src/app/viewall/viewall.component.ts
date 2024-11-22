@@ -14,8 +14,8 @@ export class ViewallComponent implements OnInit {
   products: any[][] = [];
   currentSlide = 0; // State for carousel
   recentproducts :any[][]=[];
-
-  constructor(private router: Router, private data: DataService, private route: ActivatedRoute,private global:GlobalService) {}
+  recommended:any[][]=[];
+  constructor(private router: Router, private data: DataService, private route: ActivatedRoute,protected global:GlobalService) {}
 
   ngOnInit() {
     // Subscribe to query parameters
@@ -27,13 +27,17 @@ export class ViewallComponent implements OnInit {
         if (this.category && this.website) {
           // Fetch products by category and website
           this.fetchProductsByCategoryAndWebsite(this.category, this.website);
+          this.Recommended(this.global.cartIDs);
           this.recentproducts=this.chunkArray(this.global.recent,3);
           console.log("this is recent in viewall",this.recentproducts);
         
         } else if (this.category) {
           // Fetch products by category only
           this.fetchProductsByCategory(this.category);
-          this.recentproducts=this.chunkArray(this.global.recent,3);
+          this.Recommended(this.global.cartIDs);
+          this.recentproducts=this.chunkArray(this.global.recent,4);
+          
+
           console.log("this is recent in viewall",this.recentproducts);
           
         } else {
@@ -43,7 +47,20 @@ export class ViewallComponent implements OnInit {
       }
     });
   }
-
+  Recommended(productIds:any){
+    this.data.getRecommendations(productIds).subscribe(
+      (data: any[]) => {
+        this.recommended=this.chunkArray(data,4);         // Stop loading animation
+        console.log('Recommendations:', this.recommended);
+        this.loading=false;
+      },
+      (error: any) => {
+        console.error('Error fetching recommendations:', error);
+        this.loading=false;
+      }
+    );
+    
+  }
   // Fetch products by category and website
   private fetchProductsByCategoryAndWebsite(category: string, website: string) {
     this.data.getProductsByCatWeb(category, website).subscribe(
@@ -123,5 +140,7 @@ export class ViewallComponent implements OnInit {
   addToCart(product:any){
     this.global.addToCart(product);
     this.global.increament();
+    this.Recommended(this.global.cartIDs);
+    this.loading=true;
   }
 }
