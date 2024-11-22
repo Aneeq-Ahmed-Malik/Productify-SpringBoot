@@ -1,6 +1,17 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
+import java.util.ArrayList;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "product")
@@ -33,6 +44,16 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "website_id")
     private Website website;
+
+
+    @ManyToMany
+    @JoinTable(
+        name = "Cart_Product",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "cart_id")
+    )
+    private ArrayList<Cart> carts;
+
 
     // Default constructor
     public Product() {}
@@ -145,5 +166,9 @@ public class Product {
 
     public void setWebsite(Website website) {
         this.website = website;
+    }
+
+    public void setCarts(ArrayList<Cart> carts) {
+        this.carts = carts;
     }
 }
