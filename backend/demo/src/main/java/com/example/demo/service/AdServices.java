@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Optional;
+import java.util.*;
 
-
+import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -69,5 +69,17 @@ public class AdServices {
 
         // Return the saved ad's ID
         return ad.getId();
-    }              
+    }        
+    
+    public List<Ad> getAllAds(){
+        return adRepository.findAll();
+    }
+
+    public List<Ad> getAdsByUserEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null)
+            return adRepository.findByUser(user);
+        else 
+            return null;  // Or throw an exception if user not found
+    } 
 }

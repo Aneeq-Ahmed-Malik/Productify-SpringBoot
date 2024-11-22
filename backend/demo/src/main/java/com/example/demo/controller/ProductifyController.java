@@ -1,12 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.Ad;
 import com.example.demo.model.Product;
 import com.example.demo.scraping.Scraper;
 import com.example.demo.scraping.ScraperFactory;
-import com.example.demo.service.CSVImportService;
-import com.example.demo.service.ProductRetrevalService;
-import com.example.demo.service.RecommendationService;
-import com.example.demo.service.AdServices;
+import com.example.demo.service.*;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
-import com.example.demo.service.AdServices;
 
 @RestController
 @RequestMapping("/api/products")
@@ -30,6 +27,8 @@ public class ProductifyController {
     private RecommendationService recommendationService;
     @Autowired
     private AdServices adServices;
+    @Autowired
+    private UserService userService;
 
 
 
@@ -135,5 +134,25 @@ public class ProductifyController {
         }
     }
 
+    @GetMapping("/getAllAds")
+    public List<Ad> getAllAds() {
+        return adServices.getAllAds();
+    }
+
+    @GetMapping("/getAdsByEmail")
+    public List<Ad> getAdsByEmail(@RequestParam String email) {
+        return adServices.getAdsByUserEmail(email);
+    }
+
+
+    @PostMapping("/signup")
+    public String signup(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
+        return userService.registerUser(name, email, password);
+    }
+    
+    @PostMapping("/login")
+    public String loginUser(@RequestParam String email , @RequestParam String password ) {
+        return userService.loginUser(email , password);
+    }
 
 }
