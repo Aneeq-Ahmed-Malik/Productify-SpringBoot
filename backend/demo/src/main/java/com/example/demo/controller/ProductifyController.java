@@ -5,12 +5,12 @@ import com.example.demo.scraping.Scraper;
 import com.example.demo.scraping.ScraperFactory;
 import com.example.demo.service.CSVImportService;
 import com.example.demo.service.ProductRetrevalService;
+import com.example.demo.service.RecommendationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +22,8 @@ public class ProductifyController {
     private CSVImportService csvImportService;
     @Autowired
     private ProductRetrevalService productRetrievalService;
+    @Autowired
+    private RecommendationService recommendationService;
 
     @GetMapping("/import/categories")
     public String importCategories() {
@@ -71,8 +73,8 @@ public class ProductifyController {
     }
 
     @GetMapping("/search")
-    public List<Product> searchProductsByTitle(@RequestParam String title) {
-        return productRetrievalService.searchProductsByTitle(title);
+    public List<Product> searchProductsByTitle(@RequestParam String query,  @RequestParam int limit) {
+        return recommendationService.searchProducts(query, limit);
     }
 
     @GetMapping("/price-range")
@@ -85,10 +87,8 @@ public class ProductifyController {
         try {
             Scraper scraper = ScraperFactory.getInstance().getScraper(platform);
 
-            String categoryCSVPath = Paths.get("demo/src/main/resources/files", categoryFileName).toString();
-
             // Trigger asynchronous scraping
-            initiateScrapingAsync(scraper, categoryCSVPath);
+            initiateScrapingAsync(scraper, categoryFileName);
             return "Scraping initiated successfully for platform: " + platform;
         } catch (IllegalArgumentException e) {
             return "Error: " + e.getMessage();

@@ -23,6 +23,7 @@ public abstract class Scraper {
     private void initializeDriver() {
         System.setProperty("webdriver.chrome.driver", "C:\\Development\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
+        options.setExperimentalOption("w3c", true); // Enable W3C WebDriver standard
         // options.addArguments("--remote-debugging-port=9222");
         this.driver = new ChromeDriver(options);
     }

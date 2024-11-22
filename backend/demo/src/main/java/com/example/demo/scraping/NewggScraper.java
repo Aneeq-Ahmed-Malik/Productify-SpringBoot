@@ -10,14 +10,17 @@ import org.openqa.selenium.WebElement;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class NewggScraper extends Scraper {
 
-    private final String productLinksCSVPath = "./NeweggLinks.csv"; // Path for product links
-    private final String productDataCSVPath = "./NeweggProducts.csv"; // Path for product data
+    private final String productLinksCSVPath = "./NeweggLinks.csv";
+    private final String productDataCSVPath = "./NeweggProducts1.csv";
+    
 
     @Override
     public void initiateScraping(String categoryCSVPath) {
@@ -33,9 +36,11 @@ public class NewggScraper extends Scraper {
 
 
     private String getLinks(String categoryCSVPath) throws IOException {
-        try (CSVReader reader = new CSVReader(new FileReader(categoryCSVPath));
+    try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("files/" + categoryCSVPath);
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            CSVReader reader = new CSVReader(inputStreamReader);
             CSVWriter writer = new CSVWriter(new FileWriter(productLinksCSVPath))) {
-
+           
             List<String[]> categories;
             try {
                 categories = reader.readAll(); // Can throw IOException or CsvException
@@ -46,13 +51,19 @@ public class NewggScraper extends Scraper {
             List<String[]> output = new ArrayList<>();
             output.add(new String[]{"Category", "Product_link"});
 
-            for (String[] row : categories) {
+            for (int i = 1; i < categories.size(); i++) {
+                String[] row = categories.get(i);
                 String category = row[0];
                 String url = row[1];
-
+            
                 driver.get(url);
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }  // Sleep for 2 seconds
                 List<WebElement> products = driver.findElements(By.className("item-cell"));
-
+            
                 for (WebElement product : products) {
                     String link = product.findElement(By.tagName("a")).getAttribute("href");
                     output.add(new String[]{category, link});
