@@ -57,4 +57,7 @@ viewAll(category:string,website:string){
   
   
 }
+Routing(route:string){
+  this.router.navigate([route]);
+}
 }

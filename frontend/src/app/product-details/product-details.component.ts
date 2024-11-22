@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GlobalService } from '../global.service';
+import { DataService } from '../data.service';
 @Component({
   selector: 'app-product-details',
   templateUrl: './product-details.component.html',
@@ -10,12 +11,13 @@ export class ProductDetailsComponent implements OnInit {
 
   selectedItemIndex: number=0;
   product:any={};
-  path="../../assets/img/what1.jpg";
+  path:any=null;
   loading: boolean = true; // Loading flag
   sentencePairs: string[] = [];
   recentproducts :any[][]=[];
-
-  constructor(private route: ActivatedRoute,private global:GlobalService) {}
+  recommendproducts :any[][]=[];
+  loadingRecommendations :boolean=true;
+  constructor(private route: ActivatedRoute,protected global:GlobalService,private data:DataService,private router:Router) {}
 
   ngOnInit() {
     // Subscribe to query parameters
@@ -45,12 +47,53 @@ export class ProductDetailsComponent implements OnInit {
         }
       });
       this.processDescription();
-      this.loading = false; // Stop loading when data is ready
       this.recentproducts=this.chunkArray(this.global.recent,3);
-
+      this.loading = false; // Stop loading when data is ready
+      this.getRecommendation();
+      
     },2000);
     
   }
+getRecommendation(){
+  const id = [this.product.id];
+  console.log("recomd id",id) ;
+
+  this.data.getRecommendations(id).subscribe(
+    (data: any[]) => {
+        this.recommendproducts = this.chunkArray(data, 4);
+        console.log('Recommendations:', this.recommendproducts);
+        this.loadingRecommendations = false;
+    },
+    (error: any) => {
+        console.error('Error fetching recommendations:', error);
+        this.loadingRecommendations = false;
+    }
+);
+}
+
+Routing(product:any) {
+  
+  console.log('before route',product);
+  this.router.navigate(['productdetails'], {
+    queryParams: {
+      id: product.id,
+      title: product.title,
+      description: product.description,
+      link: product.link,
+      rating: product.rating,
+      price: product.price,
+      image1: product.image1,
+      image2: product.image2,
+      image3: product.image3,
+      image4: product.image4,
+      categoryId: product.category.id, // Nested attribute
+      websiteId: product.website.id // Nested attribute
+    }
+  });
+  this.global.addToRecent(product);
+  
+}
+
 
   selectItem(index: number,path:string) {
     this.selectedItemIndex = index;

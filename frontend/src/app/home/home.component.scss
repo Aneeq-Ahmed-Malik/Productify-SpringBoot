@@ -51,6 +51,10 @@
   height: 50%;
   
 }
+.view-more:hover {
+  text-decoration: underline;
+  cursor: pointer; /* Optional, adds a pointer cursor */
+}
 
 .addtocartbtn {
   background-color: red;

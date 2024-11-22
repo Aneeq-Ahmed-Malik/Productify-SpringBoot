@@ -79,7 +79,9 @@ public class RecommendationService {
     }
 
 
-    public List<Product> getRecommendations(List<Long> productIds) {
+
+
+public List<Product> getRecommendations(List<Long> productIds,int limit) {
     List<Product> allProducts = productRepository.findAll();
 
     // Combine title and description into a list of words for each product
@@ -121,7 +123,7 @@ public class RecommendationService {
         
         List<ProductSimilarity> top6Similarities = similarities.stream()
             .sorted((s1, s2) -> Double.compare(s2.getSimilarity(), s1.getSimilarity()))
-            .limit(6)
+            .limit(limit)
             .collect(Collectors.toList());
 
 
@@ -132,7 +134,7 @@ public class RecommendationService {
 
     return productScores.entrySet().stream()
         .sorted((e1, e2) -> Double.compare(e2.getValue(), e1.getValue())) // Sort by score descending
-        .limit(6) // Take top 6
+        .limit(limit) // Take top 6
         .map(Map.Entry::getKey) // Extract the Product
         .collect(Collectors.toList());
 }
