@@ -79,9 +79,7 @@ public class RecommendationService {
     }
 
 
-
-
-    public List<Product> getRecommendations(List<Long> productIds,int limit) {
+    public List<Product> getRecommendations(List<Long> productIds, int limit) {
         List<Product> allProducts = productRepository.findAll();
 
         // Combine title and description into a list of words for each product
@@ -139,6 +137,46 @@ public class RecommendationService {
             .collect(Collectors.toList());
     }
 
+
+    public List<Product> searchProducts(String searchQuery, int limit) {
+        // Retrieve all products from the repository
+        List<Product> allProducts = productRepository.findAll();
+    
+        // Combine title and description into a list of words for each product
+        List<List<String>> allDocuments = allProducts.stream()
+            .map(product -> tokenizeText(product.getTitle() + " " + product.getDescription()))
+            .collect(Collectors.toList());
+    
+        // Compute the IDF values for the entire corpus
+        Map<String, Double> idfMap = computeIDF(allDocuments);
+    
+        // Compute TF-IDF vectors for all products
+        Map<Long, Map<String, Double>> tfidfVectors = new HashMap<>();
+        for (int i = 0; i < allProducts.size(); i++) {
+            Product product = allProducts.get(i);
+            tfidfVectors.put(product.getId(), computeTFIDF(allDocuments.get(i), idfMap));
+        }
+    
+        // Compute TF-IDF for the search query
+        List<String> queryTokens = tokenizeText(searchQuery);
+        Map<String, Double> queryTfidf = computeTFIDF(queryTokens, idfMap);
+    
+        // Calculate similarities between the search query and all products
+        List<ProductSimilarity> searchSimilarities = new ArrayList<>();
+        for (Product product : allProducts) {
+            Map<String, Double> productVector = tfidfVectors.get(product.getId());
+            double similarity = computeCosineSimilarity(queryTfidf, productVector);
+            searchSimilarities.add(new ProductSimilarity(product, similarity));
+        }
+    
+        // Sort by similarity and return the top N most similar products
+        return searchSimilarities.stream()
+            .sorted((s1, s2) -> Double.compare(s2.getSimilarity(), s1.getSimilarity()))
+            .limit(limit)
+            .map(ProductSimilarity::getProduct)
+            .collect(Collectors.toList());
+    }
+    
 
     private List<String> tokenizeText(String text) {
         return Arrays.asList(text.toLowerCase().split("\\s+"));
