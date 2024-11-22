@@ -81,63 +81,63 @@ public class RecommendationService {
 
 
 
-public List<Product> getRecommendations(List<Long> productIds,int limit) {
-    List<Product> allProducts = productRepository.findAll();
+    public List<Product> getRecommendations(List<Long> productIds,int limit) {
+        List<Product> allProducts = productRepository.findAll();
 
-    // Combine title and description into a list of words for each product
-    List<List<String>> allDocuments = allProducts.stream()
-        .map(product -> tokenizeText(product.getTitle() + " " + product.getDescription()))
-        .collect(Collectors.toList());
-
-
-    Map<String, Double> idfMap = computeIDF(allDocuments);
-
-    // Tfidf matrix, as Product # ID -> (Feature1, score),(Feature2, score)
-    Map<Long, Map<String, Double>> tfidfVectors = new HashMap<>();
-    for (int i = 0; i < allProducts.size(); i++) {
-        Product product = allProducts.get(i);
-        tfidfVectors.put(product.getId(), computeTFIDF(allDocuments.get(i), idfMap));
-    }
-
-    Map<Product, Double> productScores = new HashMap<>();
-
-    for (Long productId : productIds) {
-        Product inputProduct = allProducts.stream()
-            .filter(product -> product.getId().equals(productId))
-            .findFirst()
-            .orElse(null);
-
-        if (inputProduct == null) continue;
-
-        Map<String, Double> inputVector = tfidfVectors.get(productId);
-
-        List<ProductSimilarity> similarities = new ArrayList<>();
-        for (Product otherProduct : allProducts) {
-            if (otherProduct.getId().equals(productId)) continue;
-
-            Map<String, Double> otherVector = tfidfVectors.get(otherProduct.getId());
-            double similarity = computeCosineSimilarity(inputVector, otherVector);
-
-            similarities.add(new ProductSimilarity(otherProduct, similarity));
-        }
-        
-        List<ProductSimilarity> top6Similarities = similarities.stream()
-            .sorted((s1, s2) -> Double.compare(s2.getSimilarity(), s1.getSimilarity()))
-            .limit(limit)
+        // Combine title and description into a list of words for each product
+        List<List<String>> allDocuments = allProducts.stream()
+            .map(product -> tokenizeText(product.getTitle() + " " + product.getDescription()))
             .collect(Collectors.toList());
 
 
-        for (ProductSimilarity similarity : top6Similarities) {
-            productScores.merge(similarity.getProduct(), similarity.getSimilarity(), Double::sum);
-        }
-    }
+        Map<String, Double> idfMap = computeIDF(allDocuments);
 
-    return productScores.entrySet().stream()
-        .sorted((e1, e2) -> Double.compare(e2.getValue(), e1.getValue())) // Sort by score descending
-        .limit(limit) // Take top 6
-        .map(Map.Entry::getKey) // Extract the Product
-        .collect(Collectors.toList());
-}
+        // Tfidf matrix, as Product # ID -> (Feature1, score),(Feature2, score)
+        Map<Long, Map<String, Double>> tfidfVectors = new HashMap<>();
+        for (int i = 0; i < allProducts.size(); i++) {
+            Product product = allProducts.get(i);
+            tfidfVectors.put(product.getId(), computeTFIDF(allDocuments.get(i), idfMap));
+        }
+
+        Map<Product, Double> productScores = new HashMap<>();
+
+        for (Long productId : productIds) {
+            Product inputProduct = allProducts.stream()
+                .filter(product -> product.getId().equals(productId))
+                .findFirst()
+                .orElse(null);
+
+            if (inputProduct == null) continue;
+
+            Map<String, Double> inputVector = tfidfVectors.get(productId);
+
+            List<ProductSimilarity> similarities = new ArrayList<>();
+            for (Product otherProduct : allProducts) {
+                if (otherProduct.getId().equals(productId)) continue;
+
+                Map<String, Double> otherVector = tfidfVectors.get(otherProduct.getId());
+                double similarity = computeCosineSimilarity(inputVector, otherVector);
+
+                similarities.add(new ProductSimilarity(otherProduct, similarity));
+            }
+            
+            List<ProductSimilarity> top6Similarities = similarities.stream()
+                .sorted((s1, s2) -> Double.compare(s2.getSimilarity(), s1.getSimilarity()))
+                .limit(limit)
+                .collect(Collectors.toList());
+
+
+            for (ProductSimilarity similarity : top6Similarities) {
+                productScores.merge(similarity.getProduct(), similarity.getSimilarity(), Double::sum);
+            }
+        }
+
+        return productScores.entrySet().stream()
+            .sorted((e1, e2) -> Double.compare(e2.getValue(), e1.getValue())) // Sort by score descending
+            .limit(limit) // Take top 6
+            .map(Map.Entry::getKey) // Extract the Product
+            .collect(Collectors.toList());
+    }
 
 
     private List<String> tokenizeText(String text) {
