@@ -85,10 +85,8 @@ public class ProductifyController {
         try {
             Scraper scraper = ScraperFactory.getInstance().getScraper(platform);
 
-            String categoryCSVPath = Paths.get("demo/src/main/resources/files", categoryFileName).toString();
-
             // Trigger asynchronous scraping
-            initiateScrapingAsync(scraper, categoryCSVPath);
+            initiateScrapingAsync(scraper, categoryFileName);
             return "Scraping initiated successfully for platform: " + platform;
         } catch (IllegalArgumentException e) {
             return "Error: " + e.getMessage();
