@@ -32,5 +32,13 @@ export class DataService {
   
     return this.http.get(`${this.baseUrlRecomend}/get`, { params });
   }
-  
+  searchProducts(query: string, limit: number): Observable<any> {
+    // Create query parameters
+    const params = new HttpParams()
+      .set('query', query)
+      .set('limit', limit);
+
+    // Make HTTP GET request
+    return this.http.get(`${this.baseUrlProducts}/search`, { params });
+  }
 }

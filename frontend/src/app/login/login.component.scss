@@ -6,8 +6,10 @@ body{
   
   .card{
   
-    width: 400px;
+    width: 600px;
     border:none;
+    height: 600px;
+    margin-top: 50px;
   
   }
   
@@ -65,7 +67,8 @@ body{
   
   .form input{
   
-    margin-bottom: 12px;
+    margin-bottom: 20px;
+    margin-top: 20px;
     border-radius: 3px;
   }
   
@@ -80,3 +83,4 @@ body{
   
     margin-top: 20px;
   }
+  

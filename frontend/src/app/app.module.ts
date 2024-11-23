@@ -15,7 +15,8 @@ import { PostadComponent } from './postad/postad.component';
 import { DataService } from './data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component'; // Import HttpClientModule
-
+import { FormsModule } from '@angular/forms';
+import { TestComponent } from './test/test.component'; // Import FormsModule
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,12 +29,15 @@ import { LoginComponent } from './login/login.component'; // Import HttpClientMo
     ShowAdsComponent,
     AdsdetailsComponent,
     PostadComponent,
-    LoginComponent
+    LoginComponent,
+    TestComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

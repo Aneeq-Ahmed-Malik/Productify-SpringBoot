@@ -7,10 +7,15 @@
 
     <div class="col-12 col-md-11 borderstl">
         <div class="row">
-            <div class="col-12 title">
+            <div *ngIf="category" class="col-12 title">
                 <h2>{{category}}</h2>
 
             </div>
+            <div *ngIf="search" class="col-12 title">
+                <h2>{{search}}</h2>
+
+            </div>
+            
             <div style="padding-bottom: 20px;" class="col-12 col-md-12">
                 <!-- Carousel Component for PlayStation -->
                 <div id="carouselExample" class="carousel slide">

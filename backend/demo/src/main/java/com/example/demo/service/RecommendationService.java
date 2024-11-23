@@ -144,7 +144,7 @@ public class RecommendationService {
     
         // Combine title and description into a list of words for each product
         List<List<String>> allDocuments = allProducts.stream()
-            .map(product -> tokenizeText(product.getTitle() + " " + product.getDescription()))
+            .map(product -> tokenizeText(product.getTitle()))
             .collect(Collectors.toList());
     
         // Compute the IDF values for the entire corpus
