@@ -1,18 +1,23 @@
 package com.example.demo.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.example.demo.model.Product;
 import com.example.demo.scraping.Scraper;
 import com.example.demo.scraping.ScraperFactory;
 import com.example.demo.service.CSVImportService;
 import com.example.demo.service.ProductRetrevalService;
 import com.example.demo.service.RecommendationService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/products")
@@ -24,6 +29,8 @@ public class ProductifyController {
     private ProductRetrevalService productRetrievalService;
     @Autowired
     private RecommendationService recommendationService;
+   
+
 
     @GetMapping("/import/categories")
     public String importCategories() {
@@ -95,5 +102,6 @@ public class ProductifyController {
     @Async // Run this process asynchronously to avoid blocking
     public void initiateScrapingAsync(Scraper scraper, String categoryCSVPath) {
         scraper.initiateScraping(categoryCSVPath);
-    }
+    }  
+
 }
