@@ -47,17 +47,33 @@
         <div class="form px-4 pt-5">
           <input
             type="text"
-            name=""
+            [(value)]="loginData.email"
+            (input)="onInputChange($event, 'login', 'email')"
             class="form-control"
-            placeholder="Email or Phone"
+            placeholder="Email "
+            required
           />
           <input
-            type="text"
-            name=""
+            [type]="showLoginPassword ? 'text' : 'password'"
+            [(value)]="loginData.password"
+            (input)="onInputChange($event, 'login', 'password')"
             class="form-control"
             placeholder="Password"
+            required
           />
-          <button class="btn btn-dark btn-block">Login</button>
+          <div class="form-check mt-2">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="showLoginPassword"
+              [(ngModel)]="showLoginPassword"
+            />
+            <label class="form-check-label" for="showLoginPassword">
+              Show Password
+            </label>
+          </div>
+          <button (click)="onLogin()" class="btn btn-dark btn-block">Login</button>
+          <p *ngIf="loginError" class="text-danger mt-2">{{ loginError }}</p>
         </div>
       </div>
 
@@ -71,24 +87,41 @@
         <div class="form px-4">
           <input
             type="text"
-            name=""
+            [(value)]="signupData.name"
+            (input)="onInputChange($event, 'signup', 'name')"
             class="form-control"
             placeholder="Name"
+            required
           />
           <input
             type="text"
-            name=""
+            [(value)]="signupData.email"
+            (input)="onInputChange($event, 'signup', 'email')"
             class="form-control"
             placeholder="Email"
+            required
           />
-         
           <input
-            type="text"
-            name=""
+            [type]="showSignupPassword ? 'text' : 'password'"
+            [(value)]="signupData.password"
+            (input)="onInputChange($event, 'signup', 'password')"
             class="form-control"
             placeholder="Password"
+            required
           />
-          <button class="btn btn-dark btn-block">Signup</button>
+          <div class="form-check mt-2">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="showSignupPassword"
+              [(ngModel)]="showSignupPassword"
+            />
+            <label class="form-check-label" for="showSignupPassword">
+              Show Password
+            </label>
+          </div>
+          <button (click)="onSignup()" class="btn btn-dark btn-block">Signup</button>
+          <p *ngIf="signupError" class="text-danger mt-2">{{ signupError }}</p>
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component'; // Import HttpClientModule
 import { FormsModule } from '@angular/forms';
 import { TestComponent } from './test/test.component'; // Import FormsModule
+
 @NgModule({
   declarations: [
     AppComponent,
