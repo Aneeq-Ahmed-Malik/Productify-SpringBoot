@@ -4,6 +4,7 @@ import com.example.demo.model.Product;
 import com.example.demo.scraping.Scraper;
 import com.example.demo.scraping.ScraperFactory;
 import com.example.demo.service.CSVImportService;
+import com.example.demo.service.FuzzyMatchingService;
 import com.example.demo.service.ProductRetrevalService;
 import com.example.demo.service.RecommendationService;
 
@@ -23,7 +24,7 @@ public class ProductifyController {
     @Autowired
     private ProductRetrevalService productRetrievalService;
     @Autowired
-    private RecommendationService recommendationService;
+    private FuzzyMatchingService searchService;
 
     @GetMapping("/import/categories")
     public String importCategories() {
@@ -74,7 +75,7 @@ public class ProductifyController {
 
     @GetMapping("/search")
     public List<Product> searchProductsByTitle(@RequestParam String query,  @RequestParam int limit) {
-        return recommendationService.searchProducts(query, limit);
+        return searchService.searchProducts(query, limit);
     }
 
     @GetMapping("/price-range")
