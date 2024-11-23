@@ -18,7 +18,6 @@ import com.example.demo.scraping.ScraperFactory;
 import com.example.demo.service.CSVImportService;
 import com.example.demo.service.FuzzyMatchingService;
 import com.example.demo.service.ProductRetrevalService;
-import com.example.demo.service.RecommendationService;
 
 @RestController
 @RequestMapping("/api/products")

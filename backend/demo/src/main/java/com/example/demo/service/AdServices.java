@@ -81,5 +81,36 @@ public class AdServices {
                 .map(adRepository::findByUser) // If User is present, find ads by the user
                 .orElseGet(Collections::emptyList); // If User is not found, return an empty list
     }
+
+    public String deleteAd(Long user_id, Long ad_id) {
+        // Find the ad by its ID
+        Optional<Ad> adOptional = adRepository.findById(ad_id);
+    
+        // Check if the ad exists
+        if (adOptional.isPresent()) {
+            Ad ad = adOptional.get();
+            User user = ad.getUser();
+            // Check if the ad belongs to the user (assuming the ad has a user reference)
+            if (user.getId().equals(user_id)) {
+                // Remove the ad from the user's ads list
+                user.getAds().remove(ad);  // Remove the ad from the user's ads list
+    
+                // Save the updated user with the modified ads list
+                userRepository.save(user); 
+    
+                // Delete the ad
+                adRepository.delete(ad);
+    
+                return "Ad deleted successfully.";
+            } else {
+                return "Ad does not belong to the user.";
+            }
+        }
+    
+        // If ad does not exist
+        return "Ad could not be found.";
+    }
+    
+    
     
 }

@@ -89,4 +89,8 @@ public class User {
         return cart;
     }
 
+    public List<Ad> getAds(){
+        return ads;
+    }
+
 }
