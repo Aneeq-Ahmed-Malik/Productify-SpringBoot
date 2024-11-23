@@ -1,6 +1,9 @@
 package com.example.demo.model;
 
-import java.util.*;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,6 +55,8 @@ public class Product {
         joinColumns = @JoinColumn(name = "product_id"),
         inverseJoinColumns = @JoinColumn(name = "cart_id")
     )
+    @JsonManagedReference
+    @JsonIgnore
     private List<Cart> carts;
 
 

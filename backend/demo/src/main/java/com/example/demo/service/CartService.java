@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,49 @@ public class CartService {
         }
         return "Product added successfully";
     }
+
+    public List<Product> getProductsInCart(Long user_id) {
+        Optional<Cart> userCartOptional = cartRepository.findByUserId(user_id);
+        if (userCartOptional.isPresent()) {
+            return userCartOptional.get().getProducts();
+        } 
+        return null;
+    }
+
+    public String deleteProductFromCart(Long user_id, Long product_id) {
+        // Find the user's cart
+        Optional<Cart> userCartOptional = cartRepository.findByUserId(user_id);
+    
+        if (userCartOptional.isPresent()) {
+            Cart cart = userCartOptional.get();
+    
+            // Find and remove the product from the cart
+            Product productToRemove = cart.getProducts().stream()
+                .filter(product -> product.getId().equals(product_id))
+                .findFirst()
+                .orElse(null);
+    
+            if (productToRemove != null) {
+                // Remove the product from the cart's product list
+                cart.getProducts().remove(productToRemove);
+                cartRepository.save(cart); // Save the updated cart
+    
+                // Remove the cart reference from the product if bidirectional
+                if (productToRemove.getCarts() != null) {
+                    productToRemove.getCarts().remove(cart);
+                }
+    
+                productRepository.save(productToRemove);
+    
+                return "Product removed from cart and deleted successfully.";
+            }
+            return "Product not found in cart.";
+        }
+    
+        return "Cart not found for the user.";
+    }
+    
+    
+
     
 }
