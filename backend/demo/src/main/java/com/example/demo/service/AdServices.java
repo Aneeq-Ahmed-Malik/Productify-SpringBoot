@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,11 +76,10 @@ public class AdServices {
         return adRepository.findAll();
     }
 
-    public List<Ad> getAdsByUserEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if (user != null)
-            return adRepository.findByUser(user);
-        else 
-            return null;  // Or throw an exception if user not found
-    } 
+    public List<Ad> getAdsByUserId(Long userId) {
+        return userRepository.findById(userId)  // Returns Optional<User>
+                .map(adRepository::findByUser) // If User is present, find ads by the user
+                .orElseGet(Collections::emptyList); // If User is not found, return an empty list
+    }
+    
 }

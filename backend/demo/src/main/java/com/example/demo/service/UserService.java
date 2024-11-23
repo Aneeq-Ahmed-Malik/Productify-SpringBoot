@@ -1,10 +1,12 @@
 package com.example.demo.service;
 
-import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+
+import com.example.demo.model.Cart;
+import com.example.demo.model.User;
+import com.example.demo.repository.CartRepository;
+import com.example.demo.repository.UserRepository;
 
 @Service
 public class UserService {
@@ -15,29 +17,33 @@ public class UserService {
     // Method to register a new user
     public String registerUser(String name, String email, String password) {
         // Check if email already exists
-        Optional<User> existingUser = userRepository.findByEmail(email);
-        if (existingUser.isPresent()) {
+        User existingUser = userRepository.findByEmail(email);
+        if (existingUser != null) {
             return "Email is already taken!";
-        }        
-        // Create new user and save
-        User user = new User(name,email,password);
-
+        }
+    
+        // Create new user
+        User user = new User(name, email, password);
+    
+        // Create a new cart and associate it with the user
+        Cart cart = new Cart(user); // Setting the user in the cart
+    
+        // Save the cart first, so the cart is persisted before setting it in the user
+    
+        // Now set the cart in the user object
+        user.setCart(cart);
+    
+        // Save the user
         userRepository.save(user);
+    
         return "User registered successfully!";
     }
+    
 
-    public String loginUser(String email, String password) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            // Check if the provided password matches the stored password (hashed)
-            if (password == user.getPassword()) {
-                return "Login successful!";
-            } else {
-                return "Invalid password.";
-            }
-        } else {
-            return "User not found with the provided email.";
-        }
+    public User loginUser(String email, String password) {
+        User user = userRepository.findByEmail(email);
+        if(user!= null && password.equals(user.getPassword()))
+            return user;
+        return null;
     }
 }

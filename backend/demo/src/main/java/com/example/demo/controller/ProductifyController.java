@@ -1,19 +1,23 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Ad;
-import com.example.demo.model.Product;
-import com.example.demo.scraping.Scraper;
-import com.example.demo.scraping.ScraperFactory;
-import com.example.demo.service.*;
-
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.demo.model.Product;
+import com.example.demo.scraping.Scraper;
+import com.example.demo.scraping.ScraperFactory;
+import com.example.demo.service.CSVImportService;
+import com.example.demo.service.ProductRetrevalService;
+import com.example.demo.service.RecommendationService;
 
 @RestController
 @RequestMapping("/api/products")
@@ -25,11 +29,7 @@ public class ProductifyController {
     private ProductRetrevalService productRetrievalService;
     @Autowired
     private RecommendationService recommendationService;
-    @Autowired
-    private AdServices adServices;
-    @Autowired
-    private UserService userService;
-
+   
 
 
     @GetMapping("/import/categories")
@@ -108,51 +108,6 @@ public class ProductifyController {
     @Async // Run this process asynchronously to avoid blocking
     public void initiateScrapingAsync(Scraper scraper, String categoryCSVPath) {
         scraper.initiateScraping(categoryCSVPath);
-    }
-
-   
-    @PostMapping("/postAd")
-    public String postAd(
-            @RequestParam String title,
-            @RequestParam String desc,
-            @RequestParam Long userId,
-            @RequestParam String location,
-            @RequestParam String phoneNo,
-            @RequestParam Long price,
-            @RequestParam MultipartFile image1,
-            @RequestParam(required = false) MultipartFile image2,
-            @RequestParam(required = false) MultipartFile image3,
-            @RequestParam(required = false) MultipartFile image4) {
-        try {
-            // Save ad details in the database
-            Long adId = adServices.postAd(phoneNo, title, desc, userId, location, price,image1, image2, image3, image4);
-            
-            return "Ad posted successfully!";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "Failed to post the ad: " + e.getMessage();
-        }
-    }
-
-    @GetMapping("/getAllAds")
-    public List<Ad> getAllAds() {
-        return adServices.getAllAds();
-    }
-
-    @GetMapping("/getAdsByEmail")
-    public List<Ad> getAdsByEmail(@RequestParam String email) {
-        return adServices.getAdsByUserEmail(email);
-    }
-
-
-    @PostMapping("/signup")
-    public String signup(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
-        return userService.registerUser(name, email, password);
-    }
-    
-    @PostMapping("/login")
-    public String loginUser(@RequestParam String email , @RequestParam String password ) {
-        return userService.loginUser(email , password);
-    }
+    }  
 
 }

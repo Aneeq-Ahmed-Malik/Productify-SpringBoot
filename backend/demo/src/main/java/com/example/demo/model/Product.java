@@ -1,6 +1,6 @@
 package com.example.demo.model;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,7 +52,7 @@ public class Product {
         joinColumns = @JoinColumn(name = "product_id"),
         inverseJoinColumns = @JoinColumn(name = "cart_id")
     )
-    private ArrayList<Cart> carts;
+    private List<Cart> carts;
 
 
     // Default constructor
@@ -168,7 +168,11 @@ public class Product {
         this.website = website;
     }
 
-    public void setCarts(ArrayList<Cart> carts) {
+    public List<Cart> getCarts() {
+        return carts;
+    }
+
+    public void setCarts(List<Cart> carts) {
         this.carts = carts;
     }
 }
