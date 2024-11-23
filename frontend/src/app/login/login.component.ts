@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent {
     password: '',
   };
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,private router :Router) {}
 
   setActiveTab(tabName: string): void {
     this.activeTab = tabName;
@@ -43,6 +44,8 @@ export class LoginComponent {
   
 
   onLogin(): void {
+    console.log(this.loginData);
+    
     if (!this.loginData.email || !this.loginData.password) {
       this.loginError = 'Please fill in all required fields.';
       return;
@@ -76,10 +79,16 @@ export class LoginComponent {
       this.signupError = 'Please fill in all required fields.';
       return;
     }
-
+    console.log(this.signupData);
+    
     this.authService.signup(this.signupData).subscribe(
       (response) => {
+        console.log(response);
+        
         alert('Signup successful!');
+       this.router.navigate(['home'])
+        
+
       },
       (error) => {
         this.signupError = 'Signup failed. Please try again later.';
