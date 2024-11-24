@@ -17,8 +17,8 @@ import com.example.demo.scraping.Scraper;
 import com.example.demo.scraping.ScraperFactory;
 import com.example.demo.service.CSVImportService;
 import com.example.demo.service.FuzzyMatchingService;
-import com.example.demo.service.ProductRetrevalService;
 import com.example.demo.service.NotificationManager;
+import com.example.demo.service.ProductRetrevalService;
 
 @RestController
 @RequestMapping("/api/products")
@@ -105,6 +105,7 @@ public class ProductifyController {
     @Async // Run this process asynchronously to avoid blocking
     public void initiateScrapingAsync(Scraper scraper, String categoryCSVPath) {
         scraper.initiateScraping(categoryCSVPath);
+        notificationService.notifyAllUsersOfScraping();
         notificationService.notifyAllUsersOfScraping();
     }  
 
