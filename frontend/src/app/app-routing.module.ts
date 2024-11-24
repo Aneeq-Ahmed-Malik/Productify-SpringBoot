@@ -11,33 +11,35 @@ import { PostadComponent } from './postad/postad.component';
 import { LoginComponent } from './login/login.component';
 import { TestComponent } from './test/test.component';
 import { UseradsComponent } from './userads/userads.component';
+import { AuthGuard } from './auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  {path:'viewall',component:ViewallComponent},
-  {path:'productdetails',component:ProductDetailsComponent},
-  {path:'cart',component:CartComponent},
-  {path:'showads',component:ShowAdsComponent},
-  {path:'adsdetails',component:AdsdetailsComponent},
-  {path:'postad',component:PostadComponent},
-  {path:'login',component:LoginComponent},
-  {path:'test',component:TestComponent},
-  {path:'userads',component:UseradsComponent}
-  
-  
-  
+  { path: 'viewall', component: ViewallComponent },
+  { path: 'productdetails', component: ProductDetailsComponent },
+  { path: 'cart', component: CartComponent },
+  { path: 'postad', component: PostadComponent, canActivate: [AuthGuard] },
+  { path: 'showads', component: ShowAdsComponent, canActivate: [AuthGuard] },
+  { path: 'userads', component: UseradsComponent, canActivate: [AuthGuard] },
+  { path: 'addetails', component:AdsdetailsComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent }, // Public route
+  { path: '**', redirectTo: 'home' },
+  { path: 'test', component: TestComponent },
+
+
+
+
 ];
 
 // { path: 'postad', component: PostadComponent, canActivate: [AuthGuard] },
 //   { path: 'showads', component: ShowAdsComponent, canActivate: [AuthGuard] },
 //   { path: 'userads', component: UseradsComponent, canActivate: [AuthGuard] },
 //   { path: 'login', component: LoginComponent }, // Public route
-//   {path:'login',component:LoginComponent},
 //   { path: '**', redirectTo: 'login' }, 
 
 
 @NgModule({
-  
+
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })

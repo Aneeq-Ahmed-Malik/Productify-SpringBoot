@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -49,29 +50,37 @@ public class AdController {
             @RequestPart(required = false) MultipartFile image4) throws IOException {
 
         // Log details
-        
-        return adServices.postAd(title , description , price , location , phoneNo , userId , image1 , image2 , image3 , image4);
-        
+
+        return adServices.postAd(title, description, price, location, phoneNo, userId, image1, image2, image3, image4);
+
     }
 
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/getAllAds")
     public List<Ad> getAllAds() {
         return adServices.getAllAds();
     }
 
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/getAdsById")
     public List<Ad> getAdsById(@RequestParam Long user_id) {
-    return adServices.getAdsByUserId(user_id);
+        return adServices.getAdsByUserId(user_id);
     }
 
-    
+    @CrossOrigin(origins = "http://localhost:4200")
     @DeleteMapping("/deleteAd")
-    public String deleteAd(@RequestParam("user_id") Long user_id , @RequestParam("ad_id") Long ad_id ){
-        return adServices.deleteAd(user_id , ad_id);
+    public ResponseEntity<String> deleteAd(@RequestParam("userId") Long userId, @RequestParam("ad_id") Long adId) {
+        try {
+            String result = adServices.deleteAd(userId, adId); // Assuming this service returns a success message.
+            return ResponseEntity.ok(result); // Return 200 OK with the success message.
+        } catch (Exception e) {
+            // Log the exception for debugging
+            System.err.println("Error deleting ad: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete ad.");
+        }
     }
 
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @PutMapping("/editAd")
     public ResponseEntity<Map<String, String>> editAd(
             @RequestParam("ad_id") Long ad_id,
@@ -80,16 +89,17 @@ public class AdController {
             @RequestParam("price") String price,
             @RequestParam("location") String location,
             @RequestParam("phoneNo") String phoneNo,
-            @RequestParam("user_id") Long userId,
+            @RequestParam("userId") Long userId,
             @RequestPart(required = false) MultipartFile image1,
             @RequestPart(required = false) MultipartFile image2,
             @RequestPart(required = false) MultipartFile image3,
             @RequestPart(required = false) MultipartFile image4) throws IOException {
 
         // Log details
-        
-        return adServices.editAd(ad_id , title , description , price , location , phoneNo , userId , image1 , image2 , image3 , image4);
-        
+
+        return adServices.editAd(ad_id, title, description, price, location, phoneNo, userId, image1, image2, image3,
+                image4);
+
     }
 
 }

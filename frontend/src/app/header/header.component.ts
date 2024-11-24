@@ -70,15 +70,7 @@ viewAll(category:string,website:string){
     // Example: this.searchService.searchProducts(this.searchTerm).subscribe(...)
   }
 Routing(route:string){
-  if (route=='postad'||route=='showads'||route=='adsdetails') {
-      if (this.global.loginflag) {
-        this.router.navigate([route]);
-      }
-      else
-      this.router.navigate(['login']);
-
-  }
-  else
+  
   this.router.navigate([route]);
 }
 }

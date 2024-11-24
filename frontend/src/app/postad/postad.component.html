@@ -1,5 +1,7 @@
 <div>
-  <h1>POST YOUR AD</h1>
+  <h1 *ngIf="!edit">POST YOUR AD</h1>
+  <h1 *ngIf="edit">Edit YOUR AD</h1>
+  
   <div class="sell_container">
     <div class="sell__inputs">
       <h4>INCLUDE SOME DETAILS</h4>
@@ -52,7 +54,6 @@
       <input type="text" id="location" [(ngModel)]="adDetails.location" required />
 
       <hr />
-      <h4>Enter Your Account Details</h4>
       <h4>Enter Phone Number</h4>
       <label for="profilePhone">Mobile Phone Number</label>
       <input
@@ -66,5 +67,7 @@
     </div>
 
     <button id="btnSubmit" (click)="submitAd()">Post Now</button>
+    <button  style="margin-top: 30px;" *ngIf="edit" id="btnSubmit" (click)="Delete()">Delete Now</button>
+    
   </div>
 </div>

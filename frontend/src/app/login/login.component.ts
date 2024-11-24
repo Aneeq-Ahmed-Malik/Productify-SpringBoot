@@ -27,10 +27,12 @@ export class LoginComponent implements OnInit  {
   };
   loading: boolean = true; // Loading flag
   ngOnInit() {
+
     setTimeout(() => {
       this.loading=false;
 
     }, 2000);
+    alert("plzz login/signup for Ads")
   }
   constructor(private authService: AuthService,private router :Router,private global:GlobalService) {}
 
@@ -60,9 +62,10 @@ export class LoginComponent implements OnInit  {
 
     this.authService.login(this.loginData).subscribe(
       (response) => {
+        console.log('response',response);
+        
         if (response) {
-          console.log(response);
-          
+          console.log(response); 
           alert('Login successful!');
           this.global.setLogin(response);
           this.router.navigate(['home'])

@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
@@ -18,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 
 @Entity
 @Table(name = "User")
+@JsonIgnoreProperties("ads")
 public class User {
 
     @Id
@@ -30,6 +32,7 @@ public class User {
     private Cart cart;
 
     @OneToMany(mappedBy = "user")  // 'user' is the field in the Ad class
+    
     private List<Ad> ads;
 
     private String name;

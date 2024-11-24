@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-adsdetails',
@@ -6,13 +7,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './adsdetails.component.scss'
 })
 export class AdsdetailsComponent  implements OnInit {
+  constructor(private route : ActivatedRoute){}
+  product:any;
   ngOnInit(): void {
-   
+    this.route.queryParams.subscribe(params => {
+      if (params) {
+        // Assign values from query parameters to product object
+        this.product = {
+          id: params['id'],
+          title: params['title'],
+          description: params['description'],
+          price: params['price'],
+          image1: params['image1'],
+          image2: params['image2'],
+          image3: params['image3'],
+          image4: params['image4'],
+          phone:  params['phone'] ,
+          location: params['location'],
+          name:params['name']
+        };
+      }
+    });
+
+    console.log(this.product);
+    
   }
-  images: string[] = [
-    'https://static-01.daraz.pk/p/37cd9cf9ea23a97b7d3097bfd9a03347.jpg_720x720.jpg_.webp',
-    'https://via.placeholder.com/720x720.png?text=Image+2',
-    'https://via.placeholder.com/720x720.png?text=Image+3',
-    'https://via.placeholder.com/720x720.png?text=Image+4',
-  ];
+ 
 }

@@ -1,14 +1,24 @@
-<div class="productDetails">
+<div  class="productDetails">
     <div class="left__side">
         <!-- Carousel for Images -->
         <div id="imageCarousel" class="carousel slide" style="overflow: hidden;">
             <div class="carousel-inner" style="height: 500px;">
-                <div
-                    class="carousel-item"
-                    *ngFor="let image of images; let i = index"
-                    [class.active]="i === 0">
-                    <img [src]="image" class="d-block w-100 carousel-img" [alt]="'Image ' + (i + 1)">
-                </div>
+                <div *ngIf="product.image1" class="carousel-item active">
+                    <img [src]="'../../assets/uploads/' + product.image1" class="d-block w-100 carousel-img" alt="Image 1">
+                  </div>
+                  <!-- Second Image -->
+                  <div *ngIf="product.image2" class="carousel-item">
+                    <img [src]="'../../assets/uploads/' + product.image2" class="d-block w-100 carousel-img" alt="Image 1">
+                  </div>
+                  <!-- Third Image -->
+                  <div *ngIf="product.image3" class="carousel-item">
+                    <img [src]="'../../assets/uploads/' + product.image3" class="d-block w-100 carousel-img" alt="Image 1">
+                  </div>
+                  <!-- Fourth Image -->
+                  <div *ngIf="product.image4" class="carousel-item">
+                    <img [src]="'../../assets/uploads/' + product.image4" class="d-block w-100 carousel-img" alt="Image 1">
+                  </div>
+                
             </div>
             <!-- Carousel Controls -->
             <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
@@ -22,9 +32,9 @@
         </div>
 
         <div class="price__location_card">
-            <h1 id="price">65,000</h1>
-            <h3 id="productName">Mobile Charger</h3>
-            <p id="location"><i class="fa-solid fa-location-dot"></i> Jamshed Town, Karachi</p>
+            <h1 id="price">Rs. {{product.price}}</h1>
+            <h3 id="productName">Title: {{product.title}}</h3>
+            <p id="location"><i class="fa-solid fa-location-dot"></i>Location: {{product.location}}</p>
         </div>
        
     </div>
@@ -34,15 +44,15 @@
             <div class="avaar">
                 <img src="../../assets/img/avatar.png" id="image" alt="">
                 <div class="img">
-                    <h5 id="phoneL">03456276164</h5>
-                    <p id="nameL">Kashan Adnan</p>
+                    <h5 id="phoneL">{{product.phone}}</h5>
+                    <p id="nameL">{{product.name}}</p>
                 </div>
             </div>
             <button class="chat"><i class="fa-solid fa-comments"></i> Chat</button>
         </div>
         <div class="description">
             <h1>Description</h1>
-            <p class="adj" id="description2">Suzuki bolan 2011 model 032l269l904 hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+            <p class="adj" id="description2">{{product.description}}</p>
         </div>
     </div>
 </div>

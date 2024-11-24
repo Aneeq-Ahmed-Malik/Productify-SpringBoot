@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "Ad")
+
 public class Ad {
 
     @Id
@@ -19,6 +23,7 @@ public class Ad {
     // Many-to-one relationship with User
     @ManyToOne
     @JoinColumn(name = "user_id")  // Foreign key column name
+     
     private User user;  // Reference to User
 
     // Fields for the ad

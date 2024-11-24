@@ -4,14 +4,14 @@
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
   font-size: 1.8rem;
-  color: #0d6efd; /* Bootstrap primary color */
+  color:#000120; /* Bootstrap primary color */
   letter-spacing: 2px;
   text-transform: uppercase;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .navbar-brand:hover {
-  color: #0056b3; /* Darker blue on hover */
+  color:#000120; /* Darker blue on hover */
   transform: scale(1.1); /* Slightly larger on hover */
 }
 
@@ -47,7 +47,7 @@ body { overflow-x: hidden; }
 
 /* Additional styling to prevent overflow and ensure alignment */
 .col { padding-left: 0; padding-right: 0; }
-.navbar-brand { font-weight: bold; color: #007bff; }
+.navbar-brand { font-weight: bold; color:#4A026D; }
 .dropdown-menu {
         position: absolute; /* Ensure dropdown overlays */
         z-index: 1050; /* Higher z-index to bring it above the carousel */

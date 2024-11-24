@@ -13,7 +13,7 @@ export class GlobalService {
   recentflag = false;
   loginflag = false;
   name = '';
-  userId: number | null = null; // Store user ID for API calls
+  userId: number=0; // Store user ID for API calls
 
   constructor(private cartservice: CartService) { }
 
