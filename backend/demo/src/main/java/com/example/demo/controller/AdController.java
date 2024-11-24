@@ -1,9 +1,10 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.model.Ad;
 
 import com.example.demo.service.AdServices;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @RequestMapping("/api/ad")
@@ -28,40 +28,45 @@ public class AdController {
     private AdServices adServices;
 
     @CrossOrigin(origins = "http://localhost:4200")
-@PostMapping("/postAd")
-public ResponseEntity<?> postAd(
-        @RequestPart("ad") String adJson,
-        @RequestPart(value = "image1", required = false) MultipartFile image1,
-        @RequestPart(value = "image2", required = false) MultipartFile image2,
-        @RequestPart(value = "image3", required = false) MultipartFile image3,
-        @RequestPart(value = "image4", required = false) MultipartFile image4) {
-    try {
-        // Debug: Log adJson and image1
-        System.out.println("Ad JSON: " + adJson);
+    @PostMapping("/postAd")
+    public ResponseEntity<Map<String, String>> postAd(
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestParam("price") String price,
+            @RequestParam("location") String location,
+            @RequestParam("phoneNo") String phoneNo,
+            @RequestParam("userId") Long userId,
+            @RequestPart(required = false) MultipartFile image1,
+            @RequestPart(required = false) MultipartFile image2,
+            @RequestPart(required = false) MultipartFile image3,
+            @RequestPart(required = false) MultipartFile image4) {
+
+        // Log the details
+        System.out.println("Title: " + title);
+        System.out.println("Description: " + description);
+        System.out.println("Price: " + price);
+        System.out.println("Location: " + location);
+        System.out.println("PhoneNo: " + phoneNo);
+        System.out.println("UserId: " + userId);
+
+        // Handle the images
         if (image1 != null) {
-            System.out.println("Image1 Filename: " + image1.getOriginalFilename());
+            System.out.println("Image 1: " + image1.getOriginalFilename());
+        }
+        if (image2 != null) {
+            System.out.println("Image 2: " + image2.getOriginalFilename());
+        }
+        if (image3 != null) {
+            System.out.println("Image 3: " + image3.getOriginalFilename());
+        }
+        if (image4 != null) {
+            System.out.println("Image 4: " + image4.getOriginalFilename());
         }
 
-        // Convert adJson to Ad object
-        ObjectMapper objectMapper = new ObjectMapper();
-        Ad ad = objectMapper.readValue(adJson, Ad.class);
-
-        // Save ad and images
-        adServices.postAd(
-                ad.getPhoneNo(),
-                ad.getTitle(),
-                ad.getDescription(),
-                ad.getUser().getId(),
-                ad.getLocation(),
-                ad.getPrice(),
-                image1, image2, image3, image4);
-
-        return ResponseEntity.ok("Ad posted successfully!");
-    } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Failed to post the ad: " + e.getMessage());
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Ad posted successfully!");
+        return ResponseEntity.ok(response);
     }
-}
 
     @GetMapping("/getAllAds")
     public List<Ad> getAllAds() {
@@ -71,6 +76,29 @@ public ResponseEntity<?> postAd(
     @GetMapping("/getAdsById")
     public List<Ad> getAdsById(@RequestParam Long user_id) {
         return adServices.getAdsByUserId(user_id);
+    }
+
+    /////////////testing//////////   
+    @CrossOrigin(origins = "http://localhost:4200")
+    @PostMapping
+    public ResponseEntity<Map<String, String>> uploadFiles(
+            @RequestParam("title") String title,
+            @RequestParam("description") String description,
+            @RequestPart("files") List<MultipartFile> files) {
+
+        System.out.println("Title: " + title);
+        System.out.println("Description: " + description);
+
+        if (files != null && !files.isEmpty()) {
+            for (MultipartFile file : files) {
+                System.out.println("Uploaded File: " + file.getOriginalFilename());
+            }
+        }
+
+        // Return a JSON response
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Files uploaded successfully!");
+        return ResponseEntity.ok(response);
     }
 
 }
