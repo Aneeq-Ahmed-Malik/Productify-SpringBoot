@@ -76,10 +76,10 @@ public class AdServices {
         return adRepository.findAll();
     }
 
-    public List<Ad> getAdsByUserId(Long userId) {
-        return userRepository.findById(userId)  // Returns Optional<User>
-                .map(adRepository::findByUser) // If User is present, find ads by the user
-                .orElseGet(Collections::emptyList); // If User is not found, return an empty list
-    }
+    // public List<Ad> getAdsByUserId(Long userId) {
+    //     return userRepository.findById(userId)  // Returns Optional<User>
+    //             .map(adRepository::findByUser) // If User is present, find ads by the user
+    //             .orElseGet(Collections::emptyList); // If User is not found, return an empty list
+    // }
     
 }

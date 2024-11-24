@@ -105,7 +105,7 @@ public class ProductifyController {
     @Async // Run this process asynchronously to avoid blocking
     public void initiateScrapingAsync(Scraper scraper, String categoryCSVPath) {
         scraper.initiateScraping(categoryCSVPath);
-        notificationService.notifyAllUsers();
+        notificationService.notifyAllUsersOfScraping();
     }  
 
 }
