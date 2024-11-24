@@ -10,8 +10,20 @@ export class AdsService {
 
   constructor(private http: HttpClient) {}
 
-  postAd(formData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/postAd`, formData);
+  postAdWithProgress(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/postAd`, formData, {
+      reportProgress: true,
+      observe: 'events', // Tracks upload progress events
+    });
   }
+  /////////////////testing////////
+  uploadMultipartData(formData: FormData): Observable<any> {
+    return this.http.post(this.apiUrl, formData, {
+      reportProgress: true,
+      observe: 'events', // Tracks upload progress events
+      responseType: 'json', // Ensures the response is treated as JSON
+    });
+  }
+  
   
 }

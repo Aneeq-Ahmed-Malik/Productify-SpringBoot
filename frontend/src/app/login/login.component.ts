@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { GlobalService } from '../global.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,7 @@ export class LoginComponent {
     password: '',
   };
 
-  constructor(private authService: AuthService,private router :Router) {}
+  constructor(private authService: AuthService,private router :Router,private global:GlobalService) {}
 
   setActiveTab(tabName: string): void {
     this.activeTab = tabName;
@@ -57,6 +58,9 @@ export class LoginComponent {
           console.log(response);
           
           alert('Login successful!');
+          this.global.setLogin(response);
+          this.router.navigate(['home'])
+
         } else {
           console.log(response);
           
@@ -85,9 +89,9 @@ export class LoginComponent {
       (response) => {
         console.log(response);
         
-        alert('Signup successful!');
-       this.router.navigate(['home'])
-        
+
+        this.setActiveTab('Login');
+        alert('Signup successful!Now Login Plzz');
 
       },
       (error) => {

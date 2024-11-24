@@ -4,16 +4,23 @@
     <div class="sell__inputs">
       <h4>INCLUDE SOME DETAILS</h4>
       <label for="name">Add Title</label>
-      <input id="name" type="text" [(ngModel)]="adDetails.title" required>
+      <input id="name" type="text" [(ngModel)]="adDetails.title" required />
+      
       <label for="description">Description</label>
-      <textarea id="description" cols="30" rows="10" [(ngModel)]="adDetails.description" required></textarea>
+      <textarea
+        id="description"
+        cols="30"
+        rows="10"
+        [(ngModel)]="adDetails.description"
+        required
+      ></textarea>
 
       <hr />
       <h4>SET A PRICE</h4>
       <label for="price">Price</label>
-      <input id="price" type="text" [(ngModel)]="adDetails.price" required>
+      <input id="price" type="text" [(ngModel)]="adDetails.price" required />
 
-      <hr>
+      <hr />
       <h4>Upload Images</h4>
       <div class="image-upload-buttons">
         <button (click)="triggerFileInput('image1')">Upload Image 1</button>
@@ -23,40 +30,41 @@
       </div>
 
       <!-- Hidden file inputs -->
-      <input type="file" id="image1" hidden (change)="onFileSelected($event, 1)">
-      <input type="file" id="image2" hidden (change)="onFileSelected($event, 2)">
-      <input type="file" id="image3" hidden (change)="onFileSelected($event, 3)">
-      <input type="file" id="image4" hidden (change)="onFileSelected($event, 4)">
+      <input type="file" id="image1" hidden (change)="onFileSelected($event, 1)" />
+      <input type="file" id="image2" hidden (change)="onFileSelected($event, 2)" />
+      <input type="file" id="image3" hidden (change)="onFileSelected($event, 3)" />
+      <input type="file" id="image4" hidden (change)="onFileSelected($event, 4)" />
 
+      <!-- Image Previews -->
       <div *ngIf="uploadedImages.length > 0">
         <h5>Uploaded Images:</h5>
-        <ul>
-          <li *ngFor="let img of uploadedImages; let i = index">
-            Image {{ i + 1 }}: {{ img.name }}
-          </li>
-        </ul>
+        <div class="image-previews">
+          <div *ngFor="let img of uploadedImages; let i = index">
+            <img [src]="img.preview" alt="Preview Image {{ i + 1 }}" width="100" />
+            <p>{{ img.file?.name }}</p>
+          </div>
+        </div>
       </div>
 
       <hr />
       <h4>Your AD'S Location</h4>
       <label for="location">Location</label>
-      <input type="text" id="location" [(ngModel)]="adDetails.location" required>
+      <input type="text" id="location" [(ngModel)]="adDetails.location" required />
 
-      <hr>
+      <hr />
       <h4>Enter Your Account Details</h4>
-      <div class="profileName">
-        <div class="input">
-          <label for="profileName">Name</label>
-          <input type="text" id="profileName" [(ngModel)]="adDetails.name" required>
-        </div>
-      </div>
       <h4>Enter Phone Number</h4>
       <label for="profilePhone">Mobile Phone Number</label>
-      <input type="text" id="profilePhone" [(ngModel)]="adDetails.phoneNo" required>
+      <input
+        type="text"
+        id="profilePhone"
+        [(ngModel)]="adDetails.phoneNo"
+        required
+      />
 
       <hr />
     </div>
 
-    <button id="btnSubmit" (click)="downloadImages()">Post Now</button>
+    <button id="btnSubmit" (click)="submitAd()">Post Now</button>
   </div>
 </div>

@@ -21,9 +21,15 @@
 
         <!-- Login/Signup and Cart Icons -->
         <div class="col-2 text-end icons">
-          <a class="nav-link" href="#">
-            <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i> Login/Signup
-          </a>
+          <div *ngIf="!global.loginflag"  >
+            <i (click)="Routing('login')" class="bi bi-person-circle" style="font-size: 1.5rem;"></i> Login/Signup
+          </div>
+          <div style="text-align: center;" *ngIf="global.loginflag">
+            <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+            <h4 style="color: brown;">{{global.name}}</h4>
+            
+          </div>
+          
           <a routerLink="cart" class="nav-link" href="#">
             <i class="bi bi-cart" style="font-size: 2rem;"></i>
             <span class="position-absolute top-10 translate-middle badge rounded-pill bg-danger">
@@ -64,9 +70,9 @@
                 Ads
               </div>
               <div class="dropdown-menu">
-                <div class="dropdown-item dropdown-item-hover">Post Ad</div>
-                <div class="dropdown-item dropdown-item-hover">See Ads</div>
-                <div class="dropdown-item dropdown-item-hover">Edit Ad</div>
+                <div (click)="Routing('postad')" class="dropdown-item dropdown-item-hover">Post Ad</div>
+                <div (click)="Routing('showads')" class="dropdown-item dropdown-item-hover">Show Ads</div>
+                <div (click)="Routing('adsdetails')" class="dropdown-item dropdown-item-hover">Edit Ad</div>
               </div>
             </div>
           </div>
