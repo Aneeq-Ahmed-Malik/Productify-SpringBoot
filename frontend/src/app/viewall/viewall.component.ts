@@ -29,14 +29,14 @@ export class ViewallComponent implements OnInit {
         if (this.category && this.website) {
           // Fetch products by category and website
           this.fetchProductsByCategoryAndWebsite(this.category, this.website);
-          this.Recommended(this.global.cartIDs);
+          this.Recommended(this.global.productIDs);
           this.recentproducts = this.chunkArray(this.global.recent, 3);
           console.log("this is recent in viewall", this.recentproducts);
 
         } else if (this.category) {
           // Fetch products by category only
           this.fetchProductsByCategory(this.category);
-          this.Recommended(this.global.cartIDs);
+          this.Recommended(this.global.productIDs);
           this.recentproducts = this.chunkArray(this.global.recent, 4);
 
 
@@ -45,7 +45,7 @@ export class ViewallComponent implements OnInit {
         } else {
           console.log("search in view", this.search);
           this.fetchSearchProducts();
-          this.Recommended(this.global.cartIDs);
+          this.Recommended(this.global.productIDs);
           this.recentproducts = this.chunkArray(this.global.recent, 4);
           this.loading = false; // Stop loading if no valid parameters
         }
@@ -158,7 +158,7 @@ export class ViewallComponent implements OnInit {
   addToCart(product: any) {
     this.global.addToCart(product);
     this.global.increament();
-    this.Recommended(this.global.cartIDs);
+    this.Recommended(this.global.productIDs);
     this.loading = true;
   }
 }

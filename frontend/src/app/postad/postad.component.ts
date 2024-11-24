@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AdsService } from '../ads.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-postad',
@@ -12,11 +13,12 @@ export class PostadComponent {
     description: '',
     price: '',
     location: '',
-    name: '',
     phoneNo: '',
+    userId: 4, // Example: Set the userId here
   };
 
-  uploadedImages: File[] = []; // Array to hold uploaded files
+  uploadedImages: { file: File; preview: string }[] = [];
+  uploadProgress: number | null = null;
 
   constructor(private adsService: AdsService) {}
 
@@ -28,17 +30,25 @@ export class PostadComponent {
   onFileSelected(event: Event, index: number): void {
     const input = event.target as HTMLInputElement;
     if (input?.files && input.files[0]) {
-      this.uploadedImages[index - 1] = input.files[0]; // Store file in the correct index
+      const file = input.files[0];
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.uploadedImages[index - 1] = {
+          file,
+          preview: reader.result as string,
+        };
+      };
+      reader.readAsDataURL(file);
     }
   }
 
-  downloadImages(): void {
+  submitAd(): void {
     if (
       !this.adDetails.title ||
       !this.adDetails.description ||
       !this.adDetails.price ||
       !this.adDetails.location ||
-      !this.adDetails.name ||
       !this.adDetails.phoneNo
     ) {
       alert('Please fill in all required fields!');
@@ -46,24 +56,49 @@ export class PostadComponent {
     }
 
     const formData = new FormData();
-    formData.append('ad', JSON.stringify(this.adDetails)); // Add ad details as JSON
+    formData.append('title', this.adDetails.title);
+    formData.append('description', this.adDetails.description);
+    formData.append('price', this.adDetails.price);
+    formData.append('location', this.adDetails.location);
+    formData.append('phoneNo', this.adDetails.phoneNo);
+    formData.append('userId', this.adDetails.userId.toString());
 
-    // Append images to formData
-    this.uploadedImages.forEach((file, index) => {
-      if (file) {
-        formData.append(`image${index + 1}`, file); // Name each image as image1, image2, etc.
+    this.uploadedImages.forEach((imageObj, index) => {
+      if (imageObj?.file) {
+        formData.append(`image${index + 1}`, imageObj.file);
       }
     });
 
-    this.adsService.postAd(formData).subscribe(
-      (response:any) => {
-        console.log('Ad posted successfully:', response);
-        alert('Ad posted successfully!');
+    this.adsService.postAdWithProgress(formData).subscribe({
+      next: (event) => {
+        if (event.type === HttpEventType.UploadProgress) {
+          this.uploadProgress = Math.round(
+            (100 * event.loaded) / (event.total || 1)
+          );
+          console.log(`Upload Progress: ${this.uploadProgress}%`);
+        } else if (event.type === HttpEventType.Response) {
+          console.log('Ad posted successfully:', event.body);
+          alert('Ad posted successfully!');
+          this.resetForm();
+        }
       },
-      (error:any) => {
-        console.error('Failed to post ad:', error);
+      error: (err) => {
+        console.error('Failed to post ad:', err);
         alert('Failed to post ad. Please try again.');
-      }
-    );
+      },
+    });
+  }
+
+  resetForm(): void {
+    this.adDetails = {
+      title: '',
+      description: '',
+      price: '',
+      location: '',
+      phoneNo: '',
+      userId: 4,
+    };
+    this.uploadedImages = [];
+    this.uploadProgress = null;
   }
 }

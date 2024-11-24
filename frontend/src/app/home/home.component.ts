@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { DataService } from '../data.service';
 import { forkJoin } from 'rxjs';
 import { GlobalService } from '../global.service';
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -45,7 +44,7 @@ export class HomeComponent implements OnInit {
   errorMessage: string = '';
 
   constructor(private route: Router, private productService: DataService,private global:GlobalService) {}
-
+  
   ngOnInit() {
     // this.initAutoScroll();
     // Create an array of observables for each category

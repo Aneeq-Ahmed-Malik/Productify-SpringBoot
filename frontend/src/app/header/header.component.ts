@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../global.service';
 import { Router } from '@angular/router';
 @Component({
@@ -6,8 +6,9 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
- 
+export class HeaderComponent implements OnInit {
+  ngOnInit(){
+  }
   searchTerm: string = '';
   categories = [
     { 
@@ -69,6 +70,15 @@ viewAll(category:string,website:string){
     // Example: this.searchService.searchProducts(this.searchTerm).subscribe(...)
   }
 Routing(route:string){
+  if (route=='postad'||route=='showads'||route=='adsdetails') {
+      if (this.global.loginflag) {
+        this.router.navigate([route]);
+      }
+      else
+      this.router.navigate(['login']);
+
+  }
+  else
   this.router.navigate([route]);
 }
 }
