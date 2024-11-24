@@ -15,7 +15,7 @@ export class PostadComponent  implements OnInit {
   
 
   adDetails = {
-    title: '',
+    title: 'abdullah',
     description: '',
     price: '',
     location: '',

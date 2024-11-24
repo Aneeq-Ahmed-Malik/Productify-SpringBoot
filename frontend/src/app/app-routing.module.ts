@@ -28,6 +28,14 @@ const routes: Routes = [
   
 ];
 
+// { path: 'postad', component: PostadComponent, canActivate: [AuthGuard] },
+//   { path: 'showads', component: ShowAdsComponent, canActivate: [AuthGuard] },
+//   { path: 'userads', component: UseradsComponent, canActivate: [AuthGuard] },
+//   { path: 'login', component: LoginComponent }, // Public route
+//   {path:'login',component:LoginComponent},
+//   { path: '**', redirectTo: 'login' }, 
+
+
 @NgModule({
   
   imports: [RouterModule.forRoot(routes)],

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { GlobalService } from '../global.service';
@@ -8,7 +8,7 @@ import { GlobalService } from '../global.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit  {
   activeTab: string = 'Login'; // Default tab
   loginError: string = ''; // Error message for login
   signupError: string = ''; // Error message for signup
@@ -25,7 +25,13 @@ export class LoginComponent {
     email: '',
     password: '',
   };
+  loading: boolean = true; // Loading flag
+  ngOnInit() {
+    setTimeout(() => {
+      this.loading=false;
 
+    }, 2000);
+  }
   constructor(private authService: AuthService,private router :Router,private global:GlobalService) {}
 
   setActiveTab(tabName: string): void {
@@ -83,8 +89,9 @@ export class LoginComponent {
       this.signupError = 'Please fill in all required fields.';
       return;
     }
-    console.log(this.signupData);
-    
+    else{
+      console.log(this.signupData);
+    this.loading=true;
     this.authService.signup(this.signupData).subscribe(
       (response) => {
         console.log(response);
@@ -92,12 +99,18 @@ export class LoginComponent {
 
         this.setActiveTab('Login');
         alert('Signup successful!Now Login Plzz');
-
+        setTimeout(() => {
+          this.loading=false;
+    
+        }, 1000);
       },
       (error) => {
         this.signupError = 'Signup failed. Please try again later.';
         console.error('Signup failed:', error);
+        this.loading=false;
       }
     );
+    }
+    
   }
 }

@@ -34,25 +34,28 @@ public class UserController {
             String name = userData.get("name");
 
             User user = userService.registerUser(name, email, password);
-            if (user != null){
+            if (user != null) {
                 notificationService.notifyUserOfSignUp(user);
                 return ResponseEntity.ok(Map.of("message", "Success"));
-            }
-            else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Already Registerted."));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Already Registered."));
             }
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", e.getMessage()));
         }
     }
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
-    public User loginUser(@RequestBody Map<String, String> userData) {
-        String email = userData.get("email");
-        String password = userData.get("password");
-        return userService.loginUser(email, password);
-        
+    public ResponseEntity<?> loginUser(@RequestBody Map<String, String> userData) {
+        try {
+            String email = userData.get("email");
+            String password = userData.get("password");
+            User user = userService.loginUser(email, password);
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Invalid credentials"));
+        }
     }
 
 }

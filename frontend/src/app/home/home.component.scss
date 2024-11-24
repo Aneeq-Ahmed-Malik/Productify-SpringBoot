@@ -100,11 +100,12 @@ h1 {
   
 }
 .custom-control {
-  background-color: rgba(0, 0, 0, 0.5); /* Default semi-transparent black background */
+  background-color: rgba(0, 0, 0, 0.8); /* Default semi-transparent black background */
   border: none;
   border-radius: 50%; /* Makes the button round */
-  width: 50px;
-  height: 50px;
+  width: 80px;
+  height: 80px;
+  margin-top: 25%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -122,6 +123,8 @@ h1 {
 
 .custom-control:focus {
   outline: none; /* Remove focus outline */
+
+  
 }
 
 .loading-overlay {
