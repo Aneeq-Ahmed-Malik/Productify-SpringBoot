@@ -1,5 +1,10 @@
 package com.example.demo.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -17,8 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.model.Ad;
-
+import com.example.demo.repository.AdRepository;
 import com.example.demo.service.AdServices;
+import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api/ad")
@@ -26,6 +31,12 @@ public class AdController {
 
     @Autowired
     private AdServices adServices;
+
+    @Autowired
+    private UserService userServices;
+
+    @Autowired
+    private AdRepository adRepository; // Assuming you have an AdRepository to save the Ad to the database
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/postAd")
@@ -39,33 +50,75 @@ public class AdController {
             @RequestPart(required = false) MultipartFile image1,
             @RequestPart(required = false) MultipartFile image2,
             @RequestPart(required = false) MultipartFile image3,
-            @RequestPart(required = false) MultipartFile image4) {
+            @RequestPart(required = false) MultipartFile image4) throws IOException {
 
-        // Log the details
+        // Log details
         System.out.println("Title: " + title);
         System.out.println("Description: " + description);
-        System.out.println("Price: " + price);
-        System.out.println("Location: " + location);
-        System.out.println("PhoneNo: " + phoneNo);
-        System.out.println("UserId: " + userId);
 
-        // Handle the images
+        String uploadDir = "frontend/src/assets/uploads";
+
+        File directory = new File(uploadDir);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+
+        Ad ad = new Ad();
+        ad.setUser(userServices.getUserById(userId).get()); // Assuming you have a User entity to fetch or create user
+        ad.setTitle(title);
+        ad.setDescription(description);
+        ad.setPhoneNo(phoneNo);
+        ad.setPrice(Long.parseLong(price));
+        ad.setLocation(location);
+
+        ad = adRepository.save(ad);
+
+        Map<String, String> filePaths = new HashMap<>();
         if (image1 != null) {
-            System.out.println("Image 1: " + image1.getOriginalFilename());
+            String filePath = saveFile(uploadDir, image1, userId, ad.getId(), 1);
+            filePaths.put("image1", "/uploads/" + filePath);
+            ad.setImage1(filePath); 
         }
         if (image2 != null) {
-            System.out.println("Image 2: " + image2.getOriginalFilename());
+            String filePath = saveFile(uploadDir, image2, userId, ad.getId(), 2);
+            filePaths.put("image2", "/uploads/" + filePath);
+            ad.setImage2(filePath); 
         }
         if (image3 != null) {
-            System.out.println("Image 3: " + image3.getOriginalFilename());
+            String filePath = saveFile(uploadDir, image3, userId, ad.getId(), 3);
+            filePaths.put("image3", "/uploads/" + filePath);
+            ad.setImage3(filePath); 
         }
         if (image4 != null) {
-            System.out.println("Image 4: " + image4.getOriginalFilename());
+            String filePath = saveFile(uploadDir, image4, userId, ad.getId(), 4);
+            filePaths.put("image4", "/uploads/" + filePath);
+            ad.setImage4(filePath); 
         }
+
+        adRepository.save(ad);
+
+        filePaths.forEach((key, value) -> System.out.println(key + ": " + value));
 
         Map<String, String> response = new HashMap<>();
         response.put("message", "Ad posted successfully!");
+        response.putAll(filePaths);
+
         return ResponseEntity.ok(response);
+    }
+
+    private String saveFile(String uploadDir, MultipartFile file, Long userId, Long postId, int imageNo)
+            throws IOException {
+        String fileName = userId + "_" + postId + "_" + imageNo + getFileExtension(file);
+        String filePath = uploadDir + File.separator + fileName;
+
+        Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
+
+        return fileName; 
+    }
+
+    private String getFileExtension(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        return fileName != null ? fileName.substring(fileName.lastIndexOf(".")) : "";
     }
 
     @GetMapping("/getAllAds")
@@ -73,10 +126,10 @@ public class AdController {
         return adServices.getAllAds();
     }
 
-    @GetMapping("/getAdsById")
-    public List<Ad> getAdsById(@RequestParam Long user_id) {
-        return adServices.getAdsByUserId(user_id);
-    }
+    // @GetMapping("/getAdsById")
+    // public List<Ad> getAdsById(@RequestParam Long user_id) {
+    // return adServices.getAdsByUserId(user_id);
+    // }
 
     /////////////testing//////////   
     @CrossOrigin(origins = "http://localhost:4200")

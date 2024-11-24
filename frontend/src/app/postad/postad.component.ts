@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdsService } from '../ads.service';
 import { HttpEventType } from '@angular/common/http';
+import { GlobalService } from '../global.service';
 
 @Component({
   selector: 'app-postad',
@@ -19,13 +20,14 @@ export class PostadComponent  implements OnInit {
     price: '',
     location: '',
     phoneNo: '',
-    userId: 4, // Example: Set the userId here
+    userId: this.global.userId, // Example: Set the userId here
   };
+  userId : any = this.global.userId;
 
   uploadedImages: { file: File; preview: string }[] = [];
   uploadProgress: number | null = null;
 
-  constructor(private adsService: AdsService) {}
+  constructor(private adsService: AdsService, private global: GlobalService) {}
 
   triggerFileInput(imageId: string): void {
     const fileInput = document.getElementById(imageId) as HTMLInputElement;
@@ -66,7 +68,7 @@ export class PostadComponent  implements OnInit {
     formData.append('price', this.adDetails.price);
     formData.append('location', this.adDetails.location);
     formData.append('phoneNo', this.adDetails.phoneNo);
-    formData.append('userId', this.adDetails.userId.toString());
+    formData.append('userId', this.userId);
 
     this.uploadedImages.forEach((imageObj, index) => {
       if (imageObj?.file) {
@@ -101,7 +103,7 @@ export class PostadComponent  implements OnInit {
       price: '',
       location: '',
       phoneNo: '',
-      userId: 4,
+      userId: this.global.userId,
     };
     this.uploadedImages = [];
     this.uploadProgress = null;
