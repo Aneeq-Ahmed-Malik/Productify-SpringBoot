@@ -74,20 +74,14 @@ public class ProductifyController {
         return productRetrievalService.getProductsByCategory(categoryName);
     }
 
-    @GetMapping("/website/{websiteName}")
-    public List<Product> getProductsByWebsite(@PathVariable String websiteName) {
-        return productRetrievalService.getProductsByWebsite(websiteName);
-    }
-
+  
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/search")
     public List<Product> searchProductsByTitle(@RequestParam String query,  @RequestParam int limit) {
         return searchService.searchProducts(query, limit);
     }
 
-    @GetMapping("/price-range")
-    public List<Product> getProductsByPriceRange(@RequestParam double minPrice, @RequestParam double maxPrice) {
-        return productRetrievalService.getProductsByPriceRange(minPrice, maxPrice);
-    }
+   
 
     @GetMapping("/scrape")
     public String scrape(@RequestParam String platform, @RequestParam String categoryFileName) {

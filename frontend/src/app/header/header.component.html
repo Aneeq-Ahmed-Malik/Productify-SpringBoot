@@ -1,18 +1,19 @@
-<div style="width: 100%;">
+<div style="width: 100%; background-color: #F8F9FA;">
   <nav style="padding-bottom:50px; width: 100%;" class="navbar bg-body-tertiary">
     <div class="container-fluid">
       <!-- Row: Align Brand, Search Bar, and Icons in Same Row -->
       <div class="row w-100 align-items-center pt-3">
         <!-- Brand Name -->
         <div class="col-3">
-          <div (click)="Routing('home')" class="navbar-brand ms-4" >Productify</div>
+          <div (click)="Routing('home')" class="navbar-brand ms-4">Productify</div>
         </div>
 
         <!-- Search Bar -->
         <div class="col-7">
-          <form class="d-flex justify-content-center" role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success " type="submit">
+          <form class="d-flex justify-content-center" (ngSubmit)="onSearch()" role="search">
+            <input [(ngModel)]="searchTerm" name="searchInput" class="form-control me-2" type="search"
+              placeholder="Search" aria-label="Search" required />
+            <button style="color:blue;" class="btn btn-outline-success" type="submit">
               <i class="bi bi-search"></i>
             </button>
           </form>
@@ -24,12 +25,9 @@
             <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i> Login/Signup
           </a>
           <a routerLink="cart" class="nav-link" href="#">
-            <i class="bi bi-cart" style="font-size: 2rem;">
-
-            </i>
-            <span class="position-absolute top-10  translate-middle badge rounded-pill bg-danger">
-              {{this.global.size}}
-
+            <i class="bi bi-cart" style="font-size: 2rem;"></i>
+            <span class="position-absolute top-10 translate-middle badge rounded-pill bg-danger">
+              {{ this.global.size }}
             </span>
           </a>
         </div>
@@ -40,24 +38,41 @@
     <div class="row w-100 mt-2 pt-3">
       <div class="col-12 col-md-12 d-flex justify-content-start align-items-center">
         <div class="row">
-          
-          <div style="margin-bottom: 20px; text-align: center;" *ngFor="let category of categories" class="col-2 col-md-2 ">
+          <!-- Categories Dropdown -->
+          <div style="margin-bottom: 20px; text-align: center;" *ngFor="let category of categories" class="col-2 col-md-2">
             <div class="dropdown">
-              <div  class=" dropdown-toggle me-5" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <div class="dropdown-toggle category-title" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{ category.name }}
               </div>
               <div class="dropdown-menu">
-                <div (click)="viewAll(category.name,website)" *ngFor="let website of category.websites" class="dropdown-item">
+                <div (click)="viewAll(category.name, website)" *ngFor="let website of category.websites" class="dropdown-item">
                   {{ website }}
                 </div>
               </div>
             </div>
           </div>
           
+          <!-- Ads Dropdown -->
+          <div style="margin-bottom: 20px; text-align: center;" class="col-2 col-md-2">
+            <div class="dropdown">
+              <div
+                class="dropdown-toggle ads-title"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                Ads
+              </div>
+              <div class="dropdown-menu">
+                <div class="dropdown-item dropdown-item-hover">Post Ad</div>
+                <div class="dropdown-item dropdown-item-hover">See Ads</div>
+                <div class="dropdown-item dropdown-item-hover">Edit Ad</div>
+              </div>
+            </div>
+          </div>
+          
 
         </div>
-
-
       </div>
     </div>
   </nav>

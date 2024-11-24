@@ -1,0 +1,129 @@
+<div class="d-flex justify-content-center align-items-center mt-5">
+  <div class="card">
+    <!-- Dynamic Title -->
+    <h1 class="text-center mb-5">{{ activeTab }}</h1>
+
+    <!-- Tab Headers -->
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+      <li class="nav-item text-center">
+        <a
+          class="nav-link active btl"
+          id="pills-home-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-home"
+          role="tab"
+          aria-controls="pills-home"
+          aria-selected="true"
+          (click)="setActiveTab('Login')"
+        >
+          Login
+        </a>
+      </li>
+      <li class="nav-item text-center">
+        <a
+          class="nav-link btr"
+          id="pills-profile-tab"
+          data-bs-toggle="pill"
+          data-bs-target="#pills-profile"
+          role="tab"
+          aria-controls="pills-profile"
+          aria-selected="false"
+          (click)="setActiveTab('Signup')"
+        >
+          Signup
+        </a>
+      </li>
+    </ul>
+
+    <!-- Tab Contents -->
+    <div class="tab-content" id="pills-tabContent">
+      <!-- Login Tab -->
+      <div
+        class="tab-pane fade show active"
+        id="pills-home"
+        role="tabpanel"
+        aria-labelledby="pills-home-tab"
+      >
+        <div class="form px-4 pt-5">
+          <input
+            type="text"
+            [(value)]="loginData.email"
+            (input)="onInputChange($event, 'login', 'email')"
+            class="form-control"
+            placeholder="Email "
+            required
+          />
+          <input
+            [type]="showLoginPassword ? 'text' : 'password'"
+            [(value)]="loginData.password"
+            (input)="onInputChange($event, 'login', 'password')"
+            class="form-control"
+            placeholder="Password"
+            required
+          />
+          <div class="form-check mt-2">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="showLoginPassword"
+              [(ngModel)]="showLoginPassword"
+            />
+            <label class="form-check-label" for="showLoginPassword">
+              Show Password
+            </label>
+          </div>
+          <button (click)="onLogin()" class="btn btn-dark btn-block">Login</button>
+          <p *ngIf="loginError" class="text-danger mt-2">{{ loginError }}</p>
+        </div>
+      </div>
+
+      <!-- Signup Tab -->
+      <div
+        class="tab-pane fade"
+        id="pills-profile"
+        role="tabpanel"
+        aria-labelledby="pills-profile-tab"
+      >
+        <div class="form px-4">
+          <input
+            type="text"
+            [(value)]="signupData.name"
+            (input)="onInputChange($event, 'signup', 'name')"
+            class="form-control"
+            placeholder="Name"
+            required
+          />
+          <input
+            type="text"
+            [(value)]="signupData.email"
+            (input)="onInputChange($event, 'signup', 'email')"
+            class="form-control"
+            placeholder="Email"
+            required
+          />
+          <input
+            [type]="showSignupPassword ? 'text' : 'password'"
+            [(value)]="signupData.password"
+            (input)="onInputChange($event, 'signup', 'password')"
+            class="form-control"
+            placeholder="Password"
+            required
+          />
+          <div class="form-check mt-2">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="showSignupPassword"
+              [(ngModel)]="showSignupPassword"
+            />
+            <label class="form-check-label" for="showSignupPassword">
+              Show Password
+            </label>
+          </div>
+          <button (click)="onSignup()" class="btn btn-dark btn-block">Signup</button>
+          <p *ngIf="signupError" class="text-danger mt-2">{{ signupError }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

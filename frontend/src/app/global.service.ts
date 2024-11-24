@@ -7,7 +7,7 @@ export class GlobalService {
   cart:any=[];
   cartIDs:any=[];
   recent:any=[];
-  
+  userID:any;
   size=0;
   recentflag:boolean=false;
   constructor(private data:DataService) { }

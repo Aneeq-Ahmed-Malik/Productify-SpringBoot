@@ -10,6 +10,11 @@ import { GlobalService } from '../global.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  images: string[] = [
+    '../../assets/img/img1.jpg',
+    '../../assets/img/img2.jpg',
+    '../../assets/img/img3.jpg'
+  ];
   // Array of category configurations
   categories = [
     { name: 'Gaming Keyboards', chunkSize: 4, key: 'keyboards' },
@@ -42,6 +47,7 @@ export class HomeComponent implements OnInit {
   constructor(private route: Router, private productService: DataService,private global:GlobalService) {}
 
   ngOnInit() {
+    // this.initAutoScroll();
     // Create an array of observables for each category
     const observables = this.categories.map(category => 
       this.productService.getProductsByCategory(category.name)
@@ -65,10 +71,21 @@ export class HomeComponent implements OnInit {
     );
     // Use forkJoin to wait for all requests to complete
     
-
+    // this.initAutoScroll();
+   
 
 
   }
+  // initAutoScroll(): void {
+  //   const carouselElement = document.querySelector('#carouselExampleControlsNoTouching') as HTMLElement;
+
+  //   if (carouselElement) {
+  //     const carousel = new Carousel(carouselElement, {
+  //       interval: 2000, // 5 seconds
+  //       ride: 'carousel' // Start automatically
+  //     });
+  //   }
+  // }
 
   Routing(product:any,category:any=null) {
     if(product=='viewwall'){

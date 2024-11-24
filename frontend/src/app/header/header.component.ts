@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
+ 
+  searchTerm: string = '';
   categories = [
     { 
       name: 'Gaming Headsets', 
@@ -57,6 +59,15 @@ viewAll(category:string,website:string){
   
   
 }
+ // Holds the value of the search input
+
+  onSearch(): void {
+    console.log('Search Term:', this.searchTerm);
+    this.router.navigate(['viewall'],{queryParams:{search:this.searchTerm}});
+
+    // You can now call an API or perform other actions with the search term
+    // Example: this.searchService.searchProducts(this.searchTerm).subscribe(...)
+  }
 Routing(route:string){
   this.router.navigate([route]);
 }

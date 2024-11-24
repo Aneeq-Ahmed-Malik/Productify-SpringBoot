@@ -1,46 +1,69 @@
 import { Component } from '@angular/core';
+import { AdsService } from '../ads.service';
 
 @Component({
   selector: 'app-postad',
   templateUrl: './postad.component.html',
-  styleUrl: './postad.component.scss'
+  styleUrls: ['./postad.component.scss'],
 })
 export class PostadComponent {
-  uploadedImages: { name: string; url: string }[] = [];
+  adDetails = {
+    title: '',
+    description: '',
+    price: '',
+    location: '',
+    name: '',
+    phoneNo: '',
+  };
 
-  // Trigger file input by ID
-  triggerFileInput(inputId: string) {
-    const fileInput = document.getElementById(inputId) as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
+  uploadedImages: File[] = []; // Array to hold uploaded files
+
+  constructor(private adsService: AdsService) {}
+
+  triggerFileInput(imageId: string): void {
+    const fileInput = document.getElementById(imageId) as HTMLInputElement;
+    fileInput?.click();
+  }
+
+  onFileSelected(event: Event, index: number): void {
+    const input = event.target as HTMLInputElement;
+    if (input?.files && input.files[0]) {
+      this.uploadedImages[index - 1] = input.files[0]; // Store file in the correct index
     }
   }
 
-  // Handle file selection
-  onFileSelected(event: Event, index: number) {
-    const fileInput = event.target as HTMLInputElement;
-    if (fileInput.files && fileInput.files.length > 0) {
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.uploadedImages[index - 1] = {
-          name: file.name,
-          url: reader.result as string
-        };
-      };
-      reader.readAsDataURL(file);
+  downloadImages(): void {
+    if (
+      !this.adDetails.title ||
+      !this.adDetails.description ||
+      !this.adDetails.price ||
+      !this.adDetails.location ||
+      !this.adDetails.name ||
+      !this.adDetails.phoneNo
+    ) {
+      alert('Please fill in all required fields!');
+      return;
     }
-  }
 
-  // Trigger download of uploaded images
-  downloadImages() {
-    this.uploadedImages.forEach(image => {
-      const link = document.createElement('a');
-      link.href = image.url;
-      link.download = `MyAdsFolder/${image.name}`;
-      link.click();
+    const formData = new FormData();
+    formData.append('ad', JSON.stringify(this.adDetails)); // Add ad details as JSON
+
+    // Append images to formData
+    this.uploadedImages.forEach((file, index) => {
+      if (file) {
+        formData.append(`image${index + 1}`, file); // Name each image as image1, image2, etc.
+      }
     });
+
+    this.adsService.postAd(formData).subscribe(
+      (response:any) => {
+        console.log('Ad posted successfully:', response);
+        alert('Ad posted successfully!');
+      },
+      (error:any) => {
+        console.error('Failed to post ad:', error);
+        alert('Failed to post ad. Please try again.');
+      }
+    );
   }
-
-
 }
