@@ -10,6 +10,42 @@
     outline: none;
 }
 
+.carousel {
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-inner {
+    width: 100%;
+    height: 500px; /* Fix the height */
+    overflow: hidden;
+}
+
+.carousel-item {
+    height: 100%; /* Ensure each item fills the height */
+    display: flex;
+    align-items: center; /* Center align image vertically */
+    justify-content: center;
+}
+.adj {
+    overflow-wrap: break-word; /* Break long words into the next line */
+    word-wrap: break-word; /* Backward compatibility for older browsers */
+    word-break: break-word; /* Ensure long strings break properly */
+    overflow: hidden; /* Ensure no horizontal overflow */
+}
+.carousel-img {
+    width: 100%;
+    height: 100%; /* Fill the container */
+    object-fit: cover; /* Maintain aspect ratio and crop if necessary */
+    border-radius: 5px;
+}
+
+#imageCarousel {
+    max-width: 900px;
+    margin: 0 auto; /* Center the carousel */
+}
+
+
 b {
     color: #3a77ff;
 }
@@ -717,8 +753,8 @@ footer {
 .left__side .price__location_card,
 .description {
     width: 100%;
-    margin-top: 20px;
-    padding: 10px 30px;
+  
+
     border: 1px solid #012f34;
     border-radius: 6px;
 }

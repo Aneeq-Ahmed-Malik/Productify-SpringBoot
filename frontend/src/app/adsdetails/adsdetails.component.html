@@ -1,17 +1,34 @@
 <div class="productDetails">
     <div class="left__side">
-        <img id="main" src="https://static-01.daraz.pk/p/37cd9cf9ea23a97b7d3097bfd9a03347.jpg_720x720.jpg_.webp"
-            alt="    ">
+        <!-- Carousel for Images -->
+        <div id="imageCarousel" class="carousel slide" style="overflow: hidden;">
+            <div class="carousel-inner" style="height: 500px;">
+                <div
+                    class="carousel-item"
+                    *ngFor="let image of images; let i = index"
+                    [class.active]="i === 0">
+                    <img [src]="image" class="d-block w-100 carousel-img" [alt]="'Image ' + (i + 1)">
+                </div>
+            </div>
+            <!-- Carousel Controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
         <div class="price__location_card">
             <h1 id="price">65,000</h1>
             <h3 id="productName">Mobile Charger</h3>
-            <p id="location"><i class="fa-solid fa-location-dot"></i>Jamshed Town, Karachi</p>
+            <p id="location"><i class="fa-solid fa-location-dot"></i> Jamshed Town, Karachi</p>
         </div>
-        <div class="description">
-            <h1>Description</h1>
-            <p id="description">Suzuki bolan 2011 model 032l269l904</p>
-        </div>
+       
     </div>
+
     <div class="right__side">
         <div class="profile_contact_card">
             <div class="avaar">
@@ -25,7 +42,7 @@
         </div>
         <div class="description">
             <h1>Description</h1>
-            <p id="description2">Suzuki bolan 2011 model 032l269l904</p>
+            <p class="adj" id="description2">Suzuki bolan 2011 model 032l269l904 hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
         </div>
     </div>
 </div>

@@ -10,8 +10,9 @@ import { AdsdetailsComponent } from './adsdetails/adsdetails.component';
 import { PostadComponent } from './postad/postad.component';
 import { LoginComponent } from './login/login.component';
 import { TestComponent } from './test/test.component';
+import { UseradsComponent } from './userads/userads.component';
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   {path:'viewall',component:ViewallComponent},
   {path:'productdetails',component:ProductDetailsComponent},
@@ -20,7 +21,9 @@ const routes: Routes = [
   {path:'adsdetails',component:AdsdetailsComponent},
   {path:'postad',component:PostadComponent},
   {path:'login',component:LoginComponent},
-  {path:'test',component:TestComponent}
+  {path:'test',component:TestComponent},
+  {path:'userads',component:UseradsComponent}
+  
   
   
 ];

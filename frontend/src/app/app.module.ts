@@ -16,7 +16,8 @@ import { DataService } from './data.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component'; // Import HttpClientModule
 import { FormsModule } from '@angular/forms';
-import { TestComponent } from './test/test.component'; // Import FormsModule
+import { TestComponent } from './test/test.component';
+import { UseradsComponent } from './userads/userads.component'; // Import FormsModule
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { TestComponent } from './test/test.component'; // Import FormsModule
     PostadComponent,
     LoginComponent,
     TestComponent,
+    UseradsComponent,
     
   ],
   imports: [

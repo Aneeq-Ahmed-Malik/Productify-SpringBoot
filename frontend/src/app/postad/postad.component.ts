@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AdsService } from '../ads.service';
 import { HttpEventType } from '@angular/common/http';
 
@@ -7,7 +7,12 @@ import { HttpEventType } from '@angular/common/http';
   templateUrl: './postad.component.html',
   styleUrls: ['./postad.component.scss'],
 })
-export class PostadComponent {
+export class PostadComponent  implements OnInit {
+  ngOnInit(): void {
+   
+  }
+  
+
   adDetails = {
     title: '',
     description: '',
