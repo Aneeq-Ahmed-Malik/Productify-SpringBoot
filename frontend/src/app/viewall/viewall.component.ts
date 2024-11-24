@@ -11,11 +11,12 @@ export class ViewallComponent implements OnInit {
   loading = true; // Initially set loading to true
   website: any = null;
   category: any = null;
+  search: any = null;
   products: any[][] = [];
   currentSlide = 0; // State for carousel
-  recentproducts :any[][]=[];
-  recommended:any[][]=[];
-  constructor(private router: Router, private data: DataService, private route: ActivatedRoute,protected global:GlobalService) {}
+  recentproducts: any[][] = [];
+  recommended: any[][] = [];
+  constructor(private router: Router, private data: DataService, private route: ActivatedRoute, protected global: GlobalService) { }
 
   ngOnInit() {
     // Subscribe to query parameters
@@ -23,43 +24,60 @@ export class ViewallComponent implements OnInit {
       if (params) {
         this.category = params['category'];
         this.website = params['website'];
+        this.search = params['search'];
 
         if (this.category && this.website) {
           // Fetch products by category and website
           this.fetchProductsByCategoryAndWebsite(this.category, this.website);
-          this.Recommended(this.global.cartIDs);
-          this.recentproducts=this.chunkArray(this.global.recent,3);
-          console.log("this is recent in viewall",this.recentproducts);
-        
+          this.Recommended(this.global.productIDs);
+          this.recentproducts = this.chunkArray(this.global.recent, 3);
+          console.log("this is recent in viewall", this.recentproducts);
+
         } else if (this.category) {
           // Fetch products by category only
           this.fetchProductsByCategory(this.category);
-          this.Recommended(this.global.cartIDs);
-          this.recentproducts=this.chunkArray(this.global.recent,4);
-          
+          this.Recommended(this.global.productIDs);
+          this.recentproducts = this.chunkArray(this.global.recent, 4);
 
-          console.log("this is recent in viewall",this.recentproducts);
-          
+
+          console.log("this is recent in viewall", this.recentproducts);
+
         } else {
-          console.log('No valid parameters provided.');
+          console.log("search in view", this.search);
+          this.fetchSearchProducts();
+          this.Recommended(this.global.productIDs);
+          this.recentproducts = this.chunkArray(this.global.recent, 4);
           this.loading = false; // Stop loading if no valid parameters
         }
       }
     });
   }
-  Recommended(productIds:any){
+  Recommended(productIds: any) {
     this.data.getRecommendations(productIds).subscribe(
       (data: any[]) => {
-        this.recommended=this.chunkArray(data,4);         // Stop loading animation
+        this.recommended = this.chunkArray(data, 4);         // Stop loading animation
         console.log('Recommendations:', this.recommended);
-        this.loading=false;
+        this.loading = false;
       },
       (error: any) => {
         console.error('Error fetching recommendations:', error);
-        this.loading=false;
+        this.loading = false;
       }
     );
-    
+
+  }
+  private fetchSearchProducts() {
+    this.data.searchProducts(this.search, 24).subscribe(
+      (data: any) => {
+        this.products = this.chunkArray(data, 12); // Chunk products into slides
+        console.log('Search Results:', this.products);
+        this.loading = false;
+      },
+      (error: any) => {
+        console.error('Error fetching search results:', error);
+        this.loading = false;
+      }
+    );
   }
   // Fetch products by category and website
   private fetchProductsByCategoryAndWebsite(category: string, website: string) {
@@ -83,7 +101,7 @@ export class ViewallComponent implements OnInit {
         this.products = this.chunkArray(values, 12); // Chunk products into slides
         console.log('Fetched products:', this.products);
         this.loading = false; // Stop loading once data is fetched
-       
+
 
       },
       (error) => {
@@ -107,7 +125,7 @@ export class ViewallComponent implements OnInit {
     }
   }
 
- 
+
 
   chunkArray(array: any[], size: number): any[][] {
     const chunks: any[][] = [];
@@ -116,9 +134,9 @@ export class ViewallComponent implements OnInit {
     }
     return chunks;
   }
-  Routing(product:any) {
-    
-    console.log('before route',product);
+  Routing(product: any) {
+
+    console.log('before route', product);
     this.router.navigate(['productdetails'], {
       queryParams: {
         id: product.id,
@@ -137,10 +155,10 @@ export class ViewallComponent implements OnInit {
     });
     this.global.addToRecent(product);
   }
-  addToCart(product:any){
+  addToCart(product: any) {
     this.global.addToCart(product);
     this.global.increament();
-    this.Recommended(this.global.cartIDs);
-    this.loading=true;
+    this.Recommended(this.global.productIDs);
+    this.loading = true;
   }
 }

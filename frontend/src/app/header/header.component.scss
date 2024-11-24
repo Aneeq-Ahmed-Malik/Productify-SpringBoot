@@ -57,3 +57,27 @@ body { overflow-x: hidden; }
     body {
         overflow-x: hidden;
     }
+    /* Make the "Ads" dropdown title bold */
+.ads-title {
+  font-weight: bold;
+  cursor: pointer; /* Add a pointer cursor */
+}
+
+.ads-title:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+/* Other dropdown titles - Default styling */
+.category-title {
+  font-weight: normal; /* Keep the categories dropdown normal */
+  cursor: pointer; /* Add a pointer cursor */
+}
+
+.category-title:hover {
+  text-decoration: underline; /* Add underline on hover */
+}
+
+/* Dropdown items hover effect */
+.dropdown-item-hover:hover {
+  text-decoration: underline; /* Add underline when hovering dropdown items */
+}

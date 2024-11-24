@@ -13,7 +13,10 @@ import { ShowAdsComponent } from './show-ads/show-ads.component';
 import { AdsdetailsComponent } from './adsdetails/adsdetails.component';
 import { PostadComponent } from './postad/postad.component';
 import { DataService } from './data.service';
-import { HttpClientModule } from '@angular/common/http'; // Import HttpClientModule
+import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login.component'; // Import HttpClientModule
+import { FormsModule } from '@angular/forms';
+import { TestComponent } from './test/test.component'; // Import FormsModule
 
 @NgModule({
   declarations: [
@@ -26,12 +29,16 @@ import { HttpClientModule } from '@angular/common/http'; // Import HttpClientMod
     CartComponent,
     ShowAdsComponent,
     AdsdetailsComponent,
-    PostadComponent
+    PostadComponent,
+    LoginComponent,
+    TestComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

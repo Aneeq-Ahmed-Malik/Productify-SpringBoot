@@ -72,7 +72,9 @@ getRecommendation(){
 }
 
 Routing(product:any) {
-  
+  this.loading=true;
+  this.global.addToRecent(product);
+  this.recentproducts=this.chunkArray(this.global.recent,3);
   console.log('before route',product);
   this.router.navigate(['productdetails'], {
     queryParams: {
@@ -90,7 +92,11 @@ Routing(product:any) {
       websiteId: product.website.id // Nested attribute
     }
   });
-  this.global.addToRecent(product);
+  
+  setTimeout(() => {
+    this.loading=false;
+    
+  }, 2000);
   
 }
 

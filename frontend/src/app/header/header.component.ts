@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GlobalService } from '../global.service';
 import { Router } from '@angular/router';
 @Component({
@@ -6,7 +6,10 @@ import { Router } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  ngOnInit(){
+  }
+  searchTerm: string = '';
   categories = [
     { 
       name: 'Gaming Headsets', 
@@ -57,7 +60,25 @@ viewAll(category:string,website:string){
   
   
 }
+ // Holds the value of the search input
+
+  onSearch(): void {
+    console.log('Search Term:', this.searchTerm);
+    this.router.navigate(['viewall'],{queryParams:{search:this.searchTerm}});
+
+    // You can now call an API or perform other actions with the search term
+    // Example: this.searchService.searchProducts(this.searchTerm).subscribe(...)
+  }
 Routing(route:string){
+  if (route=='postad'||route=='showads'||route=='adsdetails') {
+      if (this.global.loginflag) {
+        this.router.navigate([route]);
+      }
+      else
+      this.router.navigate(['login']);
+
+  }
+  else
   this.router.navigate([route]);
 }
 }

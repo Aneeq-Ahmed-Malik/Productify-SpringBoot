@@ -1,9 +1,9 @@
 package com.example.demo.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +27,7 @@ public class Cart {
     private User user;
 
     @ManyToMany(mappedBy = "carts")
+    @JsonBackReference
     private List<Product> products;
 
     // Getters and Setters
