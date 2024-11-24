@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.demo.model.Ad;
-import com.example.demo.service.AdServices;
+import com.example.demo.model.*;
+import com.example.demo.service.*;
+import com.example.demo.repository.*;
 
 @RestController
 @RequestMapping("/api/ad")
@@ -26,6 +27,12 @@ public class AdController {
 
     @Autowired
     private AdServices adServices;
+
+    @Autowired
+    private UserService userServices;
+
+    @Autowired
+    private AdRepository adRepository; // Assuming you have an AdRepository to save the Ad to the database
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/postAd")
@@ -55,7 +62,7 @@ public class AdController {
 
     @GetMapping("/getAdsById")
     public List<Ad> getAdsById(@RequestParam Long user_id) {
-        return adServices.getAdsByUserId(user_id);
+    return adServices.getAdsByUserId(user_id);
     }
 
     

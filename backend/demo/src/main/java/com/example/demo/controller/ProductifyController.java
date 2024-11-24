@@ -106,6 +106,7 @@ public class ProductifyController {
     public void initiateScrapingAsync(Scraper scraper, String categoryCSVPath) {
         scraper.initiateScraping(categoryCSVPath);
         notificationService.notifyAllUsersOfScraping();
+        notificationService.notifyAllUsersOfScraping();
     }  
 
 }

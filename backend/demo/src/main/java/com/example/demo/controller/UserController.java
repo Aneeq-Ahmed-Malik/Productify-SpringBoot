@@ -22,6 +22,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+   
     @Autowired
     private NotificationManager notificationService;
 
@@ -49,10 +50,7 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping("/login")
     public User loginUser(@RequestParam("email") String email , @RequestParam("password") String password) {
-        // String email = userData.get("email");
-        // String password = userData.get("password");
         return userService.loginUser(email, password);
-        
     }
 
 }
