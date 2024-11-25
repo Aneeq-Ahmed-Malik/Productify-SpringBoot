@@ -44,6 +44,7 @@ public class AdController {
             @RequestParam("location") String location,
             @RequestParam("phoneNo") String phoneNo,
             @RequestParam("userId") Long userId,
+            @RequestParam("isFeatured") boolean isFeatured,
             @RequestPart(required = false) MultipartFile image1,
             @RequestPart(required = false) MultipartFile image2,
             @RequestPart(required = false) MultipartFile image3,
@@ -51,7 +52,7 @@ public class AdController {
 
         // Log details
 
-        return adServices.postAd(title, description, price, location, phoneNo, userId, image1, image2, image3, image4);
+        return adServices.postAd(isFeatured ,title, description, price, location, phoneNo, userId, image1, image2, image3, image4);
 
     }
 
@@ -101,5 +102,11 @@ public class AdController {
                 image4);
 
     }
+
+    @GetMapping("/checkFeatureAvailability")
+    public boolean checkFeatureAvailability(@RequestParam Long userId) {
+        return adServices.checkFeatureAvailability(userId);
+    }
+    
 
 }

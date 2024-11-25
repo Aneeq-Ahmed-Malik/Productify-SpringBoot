@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import org.springframework.data.domain.Sort;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,13 +33,14 @@ public class AdServices {
     private AdRepository adRepository;
 
     @Autowired
-    private UserRepository userRepository;  // Inject the EntityManager
+    private UserRepository userRepository; // Inject the EntityManager
 
     @Autowired
     private UserService userServices;
 
     public ResponseEntity<Map<String, String>> postAd(
-            String title, String description, String price, String location, String phoneNo, Long userId,
+            boolean isFeatured, String title, String description, String price, String location, String phoneNo,
+            Long userId,
             MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4)
             throws IOException {
 
@@ -56,6 +58,7 @@ public class AdServices {
         ad.setPhoneNo(phoneNo);
         ad.setPrice(Long.parseLong(price));
         ad.setLocation(location);
+        ad.setisFeatured(isFeatured);
 
         ad = adRepository.save(ad);
 
@@ -128,13 +131,13 @@ public class AdServices {
     }
 
     public List<Ad> getAllAds() {
-        return adRepository.findAll();
+        return adRepository.findAll(Sort.by(Sort.Direction.DESC, "isFeatured"));
     }
 
     public List<Ad> getAdsByUserId(Long userId) {
         Optional<User> user = userRepository.findById(userId); // Step 1: Retrieve the user
         if (user.isPresent()) { // Step 2: Check if user exists
-            return adRepository.findByUserId(user.get().getId()); // Step 3: Fetch ads for the user
+            return adRepository.findByUserIdOrderByIsFeaturedDesc(user.get().getId()); // Step 3: Fetch ads for the user
         }
         return Collections.emptyList(); // Step 4: Return an empty list if no user is found
     }
@@ -159,7 +162,8 @@ public class AdServices {
                 // Delete the images for this ad
                 String prefix = String.format("%d_%d", user_id, ad_id); // Create the prefix
 
-                try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get("frontend/src/assets/uploads/"), prefix + "*")) {
+                try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get("frontend/src/assets/uploads/"),
+                        prefix + "*")) {
                     for (Path path : stream) {
                         try {
                             Files.deleteIfExists(path); // Safely delete the file
@@ -188,7 +192,7 @@ public class AdServices {
     }
 
     public ResponseEntity<Map<String, String>> editAd(
-            Long ad_id , String title, String description, String price, String location, String phoneNo, Long userId,
+            Long ad_id, String title, String description, String price, String location, String phoneNo, Long userId,
             MultipartFile image1, MultipartFile image2, MultipartFile image3, MultipartFile image4)
             throws IOException {
 
@@ -210,7 +214,6 @@ public class AdServices {
         ad.setId(ad_id);
 
         adRepository.save(ad);
-
 
         Map<String, String> filePaths = new HashMap<>();
         if (image1 != null) {
@@ -241,6 +244,19 @@ public class AdServices {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Ad posted successfully!");
         return ResponseEntity.ok(response);
+    }
+
+    public boolean checkFeatureAvailability(Long userId) {
+        List<Ad> userAds = adRepository.findByUserId(userId);
+
+        // Step 2: Calculate the allowed number of featured ads
+        int allowedFeaturedAds = userAds.size() / 5;
+
+        // Step 3: Count the number of already featured ads
+        long currentFeaturedAds = userAds.stream().filter(ad -> ad.getisFeatured()).count();
+
+        // Step 4: Return true if the user can feature a new ad, false otherwise
+        return allowedFeaturedAds > currentFeaturedAds;
     }
 
 }

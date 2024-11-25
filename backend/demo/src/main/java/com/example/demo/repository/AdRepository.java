@@ -10,4 +10,6 @@ import java.util.List;
 public interface AdRepository extends JpaRepository<Ad, Long> {
     // Find ads by user ID
     List<Ad> findByUserId(Long userId);
+    List<Ad> findByUserIdOrderByIsFeaturedDesc(Long userId);
+
 }

@@ -38,9 +38,12 @@ public class Ad {
     private String image2;  
     private String image3;  
     private String image4;  
+    boolean isFeatured;
 
     // Parameterized constructor
-    public Ad(){}
+    public Ad(){
+        isFeatured=false;
+    }
 
 
     public Ad(User user, String title, String description, String phoneNo, Long price, String location) {
@@ -50,6 +53,7 @@ public class Ad {
         this.phoneNo = phoneNo;
         this.price = price;
         this.location = location;
+        isFeatured=false;
     }
 
     // Getters and Setters
@@ -140,5 +144,13 @@ public class Ad {
 
     public void setImage4(String image4) {
         this.image4 = image4;
+    }
+
+    public boolean getisFeatured() {
+        return isFeatured;
+    }
+
+    public void setisFeatured(boolean  isFeatured) {
+        this.isFeatured = isFeatured;
     }
 }
