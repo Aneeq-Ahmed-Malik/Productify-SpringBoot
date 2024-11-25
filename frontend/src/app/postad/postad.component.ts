@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdsService } from '../ads.service';
 import { HttpEventType } from '@angular/common/http';
 import { GlobalService } from '../global.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-postad',
@@ -10,7 +10,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./postad.component.scss'],
 })
 export class PostadComponent  implements OnInit {
-  constructor(private adsService: AdsService, private global: GlobalService,private route:ActivatedRoute) {}
+  isLoading:boolean=true;
+  constructor(private adsService: AdsService, private global: GlobalService,private route:ActivatedRoute,private router:Router) {}
   adDetails: { 
     id: any; 
     title: string; 
@@ -54,7 +55,7 @@ edit:boolean=false;
           if (imageParam) {
             this.uploadedImages.push({
               file:imageParam , // Query parameters won't have file objects
-              preview: `../../assets/uploads/${imageParam}`, // Construct preview path
+              preview: `http://localhost:8080/${imageParam}`, // Construct preview path
             });
           }
         }
@@ -64,6 +65,8 @@ edit:boolean=false;
   
     console.log('Ad Details:', this.adDetails);
     console.log('Uploaded Images:', this.uploadedImages);
+
+    this.isLoading=false;
   }
   
  
@@ -135,7 +138,7 @@ edit:boolean=false;
           if (event.type === HttpEventType.Response) {
             console.log('Ad posted successfully:', event.body);
             alert('Ad posted successfully!');
-            this.resetForm();
+            setTimeout(() => this.router.navigate(['showads']), 5000); // Delay navigation
           }
         },
         error: (err) => {
@@ -143,6 +146,7 @@ edit:boolean=false;
           alert('Failed to post ad. Please try again.');
         },
       });
+      
       
     }
   else{
@@ -153,6 +157,7 @@ edit:boolean=false;
           console.log('Ad edited successfully:', event.body);
           alert('Ad edited successfully!');
           this.resetForm();
+          this.router.navigate(['showads']);
         }
       },
       error: (err) => {
@@ -169,7 +174,10 @@ edit:boolean=false;
       this.adsService.deleteAd(this.userId, this.adDetails.id).subscribe({
         next: (response: string) => {
           console.log('Ad deleted successfully:', response);
+          this.resetForm();
+
           alert(response); // You can display the response message here
+          this.router.navigate(['userads']);
         },
         error: (err) => {
           console.error('Error deleting ad:', err);

@@ -1,24 +1,34 @@
-<div  class="productDetails">
+<div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  
+<div *ngIf="!isLoading" class="productDetails">
     <div class="left__side">
         <!-- Carousel for Images -->
         <div id="imageCarousel" class="carousel slide" style="overflow: hidden;">
             <div class="carousel-inner" style="height: 500px;">
                 <div *ngIf="product.image1" class="carousel-item active">
-                    <img [src]="'../../assets/uploads/' + product.image1" class="d-block w-100 carousel-img" alt="Image 1">
-                  </div>
-                  <!-- Second Image -->
-                  <div *ngIf="product.image2" class="carousel-item">
-                    <img [src]="'../../assets/uploads/' + product.image2" class="d-block w-100 carousel-img" alt="Image 1">
-                  </div>
-                  <!-- Third Image -->
-                  <div *ngIf="product.image3" class="carousel-item">
-                    <img [src]="'../../assets/uploads/' + product.image3" class="d-block w-100 carousel-img" alt="Image 1">
-                  </div>
-                  <!-- Fourth Image -->
-                  <div *ngIf="product.image4" class="carousel-item">
-                    <img [src]="'../../assets/uploads/' + product.image4" class="d-block w-100 carousel-img" alt="Image 1">
-                  </div>
-                
+                    <img [src]="'../../assets/uploads/' + product.image1" class="d-block w-100 carousel-img"
+                        alt="Image 1">
+                </div>
+                <!-- Second Image -->
+                <div *ngIf="product.image2" class="carousel-item">
+                    <img [src]="'../../assets/uploads/' + product.image2" class="d-block w-100 carousel-img"
+                        alt="Image 1">
+                </div>
+                <!-- Third Image -->
+                <div *ngIf="product.image3" class="carousel-item">
+                    <img [src]="'../../assets/uploads/' + product.image3" class="d-block w-100 carousel-img"
+                        alt="Image 1">
+                </div>
+                <!-- Fourth Image -->
+                <div *ngIf="product.image4" class="carousel-item">
+                    <img [src]="'../../assets/uploads/' + product.image4" class="d-block w-100 carousel-img"
+                        alt="Image 1">
+                </div>
+
             </div>
             <!-- Carousel Controls -->
             <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
@@ -36,7 +46,7 @@
             <h3 id="productName">Title: {{product.title}}</h3>
             <p id="location"><i class="fa-solid fa-location-dot"></i>Location: {{product.location}}</p>
         </div>
-       
+
     </div>
 
     <div class="right__side">
@@ -44,11 +54,15 @@
             <div class="avaar">
                 <img src="../../assets/img/avatar.png" id="image" alt="">
                 <div class="img">
-                    <h5 id="phoneL">{{product.phone}}</h5>
-                    <p id="nameL">{{product.name}}</p>
+                    <h4 id="phoneL"><b>Phone: </b>{{product.phone}}</h4>
+                    <h4 id="nameL"><b>Name: </b>{{product.name}}</h4>
                 </div>
             </div>
-            <button class="chat"><i class="fa-solid fa-comments"></i> Chat</button>
+           
+
+            <button (click)="openWhatsApp( 'Hello! I am interested in your ad.')" class="chat"><i
+                    class="fa-solid fa-comments"></i>
+                    Contact on WhatsApp</button>
         </div>
         <div class="description">
             <h1>Description</h1>

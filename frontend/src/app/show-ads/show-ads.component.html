@@ -1,38 +1,41 @@
-<div class="row body">
-  <div style="text-align: center;" class="col-3 col-md-3 adj ">
-      <h1 >ADS</h1>
+<div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
   </div>
   
-  <div *ngFor="let product of ads;let i=index" class="col-10 col-md-10 adj height colcolor">
+  <div *ngIf="!isLoading" class="row body">
+    <div style="text-align: center;" class="col-3 col-md-3 adj">
+      <h1>ADS</h1>
+    </div>
+  
+    <div *ngFor="let product of ads; let i = index" class="col-10 col-md-10 adj height colcolor">
       <div class="row">
-          <div style="height: 50px; border-bottom: solid 1px silver; word-spacing: 260px;margin-bottom: 10px;" class="col-md-12">
-              <h4><b>Product Title Price Actions</b></h4>
-          </div>
-
-          <div *ngIf="getFirstAvailableImage(product)" style="height: 200px; width: 200px;" class="col-3 col-md-3">
-            <img [src]="'../../assets/uploads/' + getFirstAvailableImage(product)" alt="" style="width: 100%; height: 100%; object-fit: contain;">
-          </div>
-
-
-          <div  class="col-4 col-md-4 adj ">
-              <p style="padding-left: 120px;padding-top: 80px;"><b>{{ product.title }}</b></p>
-              
-          </div>
-          <div  class="col-2 col-md-2 adj ">
-            <p style="padding-left: 40px;padding-top: 80px;color: red;"><b>{{ product.price }}</b></p>
-            
+        <div
+          style="height: 50px; border-bottom: solid 1px silver; word-spacing: 260px; margin-bottom: 10px;"
+          class="col-md-12"
+        >
+          <h4><b>Product Title Price Actions</b></h4>
         </div>
-        
-          <div style="padding-top:30px ;" class="col-3 col-md-3">
-              <div style="padding-left: 120px;padding-top: 30px;" class="button-container">
-
-                  <button (click)="Routing(product)"   type="button" class="btn btn-success">See Details</button>
-
-              </div>
+  
+        <div *ngIf="getFirstAvailableImage(product)" style="height: 200px; width: 200px;" class="col-3 col-md-3">
+            <img [src]="'http://localhost:8080/' + getFirstAvailableImage(product)" alt="" style="width: 100%; height: 100%; object-fit: contain;">
           </div>
 
+  
+        <div class="col-4 col-md-4 adj">
+          <p style="padding-left: 120px; padding-top: 80px;"><b>{{ product.title }}</b></p>
+        </div>
+        <div class="col-2 col-md-2 adj">
+          <p style="padding-left: 40px; padding-top: 80px; color: red;"><b>{{ product.price }}</b></p>
+        </div>
+  
+        <div style="padding-top: 30px;" class="col-3 col-md-3">
+          <div style="padding-left: 120px; padding-top: 30px;" class="button-container">
+            <button (click)="Routing(product)" type="button" class="btn btn-success">See Details</button>
+          </div>
+        </div>
       </div>
-      
+    </div>
   </div>
   
-</div>

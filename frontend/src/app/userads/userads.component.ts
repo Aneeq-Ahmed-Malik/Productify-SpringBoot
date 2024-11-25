@@ -11,17 +11,21 @@ import { Router } from '@angular/router';
 export class UseradsComponent implements OnInit {
   constructor(private global:GlobalService,private adService:AdsService,private router:Router){}
   ads:any;
+  isLoadig:boolean=true;
   ngOnInit(): void {
    this.fetchAds();
+
   }
   fetchAds(): void {
     this.adService.getAdsByUserId(this.global.userId).subscribe({
       next: (data) => {
         this.ads = data;
         console.log('Fetched ads:', this.ads);
+        this.isLoadig=false;
       },
       error: (err) => {
         console.error('Error fetching ads:', err);
+        this.isLoadig=false;
       },
     });
   }
