@@ -75,6 +75,8 @@ public class CSVImportService {
             filePath = "files/NewggProducts.csv";
         } else if (website.equals("Amazon")) {
             filePath = "files/AmazonProducts.csv";
+        } else if (website.equals("AliExpress")) {
+            filePath = "files/AliExpressProducts.csv";
         } else {
             throw new FileNotFoundException("No CSV file found for website: " + website);
         }
@@ -128,7 +130,7 @@ public class CSVImportService {
         } else if (website.equals("Amazon")) {
             filePath = "files/AmazonReviews.csv";
         }
-        else if (website.equals("ALiExpress")) {
+        else if (website.equals("AliExpress")) {
             filePath = "files/AliExpressReviews.csv";
         } else {
             throw new FileNotFoundException("No CSV file found for website: " + website);
@@ -148,13 +150,23 @@ public class CSVImportService {
             reader.readNext();
             
             List<String[]> rows = reader.readAll();
-            rows.forEach(row -> {
-                Review review = new Review();
-                review.setReviews(row[1]);
-                review.setLink(row[2]);
-                review.setSentiment(row[3]);  // Assuming the name is in the second column
-                reviewRepository.save(review);
-            });
+            
+        
+            // Iterate over all rows in the CSV file
+            for (String[] row : rows) {
+                if (row.length >= 4) { // Check that the row has enough columns
+                    Review review = new Review();
+                    review.setReviews(row[1]);  // Assuming review is in column 1
+                    review.setLink(row[2]);     // Assuming link is in column 2
+                    review.setSentiment(row[3]);  // Assuming sentiment is in column 3
+                    
+                    reviewRepository.save(review);  // Save review to the database
+                }
+            }
+
+            System.out.println("Total reviews imported: " + rows.size());
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

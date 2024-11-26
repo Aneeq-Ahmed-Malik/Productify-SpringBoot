@@ -16,10 +16,10 @@ public class Review {
     private Long id;
 
 
-    @Column(length = 5000)
+    @Column(length = 100000)
     private String reviews;
 
-    @Column(length = 3000)
+    @Column(length = 5000)
     private String link;
 
     private String sentiment;
