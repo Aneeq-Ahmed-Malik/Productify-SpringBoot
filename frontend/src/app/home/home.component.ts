@@ -68,23 +68,11 @@ export class HomeComponent implements OnInit {
         this.loading = false; // Stop loading even if there's an error
       }
     );
-    // Use forkJoin to wait for all requests to complete
     
-    // this.initAutoScroll();
-   
 
 
   }
-  // initAutoScroll(): void {
-  //   const carouselElement = document.querySelector('#carouselExampleControlsNoTouching') as HTMLElement;
-
-  //   if (carouselElement) {
-  //     const carousel = new Carousel(carouselElement, {
-  //       interval: 2000, // 5 seconds
-  //       ride: 'carousel' // Start automatically
-  //     });
-  //   }
-  // }
+  
 
   Routing(product:any,category:any=null) {
     if(product=='viewwall'){
@@ -124,4 +112,5 @@ export class HomeComponent implements OnInit {
     this.global.addToCart(product);
     this.global.increament();
   }
+  
 }

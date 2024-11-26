@@ -41,6 +41,11 @@ export class AdsService {
       responseType: 'text' as 'json', // Specify that the response is plain text
     });
   }
+  checkFeatureAvailability(userId: number): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/checkFeatureAvailability`, {
+      params: { userId: userId.toString() },
+    });
+  }
   /////////////////testing////////
   uploadMultipartData(formData: FormData): Observable<any> {
     return this.http.post(this.apiUrl, formData, {

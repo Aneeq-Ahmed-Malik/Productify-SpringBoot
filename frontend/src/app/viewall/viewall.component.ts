@@ -19,6 +19,7 @@ export class ViewallComponent implements OnInit {
   constructor(private router: Router, private data: DataService, private route: ActivatedRoute, protected global: GlobalService) { }
 
   ngOnInit() {
+    this.loading = true;
     // Subscribe to query parameters
     this.route.queryParams.subscribe((params) => {
       if (params) {
@@ -43,6 +44,7 @@ export class ViewallComponent implements OnInit {
           console.log("this is recent in viewall", this.recentproducts);
 
         } else {
+          
           console.log("search in view", this.search);
           this.fetchSearchProducts();
           this.Recommended(this.global.productIDs);
@@ -51,6 +53,7 @@ export class ViewallComponent implements OnInit {
         }
       }
     });
+    this.currentSlide = 0;
   }
   Recommended(productIds: any) {
     this.data.getRecommendations(productIds).subscribe(
@@ -118,13 +121,11 @@ export class ViewallComponent implements OnInit {
     }
   }
 
-  // Method to move to the previous slide
   previousSlide() {
     if (this.currentSlide > 0) {
       this.currentSlide--;
     }
   }
-
 
 
   chunkArray(array: any[], size: number): any[][] {
@@ -161,4 +162,5 @@ export class ViewallComponent implements OnInit {
     this.Recommended(this.global.productIDs);
     this.loading = true;
   }
+  
 }

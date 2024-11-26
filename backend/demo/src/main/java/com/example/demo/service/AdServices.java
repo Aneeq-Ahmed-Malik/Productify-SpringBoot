@@ -258,5 +258,6 @@ public class AdServices {
         // Step 4: Return true if the user can feature a new ad, false otherwise
         return allowedFeaturedAds > currentFeaturedAds;
     }
+    
 
 }

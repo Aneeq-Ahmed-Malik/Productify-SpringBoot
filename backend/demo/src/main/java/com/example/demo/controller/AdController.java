@@ -102,11 +102,12 @@ public class AdController {
                 image4);
 
     }
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/checkFeatureAvailability")
     public boolean checkFeatureAvailability(@RequestParam Long userId) {
         return adServices.checkFeatureAvailability(userId);
     }
+    
     
 
 }

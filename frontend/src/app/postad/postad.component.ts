@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class PostadComponent  implements OnInit {
   isLoading:boolean=true;
+  FeaturedAd:any=false;
   constructor(private adsService: AdsService, private global: GlobalService,private route:ActivatedRoute,private router:Router) {}
   adDetails: { 
     id: any; 
@@ -34,7 +35,8 @@ userId : any = this.global.userId;
 edit:boolean=false;
  
   ngOnInit(): void {
-   
+
+   this.checkFeatureAvailability(this.userId);
     this.route.queryParams.subscribe(params => {
       console.log('params',params);
       
@@ -98,7 +100,8 @@ edit:boolean=false;
     }
   }
 
-  submitAd(): void {
+  submitAd(check:any): void {
+
     if (
       !this.adDetails.title ||
       !this.adDetails.description ||
@@ -118,7 +121,13 @@ edit:boolean=false;
       formData.append('ad_id', this.adDetails.id);
 
     }
-
+    if (check=='featured') {
+      formData.append('isFeatured',this.FeaturedAd);
+    }
+    else{
+      let flag:any=false;
+      formData.append('isFeatured',flag);
+    }
     formData.append('title', this.adDetails.title);
     formData.append('description', this.adDetails.description);
     formData.append('price', this.adDetails.price);
@@ -199,5 +208,18 @@ edit:boolean=false;
     };
     this.uploadedImages = [];
     this.uploadProgress = null;
+  }
+
+  checkFeatureAvailability(userId: number): void {
+    this.adsService.checkFeatureAvailability(userId).subscribe(
+      (response) => {
+        this.FeaturedAd= response; // Assign the result
+        console.log('Feature availability:', this.FeaturedAd);
+      },
+      (error) => {
+        console.error('Error checking feature availability:', error);
+        this.FeaturedAd = false; // Handle error gracefully
+      }
+    );
   }
 }

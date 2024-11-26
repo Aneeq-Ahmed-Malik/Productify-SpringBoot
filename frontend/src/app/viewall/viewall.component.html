@@ -15,7 +15,7 @@
                 <h2>{{search}}</h2>
 
             </div>
-            
+
             <div style="padding-bottom: 20px;" class="col-12 col-md-12">
                 <!-- Carousel Component for PlayStation -->
                 <div id="carouselExample" class="carousel slide">
@@ -67,8 +67,8 @@
                                                 </div>
 
                                             </div>
-                                            <button style="position: absolute;bottom: 0;" (click)="addToCart(product)" class="btn btn-danger w-100"
-                                                type="button">Add To Cart</button>
+                                            <button style="position: absolute;bottom: 0;" (click)="addToCart(product)"
+                                                class="btn btn-danger w-100" type="button">Add To Cart</button>
                                         </div>
                                     </div>
                                 </div>
@@ -79,22 +79,34 @@
                     <!-- Custom Carousel Controls -->
                     <div class="d-flex justify-content-between align-items-center mt-3 control-container">
                         <!-- Previous button -->
-                        <button style="width: 30%;" class="btn btn-secondary custom-carousel-control-prev" (click)="previousSlide()"
-                            [disabled]="currentSlide === 0">
+                        <button
+                            style="width: 30%;"
+                            class="btn btn-secondary custom-carousel-control-prev"
+                            (click)="previousSlide()"
+                            [disabled]="currentSlide === 0"
+                        >
                             Previous
                         </button>
-
+            
                         <!-- Slide indicator -->
-                        <span class="fw-bold">Slide {{ currentSlide + 1 }} of {{ products.length }}</span>
-
+                        <span class="fw-bold">
+                            Slide {{ currentSlide + 1 }} of {{ products.length }}
+                        </span>
+            
                         <!-- Next button -->
-                        <button style="width: 30%;" class="btn btn-secondary custom-carousel-control-next" (click)="nextSlide()"
-                            [disabled]="currentSlide === products.length - 1">
+                        <button
+                            style="width: 30%;"
+                            class="btn btn-secondary custom-carousel-control-next"
+                            (click)="nextSlide()"
+                            [disabled]="currentSlide === products.length - 1"
+                        >
                             Next
                         </button>
                     </div>
+                    
                 </div>
             </div>
+
             <div *ngIf="global.recentflag">
                 <div style="margin-left: auto;margin-right: auto ;margin-top: 50px;border-top: solid 2px silver ;"
                     class="col-12 col-md-12">
@@ -206,7 +218,7 @@
                                                         2).join('
                                                         ')
                                                         }}</h5>
-                                                    <p class="price" ><b>${{ product.price }}</b></p>
+                                                    <p class="price"><b>${{ product.price }}</b></p>
                                                     <div ngSwitch={{product.website.id}}>
                                                         <div *ngSwitchCase="'1'">
                                                             <svg width="100px" height="100px"

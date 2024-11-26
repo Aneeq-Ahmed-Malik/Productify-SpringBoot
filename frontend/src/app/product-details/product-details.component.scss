@@ -65,3 +65,25 @@
   .price{
     color: red;
   }
+  .star-rating {
+    display: inline-flex;
+    gap: 2px;
+  }
+  
+  .star {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .full-star path {
+    fill: #ED8A19; /* Full star color */
+  }
+  
+  .half-star path {
+    fill: #FFB800; /* Half-filled color */
+  }
+  
+  .empty-star path {
+    fill: #ddd; /* Empty star color */
+  }
+    

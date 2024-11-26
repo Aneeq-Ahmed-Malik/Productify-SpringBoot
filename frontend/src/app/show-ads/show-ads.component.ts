@@ -67,4 +67,7 @@ export class ShowAdsComponent implements OnInit {
     }
     return null; // No image available
   }
+  checkfeatured(){
+    
+  }
 }

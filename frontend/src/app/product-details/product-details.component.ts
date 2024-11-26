@@ -17,12 +17,14 @@ export class ProductDetailsComponent implements OnInit {
   recentproducts :any[][]=[];
   recommendproducts :any[][]=[];
   loadingRecommendations :boolean=true;
+  
+  fullStars: number = 0; // Full stars
+  halfStar: boolean = false; // Half star flag
+  emptyStars: number = 0; // Empty stars
   constructor(private route: ActivatedRoute,protected global:GlobalService,private data:DataService,private router:Router) {}
 
   ngOnInit() {
-    // Subscribe to query parameters
-    setTimeout(() =>{
-
+    setTimeout(() => {
       this.route.queryParams.subscribe(params => {
         if (params) {
           // Assign values from query parameters to product object
@@ -40,20 +42,28 @@ export class ProductDetailsComponent implements OnInit {
             category: { id: params['categoryId'] },
             website: { id: params['websiteId'] }
           };
-          this.path='../../assets/' + this.product.image1.replace('./', '');
+
+          // Calculate rating
+          this.fullStars = Math.floor(this.product.rating);
+          this.halfStar = this.product.rating % 1 >= 0.5;
+          this.emptyStars = 5 - this.fullStars - (this.halfStar ? 1 : 0);
+
+          this.path = '../../assets/' + this.product.image1.replace('./', '');
           console.log('Product:', this.product);
         } else {
           console.log("No product data found in query parameters");
         }
       });
+
       this.processDescription();
-      this.recentproducts=this.chunkArray(this.global.recent,3);
-      this.loading = false; // Stop loading when data is ready
+      this.recentproducts = this.chunkArray(this.global.recent, 3);
+      this.loading = false;
       this.getRecommendation();
-      
-    },2000);
-    
+
+    }, 2000);
   }
+
+
 getRecommendation(){
   const id = [this.product.id];
   console.log("recomd id",id) ;
