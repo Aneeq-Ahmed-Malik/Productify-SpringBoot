@@ -160,7 +160,14 @@ export class ViewallComponent implements OnInit {
     this.global.addToCart(product);
     this.global.increament();
     this.Recommended(this.global.productIDs);
-    this.loading = true;
+   
+    this.scrollToTop();
+  }
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Adds smooth scrolling
+    });
   }
   
 }

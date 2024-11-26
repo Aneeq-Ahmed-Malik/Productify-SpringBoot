@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
 export class DataService {
   private baseUrlProducts = 'http://localhost:8080/api/products';
   private baseUrlRecomend = 'http://localhost:8080/api/recommend'; // API base URL
+  private baseUrlReview = 'http://localhost:8080/api/review'; // API base URL
+
+  
 
   constructor(private http: HttpClient) {}
 
@@ -40,5 +43,16 @@ export class DataService {
 
     // Make HTTP GET request
     return this.http.get(`${this.baseUrlProducts}/search`, { params });
+  }
+  getSentimentAnalysis(link: string): Observable<string> {
+    const params = new HttpParams().set('link', link);
+    return this.http.get(`${this.baseUrlReview}/sentiment`, {
+      params,
+      responseType: 'text', // Since the endpoint returns a string
+    });
+
+  }
+  generateQrCodeUrl(text: string): string {
+    return `https://quickchart.io/qr?text=${encodeURIComponent(text)}`;
   }
 }

@@ -13,43 +13,43 @@ export class HeaderComponent implements OnInit {
   categories = [
     { 
       name: 'Gaming Headsets', 
-      websites: ['Amazon', 'Ali Express', 'Newgg'] 
+      websites: ['Amazon', 'AliExpress', 'Newgg'] 
     },
     { 
       name: 'Playstation 5 Controllers', 
-      websites: ['Amazon', 'Ali Express', 'Newgg'] 
+      websites: ['Amazon', 'AliExpress', 'Newgg'] 
     },
     { 
       name: 'Gaming Keyboards', 
-      websites: ['Amazon', 'Ali Express', 'Newgg'] 
+      websites: ['Amazon', 'AliExpress', 'Newgg'] 
     },
     { 
       name: 'Gaming Mice', 
-      websites: ['Amazon', 'Ali Express', 'Newgg'] 
+      websites: ['Amazon', 'AliExpress', 'Newgg'] 
     },
     { 
       name: 'Nintendo Switch Accessories', 
-      websites: ['Amazon', 'Ali Express', 'Newgg'] 
+      websites: ['Amazon', 'AliExpress', 'Newgg'] 
     },
     { 
       name: 'Playstation 5 Games', 
-      websites: ['Amazon', 'Ali Express', 'Newgg'] 
+      websites: ['Amazon', 'AliExpress', 'Newgg'] 
     },
     { 
       name: 'Gaming Monitors', 
-      websites: ['Amazon', 'Ali Express', 'Newgg'] 
+      websites: ['Amazon', 'AliExpress', 'Newgg'] 
     },
     { 
       name: 'Virtual Reality Accessories', 
-      websites: ['Amazon', 'Ali Express', 'Newgg'] 
+      websites: ['Amazon', 'AliExpress', 'Newgg'] 
     },
     { 
       name: 'Gaming Chairs', 
-      websites: ['Amazon', 'Ali Express', 'Newgg'] 
+      websites: ['Amazon', 'AliExpress', 'Newgg'] 
     },
     { 
       name: 'Playstation 4 Accessories', 
-      websites: ['Amazon', 'Ali Express', 'Newgg'] 
+      websites: ['Amazon', 'AliExpress', 'Newgg'] 
     }
   ];
 constructor(protected global:GlobalService,private router:Router){}

@@ -86,4 +86,14 @@
   .empty-star path {
     fill: #ddd; /* Empty star color */
   }
-    
+ 
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: black; /* Change this to your desired color */
+    border-radius: 50%; /* Optional: Make the button rounded */
+    width: 40px; /* Optional: Customize button size */
+    height: 40px; /* Optional: Customize button size */
+    margin-right: 140px;
+  }
+  

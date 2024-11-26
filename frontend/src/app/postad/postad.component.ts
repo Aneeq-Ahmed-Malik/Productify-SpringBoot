@@ -147,7 +147,7 @@ edit:boolean=false;
           if (event.type === HttpEventType.Response) {
             console.log('Ad posted successfully:', event.body);
             alert('Ad posted successfully!');
-            setTimeout(() => this.router.navigate(['showads']), 5000); // Delay navigation
+            setTimeout(() => this.router.navigate(['showads']), 1000); // Delay navigation
           }
         },
         error: (err) => {

@@ -1,13 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GlobalService } from '../global.service';
 import { CartService } from '../cart.service';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
 export class CartComponent  implements OnInit {
-  constructor(private global:GlobalService){}
+  constructor(private global:GlobalService,private route:Router){}
   
   cart:any=[];
   ngOnInit(){
@@ -44,5 +45,25 @@ export class CartComponent  implements OnInit {
   getsize(): boolean {
     return this.cart && this.cart.length > 0;
 }
-
+Routing(product:any,category:any=null) {
+ 
+  console.log('before route',product);
+  this.route.navigate(['productdetails'], {
+    queryParams: {
+      id: product.id,
+      title: product.title,
+      description: product.description,
+      link: product.link,
+      rating: product.rating,
+      price: product.price,
+      image1: product.image1,
+      image2: product.image2,
+      image3: product.image3,
+      image4: product.image4,
+      categoryId: product.category.id, // Nested attribute
+      websiteId: product.website.id // Nested attribute
+    }
+  });
+  this.global.addToRecent(product);
+}
 }
