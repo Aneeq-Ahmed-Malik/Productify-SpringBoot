@@ -14,7 +14,7 @@ export class GlobalService {
   loginflag = false;
   name = '';
   userId: number=0; // Store user ID for API calls
-
+  ads:any[]=[];
   constructor(private cartservice: CartService) { }
 
   addToCart(product: any) {

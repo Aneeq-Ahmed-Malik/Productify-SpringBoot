@@ -1,4 +1,10 @@
-<div>
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!isLoading">
   <h1 *ngIf="!edit">POST YOUR AD</h1>
   <h1 *ngIf="edit">Edit YOUR AD</h1>
   
@@ -66,8 +72,9 @@
       <hr />
     </div>
 
-    <button id="btnSubmit" (click)="submitAd()">Post Now</button>
+    <button id="btnSubmit" (click)="submitAd('post')">Post Now</button>
     <button  style="margin-top: 30px;" *ngIf="edit" id="btnSubmit" (click)="Delete()">Delete Now</button>
+    <button  style="margin-top: 30px;" *ngIf="FeaturedAd" id="btnSubmit" (click)="submitAd('featured')">Featured And Post</button>
     
   </div>
 </div>

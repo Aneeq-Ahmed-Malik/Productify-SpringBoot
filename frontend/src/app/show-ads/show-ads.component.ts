@@ -5,22 +5,34 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-show-ads',
   templateUrl: './show-ads.component.html',
-  styleUrl: './show-ads.component.scss'
+  styleUrls: ['./show-ads.component.scss']
 })
 export class ShowAdsComponent implements OnInit {
   ads: any = [];
-  constructor(private adservice: AdsService, private router: Router) {
+  isLoading: boolean = true;
+  timestamp: number = new Date().getTime(); // Generate unique timestamp
 
-  }
+  constructor(private adservice: AdsService, private router: Router) {}
+
   ngOnInit(): void {
-    this.adservice.getAllAds().subscribe((data) => {
-      console.log('ads before', data);
-
-      this.ads = data;
-      console.log('ads after', this.ads);
-
-    })
+    this.fetchAllAds();
   }
+
+  fetchAllAds() {
+    this.isLoading = true; // Show loading spinner
+    this.adservice.getAllAds().subscribe(
+      (data) => {
+        this.ads = data;
+        this.timestamp = new Date().getTime(); // Update timestamp after fetching ads
+        this.isLoading = false; // Hide loading spinner
+      },
+      (error) => {
+        console.error('Error fetching ads:', error);
+        this.isLoading = false; // Hide loading spinner even if the API fails
+      }
+    );
+  }
+
   Routing(ad: any) {
     this.router.navigate(['addetails'], {
       queryParams: {
@@ -33,8 +45,8 @@ export class ShowAdsComponent implements OnInit {
         image3: ad.image3,
         image4: ad.image4,
         phone: ad.phoneNo,
-        location:ad.location,
-        name:ad.user.name
+        location: ad.location,
+        name: ad.user.name
       }
     });
   }
@@ -54,5 +66,8 @@ export class ShowAdsComponent implements OnInit {
       return product.image4;
     }
     return null; // No image available
+  }
+  checkfeatured(){
+    
   }
 }

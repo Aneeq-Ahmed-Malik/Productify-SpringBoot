@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdsService } from '../ads.service';
 import { HttpEventType } from '@angular/common/http';
 import { GlobalService } from '../global.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-postad',
@@ -10,7 +10,9 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./postad.component.scss'],
 })
 export class PostadComponent  implements OnInit {
-  constructor(private adsService: AdsService, private global: GlobalService,private route:ActivatedRoute) {}
+  isLoading:boolean=true;
+  FeaturedAd:any=false;
+  constructor(private adsService: AdsService, private global: GlobalService,private route:ActivatedRoute,private router:Router) {}
   adDetails: { 
     id: any; 
     title: string; 
@@ -33,7 +35,8 @@ userId : any = this.global.userId;
 edit:boolean=false;
  
   ngOnInit(): void {
-   
+
+   this.checkFeatureAvailability(this.userId);
     this.route.queryParams.subscribe(params => {
       console.log('params',params);
       
@@ -54,7 +57,7 @@ edit:boolean=false;
           if (imageParam) {
             this.uploadedImages.push({
               file:imageParam , // Query parameters won't have file objects
-              preview: `../../assets/uploads/${imageParam}`, // Construct preview path
+              preview: `http://localhost:8080/${imageParam}`, // Construct preview path
             });
           }
         }
@@ -64,6 +67,8 @@ edit:boolean=false;
   
     console.log('Ad Details:', this.adDetails);
     console.log('Uploaded Images:', this.uploadedImages);
+
+    this.isLoading=false;
   }
   
  
@@ -95,7 +100,8 @@ edit:boolean=false;
     }
   }
 
-  submitAd(): void {
+  submitAd(check:any): void {
+
     if (
       !this.adDetails.title ||
       !this.adDetails.description ||
@@ -115,7 +121,13 @@ edit:boolean=false;
       formData.append('ad_id', this.adDetails.id);
 
     }
-
+    if (check=='featured') {
+      formData.append('isFeatured',this.FeaturedAd);
+    }
+    else{
+      let flag:any=false;
+      formData.append('isFeatured',flag);
+    }
     formData.append('title', this.adDetails.title);
     formData.append('description', this.adDetails.description);
     formData.append('price', this.adDetails.price);
@@ -135,7 +147,7 @@ edit:boolean=false;
           if (event.type === HttpEventType.Response) {
             console.log('Ad posted successfully:', event.body);
             alert('Ad posted successfully!');
-            this.resetForm();
+            setTimeout(() => this.router.navigate(['showads']), 5000); // Delay navigation
           }
         },
         error: (err) => {
@@ -143,6 +155,7 @@ edit:boolean=false;
           alert('Failed to post ad. Please try again.');
         },
       });
+      
       
     }
   else{
@@ -153,6 +166,7 @@ edit:boolean=false;
           console.log('Ad edited successfully:', event.body);
           alert('Ad edited successfully!');
           this.resetForm();
+          this.router.navigate(['showads']);
         }
       },
       error: (err) => {
@@ -169,7 +183,10 @@ edit:boolean=false;
       this.adsService.deleteAd(this.userId, this.adDetails.id).subscribe({
         next: (response: string) => {
           console.log('Ad deleted successfully:', response);
+          this.resetForm();
+
           alert(response); // You can display the response message here
+          this.router.navigate(['userads']);
         },
         error: (err) => {
           console.error('Error deleting ad:', err);
@@ -191,5 +208,18 @@ edit:boolean=false;
     };
     this.uploadedImages = [];
     this.uploadProgress = null;
+  }
+
+  checkFeatureAvailability(userId: number): void {
+    this.adsService.checkFeatureAvailability(userId).subscribe(
+      (response) => {
+        this.FeaturedAd= response; // Assign the result
+        console.log('Feature availability:', this.FeaturedAd);
+      },
+      (error) => {
+        console.error('Error checking feature availability:', error);
+        this.FeaturedAd = false; // Handle error gracefully
+      }
+    );
   }
 }

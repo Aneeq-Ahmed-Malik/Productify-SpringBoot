@@ -97,7 +97,7 @@ public class AdServices {
 
     private String saveFile(String uploadDir, MultipartFile file, Long userId, Long postId, int imageNo)
             throws IOException {
-        String fileName = userId + "_" + postId + "_" + imageNo + getFileExtension(file);
+        String fileName = userId + "-" + postId + "-" + imageNo + getFileExtension(file);
         String filePath = uploadDir + File.separator + fileName;
 
         Files.copy(file.getInputStream(), Paths.get(filePath), StandardCopyOption.REPLACE_EXISTING);
@@ -258,5 +258,6 @@ public class AdServices {
         // Step 4: Return true if the user can feature a new ad, false otherwise
         return allowedFeaturedAds > currentFeaturedAds;
     }
+    
 
 }

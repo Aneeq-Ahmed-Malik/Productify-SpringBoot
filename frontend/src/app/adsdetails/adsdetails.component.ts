@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AdsdetailsComponent  implements OnInit {
   constructor(private route : ActivatedRoute){}
+  isLoading:boolean=true
   product:any;
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -30,7 +31,21 @@ export class AdsdetailsComponent  implements OnInit {
     });
 
     console.log(this.product);
+    setTimeout(() => {
+      this.isLoading=false;
+    }, 6000);
     
+  }
+
+  openWhatsApp( message: string): void {
+    // Encode the message to ensure special characters are handled
+    const encodedMessage = encodeURIComponent(message);
+
+    // Construct the WhatsApp URL
+    const whatsappUrl = `https://wa.me/${this.product.phone}?text=${encodedMessage}`;
+
+    // Open WhatsApp in a new tab
+    window.open(whatsappUrl, '_blank');
   }
  
 }
