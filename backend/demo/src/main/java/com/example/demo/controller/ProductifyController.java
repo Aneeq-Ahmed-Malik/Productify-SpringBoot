@@ -53,6 +53,12 @@ public class ProductifyController {
         return "Products imported successfully!";
     }
 
+    @GetMapping("/import/reviews")
+    public String importReviews(@RequestParam String webName) {
+        csvImportService.importReviews(webName);
+        return "Reviews imported successfully!";
+    }
+
     @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/allproducts")
     public List<Product> getAllProducts() {

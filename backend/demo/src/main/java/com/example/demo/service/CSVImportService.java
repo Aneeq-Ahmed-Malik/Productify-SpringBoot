@@ -2,9 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.model.Category;
 import com.example.demo.model.Product;
+import com.example.demo.model.Review;
 import com.example.demo.model.Website;
 import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
+import com.example.demo.repository.ReviewRepository;
 import com.example.demo.repository.WebsiteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,9 @@ public class CSVImportService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
 
     public void importCategories() {
         try (InputStream inputStream = getClass().getClassLoader().getResourceAsStream("files/category.csv");
@@ -115,5 +120,45 @@ public class CSVImportService {
             e.printStackTrace();  // Consider using logging instead of printStackTrace()
         }
     }
+
+    private InputStream getPathForReview(String website) throws FileNotFoundException {
+        String filePath = "";
+        if (website.equals("Newgg")) {
+            filePath = "files/NewggReviews.csv";
+        } else if (website.equals("Amazon")) {
+            filePath = "files/AmazonReviews.csv";
+        }
+        else if (website.equals("ALiExpress")) {
+            filePath = "files/AliExpressReviews.csv";
+        } else {
+            throw new FileNotFoundException("No CSV file found for website: " + website);
+        }
+
+        // Load file from classpath
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream(filePath);
+        if (inputStream == null) {
+            throw new FileNotFoundException("File not found in classpath: " + filePath);
+        }
+        return inputStream;
+    }
+
+    public void importReviews(String websiteName) {
+        try (InputStream inputStream = getPathForReview(websiteName);
+            CSVReader reader = new CSVReader(new InputStreamReader(inputStream))) {
+            reader.readNext();
+            
+            List<String[]> rows = reader.readAll();
+            rows.forEach(row -> {
+                Review review = new Review();
+                review.setReviews(row[1]);
+                review.setLink(row[2]);
+                review.setSentiment(row[3]);  // Assuming the name is in the second column
+                reviewRepository.save(review);
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 
 }
