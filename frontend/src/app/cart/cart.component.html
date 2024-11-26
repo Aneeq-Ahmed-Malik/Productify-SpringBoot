@@ -9,11 +9,11 @@
       </h1>
     </div>
   </div>
-  <div *ngFor="let product of cart;let i=index" class="col-10 col-md-10 adj height colcolor">
-    <div class="row">
-      <div style="height: 50px; border-bottom: solid 1px silver; word-spacing: 370px;margin-bottom: 10px;"
+  <div  *ngFor="let product of cart;let i=index" class="col-10 col-md-10 adj height colcolor">
+    <div  class="row">
+      <div style="height: 50px; border-bottom: solid 1px silver; word-spacing: 380px;margin-bottom: 10px;"
         class="col-md-12">
-        <p><b>Product Title Actions</b></p>
+        <p><b>Product Title <span style="margin-left: 85%;margin-bottom: 10px;">Actions</span> </b></p>
       </div>
 
       <div style="height: 110px; width: 110px;" class="col-3 col-md-3 ">
@@ -54,14 +54,14 @@
           </div>
         </div>
       </div>
-      <div style="padding-top:30px ;" class="col-3 col-md-3">
-        <div class="button-container">
-
+      <div style="padding-top: 30px;" class="col-3 col-md-3">
+        <div class="button-container vertical-buttons">
+          <button (click)="Routing(product)" type="button" class="btn btn-danger">Details</button>
           <button (click)="redirectTo(product.link)" type="button" class="btn btn-success">Buy Now</button>
-          <button (click)="Remove(i,product)" type="button" class="btn btn-danger">Remove</button>
-
+          <button (click)="Remove(i, product)" type="button" class="btn btn-danger">Remove</button>
         </div>
       </div>
+      
 
     </div>
 

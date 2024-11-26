@@ -17,7 +17,9 @@ export class ProductDetailsComponent implements OnInit {
   recentproducts :any[][]=[];
   recommendproducts :any[][]=[];
   loadingRecommendations :boolean=true;
-  
+  sentimentResult: string = '';
+  qrCodeUrl: string | null = null;
+
   fullStars: number = 0; // Full stars
   halfStar: boolean = false; // Half star flag
   emptyStars: number = 0; // Empty stars
@@ -54,16 +56,19 @@ export class ProductDetailsComponent implements OnInit {
           console.log("No product data found in query parameters");
         }
       });
-
+      this.analyzeSentiment(this.product.link);
       this.processDescription();
       this.recentproducts = this.chunkArray(this.global.recent, 3);
       this.loading = false;
       this.getRecommendation();
+      this.generateQrCode();
 
     }, 2000);
   }
 
-
+  generateQrCode(): void {
+   this.qrCodeUrl=this.data.generateQrCodeUrl(this.product.link);
+  }
 getRecommendation(){
   const id = [this.product.id];
   console.log("recomd id",id) ;
@@ -135,6 +140,13 @@ Routing(product:any) {
   addToCart(product:any){
     this.global.addToCart(product);
     this.global.increament();
+    this.scrollToTop();
+  }
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Adds smooth scrolling
+    });
   }
   chunkArray(array: any[], size: number): any[][] {
     const chunks: any[][] = [];
@@ -142,5 +154,19 @@ Routing(product:any) {
       chunks.push(array.slice(i, i + size));
     }
     return chunks;
+  }
+
+  analyzeSentiment(link: string): void {
+    this.loading = true; // Show a loading indicator
+    this.data.getSentimentAnalysis(link).subscribe(
+      (response: string) => {
+        this.sentimentResult = response;
+        this.loading = false;
+      },
+      (error) => {
+        console.error('Error fetching sentiment analysis:', error);
+        this.loading = false;
+      }
+    );
   }
 }

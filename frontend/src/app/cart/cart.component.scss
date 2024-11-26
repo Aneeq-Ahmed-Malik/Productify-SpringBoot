@@ -52,3 +52,9 @@ button {
     align-items: center;
     /* Vertically center-align if needed */
 }
+.vertical-buttons {
+    display: flex;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 10px; /* Add spacing between buttons */
+  }
+  

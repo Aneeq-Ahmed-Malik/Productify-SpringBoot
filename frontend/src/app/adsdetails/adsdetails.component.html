@@ -8,28 +8,29 @@
     <div class="left__side">
         <!-- Carousel for Images -->
         <div id="imageCarousel" class="carousel slide" style="overflow: hidden;">
-            <div class="carousel-inner" style="height: 500px;">
+            <div class="carousel-inner" style="height: 500px; overflow: hidden;">
+                <!-- First Image -->
                 <div *ngIf="product.image1" class="carousel-item active">
                     <img [src]="'../../assets/uploads/' + product.image1" class="d-block w-100 carousel-img"
                         alt="Image 1">
                 </div>
                 <!-- Second Image -->
                 <div *ngIf="product.image2" class="carousel-item">
-                    <img [src]="'../../assets/uploads/' + product.image2" class="d-block w-100 carousel-img"
-                        alt="Image 1">
+                    <img [src]="'http://localhost:8080/' + product.image2" class="d-block w-100 carousel-img"
+                        alt="Image 2">
                 </div>
                 <!-- Third Image -->
                 <div *ngIf="product.image3" class="carousel-item">
-                    <img [src]="'../../assets/uploads/' + product.image3" class="d-block w-100 carousel-img"
-                        alt="Image 1">
+                    <img [src]="'http://localhost:8080/' + product.image3" class="d-block w-100 carousel-img"
+                        alt="Image 3">
                 </div>
                 <!-- Fourth Image -->
                 <div *ngIf="product.image4" class="carousel-item">
-                    <img [src]="'../../assets/uploads/' + product.image4" class="d-block w-100 carousel-img"
-                        alt="Image 1">
+                    <img [src]="'http://localhost:8080/' + product.image4" class="d-block w-100 carousel-img"
+                        alt="Image 4">
                 </div>
-
             </div>
+            
             <!-- Carousel Controls -->
             <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -17,10 +17,10 @@ public class ReviewController {
     public String getRecommendations() {
         return reviewAnalysisService.analyzeReviews();
     }
-
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/sentiment")
     public String getRecommendations(@RequestParam String link) {
-        return reviewAnalysisService.analyzeReviews();
+        return reviewAnalysisService.getSentiment(link);
     }
 
 }
