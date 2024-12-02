@@ -13,8 +13,12 @@
           <form class="d-flex justify-content-center" (ngSubmit)="onSearch()" role="search">
             <input [(ngModel)]="searchTerm" name="searchInput" class="form-control me-2" type="search"
               placeholder="Search" aria-label="Search" required />
-            <button style="color:blue;" class="btn btn-outline-success" type="submit">
+            <button style="color: blue;" class="btn btn-outline-success" type="submit">
               <i class="bi bi-search"></i>
+            </button>
+            <!-- Voice Search Button -->
+            <button style="color: red;" class="btn btn-outline-danger ms-2" type="button" (click)="startVoiceSearch()">
+              <i class="bi bi-mic"></i> <!-- Microphone icon -->
             </button>
           </form>
         </div>
