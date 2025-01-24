@@ -23,6 +23,7 @@ jobs:
           distribution: 'microsoft'
           
       - name: Navigate to backend/demo directory
+        working-directory: backend/demo 
         run: cd backend/demo
         
       - name: Build with Maven
