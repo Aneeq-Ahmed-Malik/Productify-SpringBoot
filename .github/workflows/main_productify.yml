@@ -21,7 +21,10 @@ jobs:
         with:
           java-version: '21'
           distribution: 'microsoft'
-
+          
+      - name: Navigate to backend/demo directory
+        run: cd backend/demo
+        
       - name: Build with Maven
         run: mvn clean install
 
