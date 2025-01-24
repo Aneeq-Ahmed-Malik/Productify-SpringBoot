@@ -59,7 +59,7 @@ public class ProductifyController {
         return "Reviews imported successfully!";
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @GetMapping("/allproducts")
     public List<Product> getAllProducts() {
         return productRetrievalService.getAllProducts();
@@ -70,21 +70,21 @@ public class ProductifyController {
         return productRetrievalService.getProductById(id);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @GetMapping("/{categoryName}/{websiteName}")
     public List<Product> getProductsByCategory(@PathVariable String categoryName, @PathVariable String websiteName) {
         return productRetrievalService.getProductsByWebsiteandCategory(categoryName, websiteName);
     }
 
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @GetMapping("/category/{categoryName}")
     public List<Product> getProductsByCategory(@PathVariable String categoryName) {
         return productRetrievalService.getProductsByCategory(categoryName);
     }
 
   
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @GetMapping("/search")
     public List<Product> searchProductsByTitle(@RequestParam String query,  @RequestParam int limit) {
         return searchService.searchProducts(query, limit);

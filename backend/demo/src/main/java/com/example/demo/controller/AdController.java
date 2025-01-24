@@ -35,7 +35,7 @@ public class AdController {
     @Autowired
     private AdRepository adRepository; // Assuming you have an AdRepository to save the Ad to the database
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @PostMapping("/postAd")
     public ResponseEntity<Map<String, String>> postAd(
             @RequestParam("title") String title,
@@ -56,19 +56,19 @@ public class AdController {
 
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @GetMapping("/getAllAds")
     public List<Ad> getAllAds() {
         return adServices.getAllAds();
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @GetMapping("/getAdsById")
     public List<Ad> getAdsById(@RequestParam Long user_id) {
         return adServices.getAdsByUserId(user_id);
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @DeleteMapping("/deleteAd")
     public ResponseEntity<String> deleteAd(@RequestParam("userId") Long userId, @RequestParam("ad_id") Long adId) {
         try {
@@ -81,7 +81,7 @@ public class AdController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @PutMapping("/editAd")
     public ResponseEntity<Map<String, String>> editAd(
             @RequestParam("ad_id") Long ad_id,
@@ -102,7 +102,7 @@ public class AdController {
                 image4);
 
     }
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @GetMapping("/checkFeatureAvailability")
     public boolean checkFeatureAvailability(@RequestParam Long userId) {
         return adServices.checkFeatureAvailability(userId);

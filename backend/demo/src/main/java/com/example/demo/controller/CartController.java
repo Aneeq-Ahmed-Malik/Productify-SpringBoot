@@ -34,7 +34,7 @@ public class CartController {
     @Autowired
     private RecommendationService recommendationService;
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @PostMapping("/addToCart")
     public String addToCart(@RequestParam Long user_id , @RequestParam Long product_id){
         String message = cartService.addToCart(user_id , product_id);
@@ -51,13 +51,13 @@ public class CartController {
         return message;
     }
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @GetMapping("/getProductsInCart")
     public List<Product> getProductsInCart(@RequestParam("user_id") Long userId) {
         return cartService.getProductsInCart(userId);
     }
     
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @DeleteMapping("/deleteProductFromCart")
     public String deleteProductFromCart(@RequestParam Long user_id , @RequestParam Long product_id){
         return cartService.deleteProductFromCart(user_id ,product_id);

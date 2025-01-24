@@ -17,7 +17,7 @@ public class RecommendationController {
 
     // Endpoint to get recommendations based on a list of product IDs
 
-    @CrossOrigin(origins = "http://localhost:4200")
+    @CrossOrigin(origins = "https://productify.live")
     @GetMapping("/get")
     public List<Product> getRecommendations(@RequestParam List<Long> productIds, @RequestParam(defaultValue = "6") int limit) throws IOException {
         return recommendationService.getRecommendations(productIds, limit);
