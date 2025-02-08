@@ -49,7 +49,7 @@
         <div class="image-previews">
           <div *ngFor="let img of uploadedImages; let i = index">
             <img [src]="img.preview" alt="Preview Image {{ i + 1 }}" width="100" />
-            <p>{{ img.file?.name }}</p>
+            <p>{{ img.file.name }}</p>
           </div>
         </div>
       </div>
