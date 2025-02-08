@@ -17,7 +17,7 @@ public class ReviewController {
     public String getRecommendations() {
         return reviewAnalysisService.analyzeReviews();
     }
-    @CrossOrigin(origins = "https://productify.live")
+    @CrossOrigin(origins = {"https://productify.live", "https://www.productify.live"})
     @GetMapping("/sentiment")
     public String getRecommendations(@RequestParam String link) {
         return reviewAnalysisService.getSentiment(link);
