@@ -26,7 +26,7 @@ public class UserController {
     @Autowired
     private NotificationManager notificationService;
 
-    @CrossOrigin(origins = "https://productify.live")
+    @CrossOrigin(origins = {"https://productify.live", "https://www.productify.live"})
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody Map<String, String> userData) {
         try {
@@ -46,7 +46,7 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "https://productify.live")
+    @CrossOrigin(origins = {"https://productify.live", "https://www.productify.live"})
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody Map<String, String> userData) {
         try {
