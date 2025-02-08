@@ -57,7 +57,7 @@ edit:boolean=false;
           if (imageParam) {
             this.uploadedImages.push({
               file:imageParam , // Query parameters won't have file objects
-              preview: `http://localhost:8080/${imageParam}`, // Construct preview path
+              preview: `https://productify.up.railway.app/${imageParam}`, // Construct preview path
             });
           }
         }
