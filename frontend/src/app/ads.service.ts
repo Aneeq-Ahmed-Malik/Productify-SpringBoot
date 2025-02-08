@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AdsService {
-  private apiUrl = 'http://localhost:8080/api/ad';
+  private apiUrl = 'https://productify.up.railway.app/api/ad';
 
   constructor(private http: HttpClient) { }
 

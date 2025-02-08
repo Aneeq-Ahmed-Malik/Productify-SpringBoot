@@ -6,9 +6,9 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class DataService {
-  private baseUrlProducts = 'http://localhost:8080/api/products';
-  private baseUrlRecomend = 'http://localhost:8080/api/recommend'; // API base URL
-  private baseUrlReview = 'http://localhost:8080/api/review'; // API base URL
+  private baseUrlProducts = 'https://productify.up.railway.app/api/products';
+  private baseUrlRecomend = 'https://productify.up.railway.app/api/recommend'; // API base URL
+  private baseUrlReview = 'https://productify.up.railway.app/api/review'; // API base URL
 
   
 
